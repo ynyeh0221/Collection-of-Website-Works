@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<title>Website Practice Day 1</title>
+<link href="https://fonts.googleapis.com/css?family=Carter+One" rel="stylesheet">
+<head>
+<style>
+body {
+   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAAPUlEQVQoU2NkQAO/1k/+zxaYy4gujiIAU4RNMVwhuiQ6H6wQl3XI4oy4FMHcCJPHcDS6J2A2EqUQpJhohQC0KSdEITneJgAAAABJRU5ErkJggg==) repeat;
+}
+h1 {
+   font-family: 'Carter One', cursive;
+}
+#myCanvas {
+    border:1px solid #000000;
+}
+
+.wrapper {
+    position: relative;
+    width: 800px;
+    height: 600px;
+}
+
+.wrapper canvas {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+.colors {
+    padding-bottom: 20px;
+}
+.colors #red {
+    width: 50px;
+    height: 50px;
+    background: red;
+    border:1px solid #000000;
+    margin-right: 10px;
+}
+.colors #yellow {
+    width: 50px;
+    height: 50px;
+    background: yellow;
+    border:1px solid #000000;
+    margin-right: 10px;
+}
+.colors #blue {
+    width: 50px;
+    height: 50px;
+    background: blue;
+    border:1px solid #000000;
+    margin-right: 10px;
+}
+.colors #white {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border:1px solid #000000;
+}
+/* Buzz effect css button */
+@-webkit-keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+
+@keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+
+.hvr-buzz {
+  
+  display: inline-block;
+    padding: 1em;
+    background-color: #F53D3D;
+    text-decoration: none;
+    color: white;
+  border-radius:5px;
+
+  
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+}
+.hvr-buzz:hover, .hvr-buzz:focus, .hvr-buzz:active {
+  -webkit-animation-name: hvr-buzz;
+  animation-name: hvr-buzz;
+  -webkit-animation-duration: 0.15s;
+  animation-duration: 0.15s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+#sitebody{
+ width:1300px;
+ margin:0 auto;
+ font-size:13px;
+}
+#header{
+ background-color:background-color:rgba(0, 0, 0, 0.5);
+ height:100px;
+ text-align:center;
+ line-height:100px;
+}
+#sidebar_left{
+ background-color:background-color:rgba(0, 0, 0, 0.5);
+ width:395px;
+ height:600px;
+ text-align:center;
+ line-height:400px;
+ float:left;
+}
+#sidebar_right{
+ background-color:background-color:rgba(0, 0, 0, 0.5);
+ width:395px;
+ height:600px;
+ text-align:center;
+ line-height:400px;
+ float:right;
+}
+#content{
+ margin-left:395px;
+ margin-right:395px;
+ height:600px;
+ background-color:background-color:rgba(0, 0, 0, 0.5);
+ text-align:center;
+ line-height:50px;
+}
+#footer{
+ clear:both;
+ font-family: 'Carter One', cursive;
+ background-color:background-color:rgba(0, 0, 0, 0.5);
+ height:80px;
+ text-align:center;
+ line-height:80px;
+}
+</style>
+</head>
+<body>
+<div id="sitebody">
+  <div id="header"><h1>Pick a color and paint the canvas</h1></div>
+  <div id="sidebar_left"></div>
+  <div id="sidebar_right"></div>
+  <div id="content">
+  <div class = "wrapper">
+    <div class = 'colors'>
+    <button id="red" class="hvr-buzz" onclick = 'get_color("red")'></button>
+    <button id="yellow" class="hvr-buzz" onclick = 'get_color("yellow")'></button>
+    <button id="blue" class="hvr-buzz" onclick = 'get_color("blue")'></button>
+    <button id="white" class="hvr-buzz" onclick = 'get_color("white")'></button>
+    </div>
+    <canvas id="myCanvas" width="500" height="500"></canvas>   
+  </div>
+  </div>
+  <div id="footer">09/02/2016 Yi-Nung Yeh</div>
+</div>
+<div style="display:none;">
+  <img id="source" src="./day1.png" width="500" height="500">
+</div>
+
+<script>
+window.onload = function() {
+    init();
+}
+
+var c, ctx, img;
+var color = 'white';
+var color2rgb = {'red': [255,0,0], 'yellow': [255,255,0], 'blue': [0,0,255], 'white': [255,255,255]};
+
+function init() {
+    c = document.getElementById("myCanvas");
+    ctx = c.getContext("2d");
+    img = document.getElementById("source");
+    ctx.drawImage(img,0,0);
+    c.addEventListener("mousedown", getPosition, false);
+}
+
+function get_color(id) {
+    color = id;
+}
+
+function getPosition(event) {
+    let x = event.layerX;
+    let y = event.layerY;
+    let img = ctx.getImageData(0, 0, 500, 500);
+    let stack = [[x,y]];
+    while (stack.length > 0)
+    {
+        let cur = stack.pop();
+        let x = cur[0], y = cur[1];
+        let pixelindex = (y * 500 + x) * 4;
+        img.data[pixelindex] = color2rgb[color][0];
+        img.data[pixelindex+1] = color2rgb[color][1];
+        img.data[pixelindex+2] = color2rgb[color][2];
+        img.data[pixelindex+3] = 255;
+        pixelindex = (y * 500 + x-1) * 4;
+        if (!((img.data[pixelindex] == color2rgb[color][0] && img.data[pixelindex+1] == color2rgb[color][1] && img.data[pixelindex+2] == color2rgb[color][2])
+        ||
+        (img.data[pixelindex] == 0 && img.data[pixelindex+1] == 0 && img.data[pixelindex+2] == 0)))
+            stack.push([x-1, y]);
+        pixelindex = (y * 500 + x+1) * 4;
+        if (!((img.data[pixelindex] == color2rgb[color][0] && img.data[pixelindex+1] == color2rgb[color][1] && img.data[pixelindex+2] == color2rgb[color][2])
+        ||
+        (img.data[pixelindex] == 0 && img.data[pixelindex+1] == 0 && img.data[pixelindex+2] == 0)))
+            stack.push([x+1, y]);
+        pixelindex = ((y-1) * 500 + x) * 4;
+        if (!((img.data[pixelindex] == color2rgb[color][0] && img.data[pixelindex+1] == color2rgb[color][1] && img.data[pixelindex+2] == color2rgb[color][2])
+        ||
+        (img.data[pixelindex] == 0 && img.data[pixelindex+1] == 0 && img.data[pixelindex+2] == 0)))
+            stack.push([x, y-1]);
+        pixelindex = ((y+1) * 500 + x) * 4;
+        if (!((img.data[pixelindex] == color2rgb[color][0] && img.data[pixelindex+1] == color2rgb[color][1] && img.data[pixelindex+2] == color2rgb[color][2])
+        ||
+        (img.data[pixelindex] == 0 && img.data[pixelindex+1] == 0 && img.data[pixelindex+2] == 0)))
+            stack.push([x, y+1]);
+    }
+    ctx.putImageData(img, 0, 0);
+}
+</script>
+</body>
+</html>
+
