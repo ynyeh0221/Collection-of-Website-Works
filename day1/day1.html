@@ -191,14 +191,14 @@ function init() {
     ctx = c.getContext("2d");
     img = document.getElementById("source");
     ctx.drawImage(img,0,0);
-    c.addEventListener("mousedown", getPosition, false);
+    c.addEventListener("mousedown", draw, false);
 }
 
 function get_color(id) {
     color = id;
 }
 
-function getPosition(event) {
+function draw(event) {
     let x = event.layerX;
     let y = event.layerY;
     let img = ctx.getImageData(0, 0, 500, 500);
