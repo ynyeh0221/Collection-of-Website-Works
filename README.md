@@ -17,3 +17,5 @@ Day 6: Colorful Clock https://ynyeh0221.github.io/Website-Practices/day6.html
 Day 7: Stopwatch https://ynyeh0221.github.io/Website-Practices/day7.html
 
 Day 8: Raindrops https://ynyeh0221.github.io/Website-Practices/day8.html
+
+Day 9: Keep it Straight https://ynyeh0221.github.io/Website-Practices/day9.html
