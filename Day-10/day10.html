@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<style>
+body {
+  color: white;
+  background: #404040;
+}
+h1 {
+  font-family: 'PT Sans', sans-serif;
+}
+h3 {
+  font-family: 'PT Sans', sans-serif;
+}
+#rectangle {
+  position: absolute;
+  width: 1300px;
+  height: 700px;
+  background: rgba(0,0,0,0);
+  z-index: 10;
+}
+#myCanvas {
+  position: absolute;
+}
+#counter {
+  position: absolute;
+  margin-left: 480px;
+  margin-top: 190px;
+  font-size: 150px;
+}
+#result1 {
+  display: none;
+}
+#result2 {
+  display: none;
+}
+#result3 {
+  display: none;
+}
+a {
+    font-family: 'PT Sans', sans-serif;
+    background-color: white;
+    width: 100px;
+    border: 2px solid #555555;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin-left: 47%;
+    cursor: pointer;
+}
+/* Buzz effect css button */
+@-webkit-keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+@keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+.hvr-buzz {
+  font-family: 'PT Sans', sans-serif;
+  display: inline-block;
+  padding: 1em;
+  background-color: #F53D3D;
+  text-decoration: none;
+  color: white;
+  border-radius:5px;
+  
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+}
+.hvr-buzz:hover, .hvr-buzz:focus, .hvr-buzz:active {
+  -webkit-animation-name: hvr-buzz;
+  animation-name: hvr-buzz;
+  -webkit-animation-duration: 0.15s;
+  animation-duration: 0.15s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+</style>
+</head>
+<body>
+<canvas id="myCanvas" width="1200" height="600""></canvas>
+<h1 id = "counter">001</h1>
+<div id = 'rectangle' onclick = 'increase_counter()'></div>
+<h1 id = "result1" style="text-align:center">Time is Up!!!</h1>
+<h3 id = "result2" style="text-align:center"></h3>
+<a id = 'result3' class="hvr-buzz" onclick = 'try_again()'>Try Again?</a>
+<script>
+var time = document.getElementsByTagName('h1')[0];
+var s = 0, t, counter = 1;
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+
+function try_again()
+{
+  window.open("./day10.html","_self");
+}
+
+function increase_counter()
+{
+  if (s < 60)
+  {
+    counter ++;
+    time.textContent = counter < 10 ? '00' + counter: counter < 100 ? '0' + counter : counter;
+  }
+}
+
+function count()
+{
+    if (s < 60)
+    {
+        s ++;
+        ctx.beginPath();
+        ctx.lineWidth = 30;
+        ctx.strokeStyle="rgba(102, 178, 255, 0.2)";
+        ctx.arc(600, 300, 250, -0.5 * Math.PI, -0.5 * Math.PI + s/30 * Math.PI);
+        ctx.stroke();
+        timer();
+    }
+    else
+    {
+        console.log(123)
+        document.getElementById("myCanvas").style.display = "none";
+        document.getElementById("counter").style.display = "none";
+        document.getElementById("rectangle").style.display = "none";
+        document.getElementById("result1").style.display = "block";
+        document.getElementById("result2").style.display = "block";
+        document.getElementById("result3").style.display = "block";
+        document.getElementById("result2").innerHTML = 'You got ' + counter + ' clicks in one minute.'
+    }
+}
+function timer()
+{
+    t = setTimeout(count, 1000);
+}
+stop.onclick = function()
+{
+    clearTimeout(t);
+}
+
+timer();
+</script>
+
+</body>
+</html>
