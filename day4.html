@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WebSite Practice Day 4</title>
+<script src="./jquery.min.js"></script>
+<style>
+body {
+    width: 800px;
+    height: 800px;
+}
+.square {
+    position: absolute;
+    background: #404040;
+    width: 50px; 
+    height: 50px;
+}
+</style>
+<script>
+$(document).ready(function(){
+  for(i = 0; i < 16; i++) {
+    for(j = 0; j < 16; j++) {
+        var id = 'div1'+ (i*16 + j);
+        $('body').append('<div onmousemove="mouseOver(id)" class = "square" id='+ id +' />');
+document.getElementById(id).style.left = (50*j) + 'px';
+document.getElementById(id).style.top = (50*i) + 'px';
+    }
+  }
+});
+function mouseOver(id) {
+    let t = document.getElementById(id);
+    t.style.background = '#'+Math.floor(Math.random()*16777215).toString(16);
+}
+</script>
+</head>
+<body>
+</body>
+</html>
