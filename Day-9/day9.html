@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+<style>
+body {
+ background: #f1faee;
+ margin-top: 10%;
+ text-align: center;
+ font-family: 'Josefin Sans', sans-serif;
+}
+button {
+    font-family: 'PT Sans', sans-serif;
+    background-color: white;
+    border: 2px solid #555555;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+/* Buzz effect css button */
+@-webkit-keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+@keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+.hvr-buzz {
+  font-family: 'PT Sans', sans-serif;
+  display: inline-block;
+  padding: 1em;
+  background-color: #F53D3D;
+  text-decoration: none;
+  color: white;
+  border-radius:5px;
+  
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+}
+.hvr-buzz:hover, .hvr-buzz:focus, .hvr-buzz:active {
+  -webkit-animation-name: hvr-buzz;
+  animation-name: hvr-buzz;
+  -webkit-animation-duration: 0.15s;
+  animation-duration: 0.15s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+</style>
+</head>
+<body>
+
+<h1>Keep It Straight</h1>
+<h3>Move mouse from the red side to the blue side in a straight line.</h3>
+
+<button type="button" class="hvr-buzz" onclick="start()"> Start</button>
+<script>
+function start()
+{
+  window.open("./day9_l1.html","_self");
+}
+</script>
+</body>
+</html>
