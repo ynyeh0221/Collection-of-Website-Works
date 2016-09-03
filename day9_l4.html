@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 9 Level 1</title>
+<style>
+body {
+ background: #f1faee;
+}
+#rectangle {
+ position: absolute;
+ top: 100px;
+ left: 100px;
+ width: 500px;
+ height: 10px;
+ background: #a8dadc;
+ z-index: 10;
+}
+#circle1 {
+ position: absolute;
+ top: 100px;
+ left: 95px;
+ width: 10px;
+ height: 10px;
+ background: #e63946;
+ -moz-border-radius: 5px;
+ -webkit-border-radius: 5px;
+ border-radius: 5px;
+ z-index: 5;
+}
+#circle2 {
+ position: absolute;
+ top: 100px;
+ left: 595px;
+ width: 10px;
+ height: 10px;
+ background: #1d3557;
+ -moz-border-radius: 5px;
+ -webkit-border-radius: 5px;
+ border-radius: 5px;
+ z-index: 5;
+}
+#check {
+ position: absolute;
+ top: 0px;
+ left: 0px;
+ width: 1000px;
+ height: 600px;
+ background: rgba(0,0,0,0);
+ z-index: 0;
+}
+#wrap {
+ position: absolute;
+ margin-left: 25%;
+ margin-top: 10%;
+}
+</style>
+</head>
+<body>
+<div id = 'wrap'>
+ <div id = 'check' onmouseover="check()"></div>
+ <div id = 'circle1' onmouseover="start()"></div>
+ <div id = 'circle2' onmouseover="finish()"></div>
+ <div id = 'rectangle'></div>
+</div>
+<script>
+var is_start = false;
+
+function start()
+{
+    is_start = true;
+}
+
+function check()
+{
+    if (is_start)
+        window.open("./day9_l4_failed.html","_self");
+    is_start = false;
+}
+
+function finish()
+{
+    if (is_start)
+        window.open("./day9_l4_passed.html","_self");
+    is_start = false;
+}
+</script>
+</body>
+</html>
