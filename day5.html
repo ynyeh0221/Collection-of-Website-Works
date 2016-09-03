@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 5</title>
+<link href="https://fonts.googleapis.com/css?family=Carter+One" rel="stylesheet">
+<script src="./jquery.min.js"></script>
+<style>
+h1 {
+   font-family: 'Carter One', cursive;
+}
+</style>
+</head>
+<body>
+<h1>Click the image to change its shadow</h1>
+<img src = 'http://cdn2.ettoday.net/images/771/d771489.jpg'></img>
+<script>
+var h = 15,
+    v = 15,
+    count = 0;
+
+function boostShadow(image) {
+    count += 10;
+    $(image).css("box-shadow", h + "px " + v + "px " + count +"px #404040");
+}
+
+$("img").on("click",function () {
+    boostShadow(this);
+});
+</script>
+</body>
+</html>
+
