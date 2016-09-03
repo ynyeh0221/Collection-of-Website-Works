@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 6</title>
+<link href="https://fonts.googleapis.com/css?family=Bungee+Shade" rel="stylesheet">
+<style>
+body {
+    font-family: 'Bungee Shade', cursive;
+    text-align: center;
+    background-color: '#ff0000'
+}
+h1 {
+    font-size: 60px;
+}
+h3 {
+    font-size: 25px;
+}
+</style>
+<script>
+var pretime, add = true, colorchange = 2, colors = generateColor('#ff0000', '#ffff00', 50), colorid = 0;
+
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTimes(s);
+    document.getElementById('time').innerHTML =
+    h + ":" + m + ":" + s;
+    document.getElementById('color').innerHTML = colors[colorid];
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10)
+        i = "0" + i;
+    return i;
+}
+function checkTimes(i) {
+    if (colorchange % 2 == 1)
+    {
+        document.body.style.background = colors[colorid];
+        if (colorid == 50-1)
+            add = false;
+        else if (colorid == 0)
+            add = true;
+        if (add)
+            colorid ++;
+        else
+            colorid --;
+    }
+    colorchange ++;
+    if (i < 10)
+        i = "0" + i;
+    return i;
+}
+function hex(c) {
+  var s = "0123456789abcdef";
+  var i = parseInt (c);
+  if (i == 0 || isNaN (c))
+    return "00";
+  i = Math.round (Math.min (Math.max (0, i), 255));
+  return s.charAt ((i - i % 16) / 16) + s.charAt (i % 16);
+}
+
+function convertToHex(rgb) {
+  return hex(rgb[0]) + hex(rgb[1]) + hex(rgb[2]);
+}
+
+function trim(s) {
+  return (s.charAt(0) == '#') ? s.substring(1, 7) : s
+}
+
+function convertToRGB(hex) {
+  var color = [];
+  color[0] = parseInt ((trim(hex)).substring (0, 2), 16);
+  color[1] = parseInt ((trim(hex)).substring (2, 4), 16);
+  color[2] = parseInt ((trim(hex)).substring (4, 6), 16);
+  return color;
+}
+
+function generateColor(colorStart, colorEnd, colorCount) {
+ var start = convertToRGB (colorStart);    
+ var end   = convertToRGB (colorEnd);    
+ var alpha = 0.0;
+ var res = []; 
+ for (i = 0; i < colorCount; i++)
+ {
+   var c = [];
+   alpha += (1.0/colorCount);  
+   c[0] = start[0] * alpha + (1 - alpha) * end[0];
+   c[1] = start[1] * alpha + (1 - alpha) * end[1];
+   c[2] = start[2] * alpha + (1 - alpha) * end[2];
+   res.push('#' + convertToHex(c));  
+ } 
+ return res; 
+}
+</script>
+</head>
+<body onload="startTime()">
+<h3>The current time is</h3>
+<h1 id = 'time'></h1>
+<h3>The current color is</h3>
+<h1 id = 'color'></h1>
+</body>
+</html>
