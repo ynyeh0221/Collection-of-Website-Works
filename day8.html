@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 8</title>
+<script src="./jquery.min.js"></script>
+<style>
+body {
+  background: 
+  linear-gradient(
+      rgba(0, 0, 0, 0.75), 
+      rgba(0, 0, 0, 0.75)
+    ),
+  url('./day8.jpg');
+  margin: 0;
+  overflow: hidden;
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+  filter: blur(1px);
+}
+</style>
+</head>
+<body>
+<canvas id="myCanvas"></canvas>
+<script>
+$(document).ready(function()
+{
+  var c = $('#myCanvas')[0];
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;  
+  if(c.getContext)
+  {
+    var ctx = c.getContext('2d'), w = c.width, h = c.height;
+    ctx.strokeStyle = 'rgba(203, 204, 255, 0.4)';
+    ctx.lineCap = 'round'; 
+    ctx.lineWidth = 1;
+    var init = [];
+    var maxrain = 1000;
+    for(let i = 0; i < maxrain; i++)
+    {
+      init.push({
+        x: Math.random() * w, y: Math.random() * h, l: Math.random() * 1,
+        xs: -4 + Math.random() * 5 + 2, ys: Math.random() * 25 + 20
+      })
+    }
+    
+    var rp = [];
+    for(let i = 0; i < maxrain; i++)
+      rp[i] = init[i];
+    
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for(let i = 0; i < maxrain; i++)
+      {
+        var p = rp[i];
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + p.l * p.xs, p.y + p.l * p.ys);
+        ctx.stroke();
+      }
+      raindrop();
+    }
+    
+    function raindrop() {
+      for(let i = 0; i < maxrain; i++)
+      {
+        var p = rp[i];
+        p.x += p.xs;
+        p.y += p.ys;
+        if(p.x > w || p.y > h)
+        {
+          p.x = Math.random() * w;
+          p.y = -15;
+        }
+      }
+    }
+    setInterval(draw, 35);    
+  }
+});
+</script>
+
+</body>
+</html>
+
