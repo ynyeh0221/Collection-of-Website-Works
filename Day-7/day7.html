@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WebSite Practice Day 7</title>
+<link href="https://fonts.googleapis.com/css?family=Londrina+Outline|PT+Sans" rel="stylesheet">
+<style>
+body {
+    text-align: center;
+    font-family: 'Londrina Outline', cursive;
+}
+h1 {
+    font-size: 100px;
+}
+button {
+    font-family: 'PT Sans', sans-serif;
+    background-color: white;
+    border: 2px solid #555555;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+/* Buzz effect css button */
+@-webkit-keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+@keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+.hvr-buzz {
+  font-family: 'PT Sans', sans-serif;
+  display: inline-block;
+  padding: 1em;
+  background-color: #F53D3D;
+  text-decoration: none;
+  color: white;
+  border-radius:5px;
+  
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+}
+.hvr-buzz:hover, .hvr-buzz:focus, .hvr-buzz:active {
+  -webkit-animation-name: hvr-buzz;
+  animation-name: hvr-buzz;
+  -webkit-animation-duration: 0.15s;
+  animation-duration: 0.15s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+</style>
+</head>
+<body>
+<h3 style = 'text-align: left'>Stopwatch</h3>
+<h1><time>00:00:00</time></h1>
+<button id="start" class="hvr-buzz">start</button>
+<button id="stop" class="hvr-buzz">stop</button>
+<button id="clear" class="hvr-buzz">clear</button>
+<script>
+var time = document.getElementsByTagName('h1')[0],
+    start = document.getElementById('start'),
+    stop = document.getElementById('stop'),
+    clear = document.getElementById('clear');
+var h = 0, m = 0, s = 0, counter;
+
+function count()
+{
+    if (s < 60)
+    {
+        s ++;
+        if (s == 60)
+        {
+            s = 0;
+            m ++;
+            if (m == 60)
+            {
+                m = 0;
+                h ++;
+            }
+        }
+    }
+    let show = '';
+    show += h < 10 ? '0' + h + ':' : h + ':';
+    show += m < 10 ? '0' + m + ':' : m + ':';
+    show += s < 10 ? '0' + s : s;
+    time.textContent = show;
+    timer();
+}
+
+function timer()
+{
+    counter = setTimeout(count, 1000);
+}
+
+stop.onclick = function()
+{
+    clearTimeout(counter);
+}
+
+start.onclick = timer;
+
+clear.onclick = function()
+{
+    time.textContent = "00:00:00";
+    h = 0;
+    m = 0;
+    h = 0;
+}
+</script>
+</body>
+</html>
