@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>WebSite Practice Day 13</title>
-<link rel="stylesheet" href="./font-awesome-4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <script src="./jquery.min.js"></script>
 <style>
@@ -102,7 +102,7 @@ function board_init(width, height)
         for (let j = 0; j < width; j++)
         {
             board[i].push(0);
-            num_map[i].push(0);
+            num_map[i].push(-1);
         }         
     }
     for (let i = 0; i < num_of_mines; i++)
@@ -117,6 +117,8 @@ function board_init(width, height)
     {
         for (let j = 0; j < width; j++)
         {
+            if (board[i][j] == 1)
+                continue;
             let neighbor_mines = 0;
             if (i-1 >= 0)
             {
@@ -173,7 +175,6 @@ function mouseClick(id) {
         document.getElementById(id).innerHTML = '<i class="fa fa-bomb" aria-hidden="true"></i>';
         document.getElementById(id).className = 'bomb';
         document.getElementById(id).style.background = "rgb(225, 0, 0)";
-        document.getElementById('start_over').innerHTML = '<i class="fa fa-frown-o" aria-hidden="true"></i>';
         clearTimeout(t);
         mouseClick = function() {};
         mark = function() {};
@@ -225,7 +226,7 @@ function mark(obj) {
         is_start = true;
         timer();
     }
-    if (obj.style.background == clicked)
+    if (remaining <= 0 || obj.style.background == clicked)
         return;
     if (obj.innerHTML == '<i class="fa fa-flag" aria-hidden="true"></i>')
     {
@@ -237,11 +238,11 @@ function mark(obj) {
         obj.style.background = unclick;
         obj.innerHTML = '';
     }
-    else if (remaining > 0)
+    else
     {
         obj.innerHTML='<i class="fa fa-flag" aria-hidden="true"></i>';
         remaining --;
-    }   
+    }    
     document.getElementById('remain').innerHTML = remaining < 10 ? '00' + remaining : remaining < 100 ? '0' + remaining : remaining;
 }
 function dfs(i, j)
@@ -254,6 +255,11 @@ function dfs(i, j)
         let id = 'div_'+ (y*w + x);
         document.getElementById(id).style.background = clicked;
         document.getElementById(id).className = 'dark';
+        if (num_map[y][x] > 0)
+        {
+            document.getElementById(id).innerHTML = num_map[y][x];
+            document.getElementById(id).style.color = colors[num_map[y][x]];
+        }
         let new_id = 'div_'+ ((y-1)*w + x);
         if (y-1 >= 0 && num_map[y-1][x] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
            stack.push([y-1, x]);
@@ -266,6 +272,45 @@ function dfs(i, j)
         new_id = 'div_'+ (y*w + x+1);
         if (x+1 < w && num_map[y][x+1] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
            stack.push([y, x+1]);
+
+        new_id = 'div_'+ ((y-1)*w + x-1);
+        if (y-1 >= 0 && x-1 >= 0 && num_map[y-1][x] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x-1]);
+        new_id = 'div_'+ ((y+1)*w + x+1);
+        if (y+1 < h && x+1 < h && num_map[y+1][x] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1,x+1]);
+        new_id = 'div_'+ ((y+1)*w + x-1);
+        if (y+1 < h && x-1 >= 0 && num_map[y+1][x-1] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1, x-1]);
+        new_id = 'div_'+ ((y-1)*w + x+1);
+        if (y-1 >= 0 && x+1 < w && num_map[y-1][x+1] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x+1]);
+
+        new_id = 'div_'+ ((y-1)*w + x);
+        if (y-1 >= 0 && num_map[y][x] === 0 && num_map[y-1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x]);
+        new_id = 'div_'+ ((y+1)*w + x);
+        if (y+1 < h && num_map[y][x] === 0 && num_map[y+1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1,x]);
+        new_id = 'div_'+ (y*w + x-1);
+        if (x-1 >= 0 && num_map[y][x] === 0 && num_map[y][x-1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y, x-1]);
+        new_id = 'div_'+ (y*w + x+1);
+        if (x+1 < w && num_map[y][x] === 0 && num_map[y][x+1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y, x+1]);
+
+        new_id = 'div_'+ ((y-1)*w + x-1);
+        if (y-1 >= 0 && num_map[y][x] === 0 && x-1 >= 0 && num_map[y-1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x-1]);
+        new_id = 'div_'+ ((y+1)*w + x+1);
+        if (y+1 < h && num_map[y][x] === 0 && x+1 < h && num_map[y+1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1,x+1]);
+        new_id = 'div_'+ ((y+1)*w + x-1);
+        if (y+1 < h && num_map[y][x] === 0 && x-1 >= 0 && num_map[y+1][x-1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1, x-1]);
+        new_id = 'div_'+ ((y-1)*w + x+1);
+        if (y-1 >= 0 && num_map[y][x] === 0 && x+1 < w && num_map[y-1][x+1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x+1]);
     }
 }
 function start_over()
