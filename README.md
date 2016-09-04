@@ -25,3 +25,5 @@ Day 10: Click Counter https://ynyeh0221.github.io/Websites/day10.html
 Day 11: Light Bulb https://ynyeh0221.github.io/Websites/day11.html
 
 Day 12: Shooting Game https://ynyeh0221.github.io/Websites/day12.html
+
+Day 13: Minesweeper https://ynyeh0221.github.io/Websites/day13.html
