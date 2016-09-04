@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>WebSite Practice Day 13</title>
-<link rel="stylesheet" href="./font-awesome-4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <script src="./jquery.min.js"></script>
 <style>
@@ -13,7 +13,6 @@ body {
     margin-top: 100px;
     margin-left: 100px;
 }
-
 #base {
     position: absolute;
     margin-top: -20px;
@@ -24,7 +23,6 @@ body {
     z-index: -1;
     box-shadow: 3px 3px 15px #000, inset 3px 3px 15px #fff;
 }
-
 .square {
     position: absolute;
     margin-top: 180px;
@@ -60,7 +58,6 @@ body {
 #wrapper {
     width: 360px;
 }
-
 .box {
   display: inline-block;
   font-size: 30px;
@@ -71,35 +68,22 @@ body {
   border: 0px solid #202020;
   letter-spacing: 5px;
   box-shadow: 0 1px 0 #ccc, 
-
                0 2px 0 #c9c9c9,
-
                0 3px 0 #bbb,
-
                0 4px 0 #b9b9b9,
-
                0 5px 0 #aaa,
-
                0 6px 1px rgba(0,0,0,.1),
-
                0 0 5px rgba(0,0,0,.1),
-
                0 1px 3px rgba(0,0,0,.3),
-
                0 3px 5px rgba(0,0,0,.2),
-
                0 5px 10px rgba(0,0,0,.25),
-
                0 10px 10px rgba(0,0,0,.2),
-
                0 20px 20px rgba(0,0,0,.15);
 }
-
 .smile {
   background: #e0e0e0;
   font-weight: bold;
 }
-
 .num {
   background: #202020;
   color: red;
@@ -175,8 +159,6 @@ $(document).ready(function(){
   }
   board_init(w, h);
 });
-
-
 function mouseClick(id) {
     if (document.getElementById(id).innerHTML == '<i class="fa fa-flag" aria-hidden="true"></i>' || document.getElementById(id).innerHTML == '?' || document.getElementById(id).style.background == clicked)
         return;
@@ -237,7 +219,6 @@ function timer() {
     }
     t = setTimeout('timer()',1000);
 }
-
 function mark(obj) {
     if (!is_start)
     {
@@ -263,7 +244,6 @@ function mark(obj) {
     }    
     document.getElementById('remain').innerHTML = remaining < 10 ? '00' + remaining : remaining < 100 ? '0' + remaining : remaining;
 }
-
 function dfs(i, j)
 {
     let stack = [[i,j]];
@@ -288,7 +268,6 @@ function dfs(i, j)
            stack.push([y, x+1]);
     }
 }
-
 function start_over()
 {
     window.open("./day13.html","_self");
