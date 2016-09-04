@@ -23,3 +23,5 @@ Day 9: Keep It Straight https://ynyeh0221.github.io/Website-Practices/day9.html
 Day 10: Click Counter https://ynyeh0221.github.io/Website-Practices/day10.html
 
 Day 11: Light Bulb https://ynyeh0221.github.io/Website-Practices/day11.html
+
+Day 12: Shooting Game https://ynyeh0221.github.io/Website-Practices/day12.html
