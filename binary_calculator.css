@@ -1,0 +1,174 @@
+        body{
+            width:1500px;
+            background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHElEQVQIW2N8++nLf2E+HkYGKIAzMARgKjFUAABjjQgFbT+LXQAAAABJRU5ErkJggg==);
+        }
+        #title{
+            position:absolute;
+            margin-top:230px;
+            margin-left:270px;
+            font-size:380%;
+            font-family: 'Carter One', cursive;
+            font-weight:bold;
+            z-index:10;
+            color:#ef233c;
+            text-shadow: 0px 1px #d90429,0px 2px #d90429,0px 3px #d90429,0px 4px #d90429,0px 5px #d90429,0px 6px #d90429, 0px 15px 15px rgba(0,0,0,.7), 0px -1px 0px rgba(255,255,255,0.3);
+        }
+        #res {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7d7e7d+0,0e0e0e+100;Black+3D */
+            background: rgb(50,50,50); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(50,50,50,1) 0%, rgba(14,14,14,1) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top,  rgba(50,50,50,1) 0%,rgba(14,14,14,1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom,  rgba(50,50,50,1) 0%,rgba(14,14,14,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
+            width: 960px;
+            height: 100px;
+            margin-top:-770px;
+            margin-left:100px;
+            padding-left:20px;
+            padding-right:20px;
+            font-size: 25px;
+            font-family: 'Press Start 2P', cursive;
+            text-align:right;
+            line-height:100px;
+            color: #edf2f4;
+            position:absolute;
+            z-index:10;
+            overflow:hidden;
+            -moz-box-shadow:0px 2px 3px 2px rgba(25,25,25,0.5) inset, 0px -2px 3px 2px rgba(255,255,255,0.5) inset;
+            -webkit-box-shadow:0px 2px 3px 2px rgba(25,25,25,0.5) inset, 0px -2px 3px 2px rgba(255,255,255,0.5) inset;
+            box-shadow:0px 10px 3px 2px rgba(25,25,25,0.5) inset, 0px -2px 3px 2px rgba(255,255,255,0.5) inset;
+        }
+
+        #btns {
+            width:800px;
+            margin-top:-610px;
+            margin-left:240px;
+            z-index:10;
+        }
+        #circle{
+            width:1200px;
+            height:1200px;
+            border-radius:99em;
+            background: -webkit-radial-gradient(600px 350px, ellipse,#45486b,#181926);
+            background: -o-radial-gradient(600px 350px, ellipse, #45486b,#181926);
+            background: -moz-radial-gradient(600px 350px, ellipse, #45486b,#181926);
+            background: radial-gradient(600px 300px, ellipse, #45486b,#181926);
+            box-shadow: 0px 50px 45px rgba(0,0,0,.7), 0px -80px 75px rgba(0,0,0,.3) inset, 0px 10px 50px rgba(255,255,255,.2) inset;
+        }
+        #btn0, #btn1 {
+            background-color: #ef233c;
+            color: #edf2f4;
+        }
+
+        #btnClr, #btnEql {
+            background-color: #edf2f4;
+            color: #ef233c;
+        }
+
+        #btnSum, #btnSub, #btnMul, #btnDiv {
+            background-color: #8d99ae;
+            color: #d90429;
+        }
+
+        .btnClass {
+            color: rgba(255,255,255,1);
+            background-color: #d90429;
+            font-family: 'Fredoka One', cursive;
+            font-weight: 700;
+            font-size: 3em;
+            text-shadow: -1px -1px 0 #fff,1px 1px 0 #333,1px 1px 0 #444;
+            padding: 4px;
+            -webkit-border-radius: 99em;
+            -moz-border-radius: 99em;
+            -webkit-box-shadow: 0px 9px 0px #d90429, 0px 9px 25px rgba(0,0,0,.7);
+            -moz-box-shadow: 0px 9px 0px #d90429, 0px 9px 25px rgba(0,0,0,.7);
+            box-shadow: 0px 9px 0px #d90429, 0px 30px 40px rgba(0,0,0,.7), 0px 30px 30px rgba(255,255,255,0.1) inset;
+            margin-right: 80px;
+            margin-bottom: 60px;
+	        width: 120px;
+	        height:120px;
+	        border: none;
+            border-radius:99em;
+	        text-align: center;
+	        -webkit-transition: all .1s ease;
+	        -moz-transition: all .1s ease;
+	        -ms-transition: all .1s ease;
+	        -o-transition: all .1s ease;
+	        transition: all .1s ease;
+
+        }
+        btnClass:active {
+            -webkit-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+            -moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+            box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+            position: relative;
+            top: 10px;
+        }
+        .btnClass2 {
+            color: rgba(255,255,255,1);
+            background-color: #d90429;
+            font-family: 'Fredoka One', cursive;
+            font-weight: 700;
+            font-size: 3em;
+            text-shadow: -1px -1px 0 #fff,1px 1px 0 #333,1px 1px 0 #444;
+            padding: 4px;
+            -webkit-border-radius: 99em;
+            -moz-border-radius: 99em;
+            -webkit-box-shadow: 0px 9px 0px #bdc1c3, 0px 9px 25px rgba(0,0,0,.7);
+            -moz-box-shadow: 0px 9px 0px #bdc1c3, 0px 9px 25px rgba(0,0,0,.7);
+            box-shadow: 0px 9px 0px #bdc1c3, 0px 30px 40px rgba(0,0,0,.7), 0px 30px 30px rgba(255,255,255,0.1) inset;
+            margin-right: 80px;
+            margin-bottom: 60px;
+	        width: 120px;
+	        height:120px;
+	        border:none;
+            border-radius:99em;
+	        text-align: center;
+	        -webkit-transition: all .1s ease;
+	        -moz-transition: all .1s ease;
+	        -ms-transition: all .1s ease;
+	        -o-transition: all .1s ease;
+	        transition: all .1s ease;
+
+        }
+        btnClass2:active {
+            -webkit-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+            -moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+            box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+            position: relative;
+            top: 10px;
+        }
+        .btnClass3 {
+            color: rgba(255,255,255,1);
+            background-color: #d90429;
+            font-family: 'Fredoka One', cursive;
+            font-weight: 700;
+            font-size: 3em;
+            text-shadow: -1px -1px 0 #fff,1px 1px 0 #333,1px 1px 0 #444;
+            padding: 4px;
+            -webkit-border-radius: 99em;
+            -moz-border-radius: 99em;
+            -webkit-box-shadow: 0px 9px 0px #494d70, 0px 9px 25px rgba(0,0,0,.7);
+            -moz-box-shadow: 0px 9px 0px #494d70, 0px 9px 25px rgba(0,0,0,.7);
+            box-shadow: 0px 9px 0px #494d70, 0px 30px 40px rgba(0,0,0,.7), 0px 30px 30px rgba(255,255,255,0.1) inset;
+            margin-right: 80px;
+            margin-bottom: 60px;
+	        width: 120px;
+	        height:120px;
+	        border: none;
+            border-radius:99em;
+	        text-align: center;
+	        -webkit-transition: all .1s ease;
+	        -moz-transition: all .1s ease;
+	        -ms-transition: all .1s ease;
+	        -o-transition: all .1s ease;
+	        transition: all .1s ease;
+
+        }
+        btnClass3:active {
+            -webkit-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+            -moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+            box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+            position: relative;
+            top: 10px;
+        }
