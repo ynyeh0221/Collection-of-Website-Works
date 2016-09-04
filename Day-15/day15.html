@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<link href='https://fonts.googleapis.com/css?family=BenchNine:400,700|Oswald|Pathway+Gothic+One|Fjalla+One' rel='stylesheet' type='text/css'>
+<style>
+.text {
+  font-family: 'Fjalla One', sans-serif;
+  font-stretch:narrower;
+  font-size: 250px;
+  text-shadow: 0 0 50px rgba(255,0,0,0.1), 0 0 100px rgba(255,255,255,0.1), 0 0 100px rgba(255,0,0,0.2), 0 0 200px rgba(255,0,0,0.2), 0 0 300px rgba(255,255,255,0.15);
+  fill: red;
+  stroke-width: 12;
+  stroke-linejoin: round;
+  stroke-dasharray: 3 3;
+  stroke-dashoffset: 0;
+  -webkit-animation: stroke 6s infinite linear;
+  animation: stroke 6s infinite linear; 
+}
+  .text:nth-child(3n + 1) {
+    stroke: red;
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s; }
+  .text:nth-child(3n + 2) {
+    stroke: white;
+    -webkit-animation-delay: -2s;
+    animation-delay: -2s; }
+  .text:nth-child(3n + 3) {
+    stroke: yellow;
+    -webkit-animation-delay: -3s;
+    animation-delay: -3s; }
+@-webkit-keyframes stroke {
+  100% {
+    stroke-dashoffset: -50; } }
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: -50; } }
+html,
+body {
+  height: 100%;
+}
+body {
+  background: #111;
+  color: #fff;
+}
+.content
+{
+  font: 800 14.5em/1  'Open Sans', Impact;
+}
+svg {
+  width: 80%;
+  margin: 0 auto 50px;
+  display: block;
+}
+</style>
+</head>
+<body>
+<div class="content">
+  <svg viewBox="0 0 2000 1000">
+      <symbol id="s-text">
+          <text text-anchor="middle" x="50%" y="50%" dy=".35em">
+                UpTown Funk
+          </text>
+      </symbol>
+      <use xlink:href="#s-text" class="text"></use>
+      <use xlink:href="#s-text" class="text"></use>
+      <use xlink:href="#s-text" class="text"></use>
+</svg>
+</div>
+
+</body>
+</html>
