@@ -112,7 +112,6 @@ function getRandomColor() {
     }
     return color;
 }
-
 var fieldwidth = 1300, fieldheight = 600, bs = [], can_b = true, maxb = 200, es = [], maxe = 15, my_plane, myScore, myLives, inc_score = 10;
 var gamearea = {
     canvas: document.getElementById("myCanvas"),
@@ -138,7 +137,6 @@ var gamearea = {
         clearInterval(this.interval);
     }
 }
-
 function startGame() {
     document.getElementById("teach1").style.display = "none";
     document.getElementById("teach2").style.display = "none";
@@ -153,7 +151,6 @@ function startGame() {
     myScore = new plane("30px", "Consolas", "black", 30, 100, "text");
     gamearea.start();
 }
-
 function plane(width, height, color, x, y, type)
 {
     this.type = type;
@@ -182,7 +179,6 @@ function plane(width, height, color, x, y, type)
         this.y += this.speedY; 
     } 
 }
-
 function enemy(x, y, color)
 {
     this.x = x;
@@ -202,7 +198,6 @@ function enemy(x, y, color)
         this.y += this.speedY; 
     } 
 }
-
 function bullet(width, height, color, x, y)
 {
     this.width = width;
@@ -239,7 +234,6 @@ function bullet(width, height, color, x, y)
         return crash;
     }
 }
-
 function update_gamearea() {
     gamearea.clear();
     my_plane.speedX = 0;
