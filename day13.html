@@ -225,7 +225,7 @@ function mark(obj) {
         is_start = true;
         timer();
     }
-    if (remaining <= 0 || obj.style.background == clicked)
+    if (obj.style.background == clicked)
         return;
     if (obj.innerHTML == '<i class="fa fa-flag" aria-hidden="true"></i>')
     {
@@ -237,11 +237,11 @@ function mark(obj) {
         obj.style.background = unclick;
         obj.innerHTML = '';
     }
-    else
+    else if (remaining > 0)
     {
         obj.innerHTML='<i class="fa fa-flag" aria-hidden="true"></i>';
         remaining --;
-    }    
+    }   
     document.getElementById('remain').innerHTML = remaining < 10 ? '00' + remaining : remaining < 100 ? '0' + remaining : remaining;
 }
 function dfs(i, j)
