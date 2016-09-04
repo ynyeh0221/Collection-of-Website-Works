@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 12</title>
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+<style>
+body {
+  font-family: 'Josefin Sans', sans-serif;
+}
+#myCanvas {
+  width: 1300px;
+  height: 600px;
+  background: white; 
+  border: 1px solid #202020;
+  display: none;
+}
+#teach1 {
+  position: absolute;
+  left: 350px;
+  top: 100px;
+  font-size: 40px;
+}
+#teach2 {
+  position: absolute;
+  left: 500px;
+  top: 200px;
+  font-size: 40px;
+}
+#start {
+  position: absolute;
+  left: 560px;
+  top: 300px;
+  font-size: 30px;
+}
+#result {
+  position: absolute;
+  left: 460px;
+  top: 100px;
+  font-size: 60px;
+  display: none;
+}
+#try_again {
+  position: absolute;
+  left: 600px;
+  top: 300px;
+  font-size: 30px;
+  display: none;
+}
+/* Buzz effect css button */
+@-webkit-keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+@keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+.hvr-buzz {
+  
+  display: inline-block;
+    padding: 1em;
+    background-color: #F53D3D;
+    text-decoration: none;
+    color: white;
+  border-radius:5px;
+  
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+}
+.hvr-buzz:hover, .hvr-buzz:focus, .hvr-buzz:active {
+  -webkit-animation-name: hvr-buzz;
+  animation-name: hvr-buzz;
+  -webkit-animation-duration: 0.15s;
+  animation-duration: 0.15s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+</style>
+</head>
+<body>
+<h1 id = 'teach1'>left/right arrow keys: move the shooter</h1>
+<h1 id = 'teach2'>spacebar: shoot</h1>
+<h3 id = 'start' class="hvr-buzz" onclick = "startGame()">Start?</h3>
+<canvas id = "myCanvas"></canvas>
+<h1 id = 'result'></h1>
+<h3><a id = 'try_again' class="hvr-buzz" href = "day12.html" style = "text-decoration: none;">Try Again?</a></h3>
+<script>
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+var fieldwidth = 1300, fieldheight = 600, bs = [], can_b = true, maxb = 200, es = [], maxe = 15, my_plane, myScore, myLives, inc_score = 10;
+var gamearea = {
+    canvas: document.getElementById("myCanvas"),
+    start: function() {
+        this.canvas.width = fieldwidth;
+        this.canvas.height = fieldheight;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.score = 0;
+        this.lives = 3;
+        this.interval = setInterval(update_gamearea, 20);
+        window.addEventListener('keydown', function (e) {
+            gamearea.key = e.keyCode;
+        })
+        window.addEventListener('keyup', function (e) {
+            gamearea.key = false;
+        })
+    },
+    clear: function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    stop : function() {
+        clearInterval(this.interval);
+    }
+}
+
+function startGame() {
+    document.getElementById("teach1").style.display = "none";
+    document.getElementById("teach2").style.display = "none";
+    document.getElementById("start").style.display = "none";
+    document.getElementById("myCanvas").style.display = "block";
+    my_plane = new plane(30, 30, "#202020", fieldwidth/2, fieldheight-30);
+    for (let i = 0; i < maxe; i++)
+    {
+        let new_e = new enemy(Math.random() * 1300, Math.random() * 600 - 600, getRandomColor());
+        es.push(new_e);
+    }
+    myLives = new plane("30px", "Consolas", "black", 30, 50, "text");
+    myScore = new plane("30px", "Consolas", "black", 30, 100, "text");
+    gamearea.start();
+}
+
+function plane(width, height, color, x, y, type)
+{
+    this.type = type;
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.update = function() {
+        ctx = gamearea.context;
+        if (this.type == "text")
+        {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        }
+        else
+        {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
+    this.new_position = function() {
+        this.x += this.speedX;
+        this.y += this.speedY; 
+    } 
+}
+
+function enemy(x, y, color)
+{
+    this.x = x;
+    this.y = y;
+    this.speedX = 0;
+    this.speedY = 0.5;
+    this.radius = 12;
+    this.update = function() {
+        ctx = gamearea.context;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = color;
+        ctx.fill();
+    }
+    this.new_position = function() {
+        this.x += this.speedX;
+        this.y += this.speedY; 
+    } 
+}
+
+function bullet(width, height, color, x, y)
+{
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.update = function() {
+        ctx = gamearea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    this.new_position = function() {
+        this.x += this.speedX;
+        this.y += this.speedY; 
+    }
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x - otherobj.radius;
+        var otherright = otherobj.x + otherobj.radius;
+        var othertop = otherobj.y - otherobj.radius;
+        var otherbottom = otherobj.y + otherobj.radius;
+        var crash = true;
+        if ((mybottom < othertop) ||
+               (mytop > otherbottom) ||
+               (myright < otherleft) ||
+               (myleft > otherright)) {
+           crash = false;
+        }
+        return crash;
+    }
+}
+
+function update_gamearea() {
+    gamearea.clear();
+    my_plane.speedX = 0;
+    my_plane.speedY = 0;
+    if (gamearea.key && gamearea.key == 37) {my_plane.speedX = -3; }
+    if (gamearea.key && gamearea.key == 39) {my_plane.speedX = 3; }
+    if (gamearea.key && gamearea.key == 32) {
+        if (can_b)
+        {
+            can_b = false;
+            let temp = new bullet(3, 5, 'red', my_plane.x + my_plane.width/2, my_plane.y);
+            temp.speedY = -2;
+            if (bs.length > maxb)
+                bs.shift();
+            bs.push(temp);
+            setTimeout(function(){can_b = true;}, 250)
+        }
+    }
+    for (let j = 0; j < es.length; j++)
+    {
+        if (es[j].y >= fieldheight)
+        {
+            if (gamearea.lives > 1)
+            {
+                gamearea.lives --;
+                es.splice(j, 1);
+                j --;
+            }
+            else
+            {
+                gamearea.lives --;
+                gamearea.stop();
+                document.getElementById('result').style.display = "block";
+                document.getElementById('result').innerHTML = "Your score is " + gamearea.score + '!!!';
+                document.getElementById('try_again').style.display = "block";
+            }
+        }
+    }
+    for (let i = 0; i < bs.length; i++)
+    {
+        for (let j = 0; j < es.length; j++)
+        {
+            if (bs[i].crashWith(es[j]))
+            {
+                bs.splice(i, 1);
+                es.splice(j, 1);
+                i --;
+                j --;
+                gamearea.score += inc_score;
+            }
+        }
+    }
+    for (let i = es.length; i < maxe; i++)
+    {
+        let new_e = new enemy(Math.random() * 1300, Math.random() * 500 - 500, getRandomColor());
+        es.push(new_e);
+    }
+    for (let b in bs)
+    {
+       bs[b].new_position();
+       bs[b].update();
+    }
+    for (let e in es)
+    {
+       es[e].new_position();
+       es[e].update();
+    }
+    myLives.text="Lives: " + gamearea.lives;
+    myLives.update();
+    myScore.text="SCORE: " + gamearea.score;
+    myScore.update();
+    my_plane.new_position();
+    my_plane.update();
+}
+</script>
+</body>
+</html>
