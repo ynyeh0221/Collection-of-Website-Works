@@ -13,7 +13,6 @@ body {
     margin-top: 100px;
     margin-left: 100px;
 }
-
 #base {
     position: absolute;
     margin-top: -20px;
@@ -24,7 +23,6 @@ body {
     z-index: -1;
     box-shadow: 3px 3px 15px #000, inset 3px 3px 15px #fff;
 }
-
 .square {
     position: absolute;
     margin-top: 180px;
@@ -60,7 +58,6 @@ body {
 #wrapper {
     width: 360px;
 }
-
 .box {
   display: inline-block;
   font-size: 30px;
@@ -71,35 +68,22 @@ body {
   border: 0px solid #202020;
   letter-spacing: 5px;
   box-shadow: 0 1px 0 #ccc, 
-
                0 2px 0 #c9c9c9,
-
                0 3px 0 #bbb,
-
                0 4px 0 #b9b9b9,
-
                0 5px 0 #aaa,
-
                0 6px 1px rgba(0,0,0,.1),
-
                0 0 5px rgba(0,0,0,.1),
-
                0 1px 3px rgba(0,0,0,.3),
-
                0 3px 5px rgba(0,0,0,.2),
-
                0 5px 10px rgba(0,0,0,.25),
-
                0 10px 10px rgba(0,0,0,.2),
-
                0 20px 20px rgba(0,0,0,.15);
 }
-
 .smile {
   background: #e0e0e0;
   font-weight: bold;
 }
-
 .num {
   background: #202020;
   color: red;
@@ -118,7 +102,7 @@ function board_init(width, height)
         for (let j = 0; j < width; j++)
         {
             board[i].push(0);
-            num_map[i].push(0);
+            num_map[i].push(-1);
         }         
     }
     for (let i = 0; i < num_of_mines; i++)
@@ -133,6 +117,8 @@ function board_init(width, height)
     {
         for (let j = 0; j < width; j++)
         {
+            if (board[i][j] == 1)
+                continue;
             let neighbor_mines = 0;
             if (i-1 >= 0)
             {
@@ -175,8 +161,6 @@ $(document).ready(function(){
   }
   board_init(w, h);
 });
-
-
 function mouseClick(id) {
     if (document.getElementById(id).innerHTML == '<i class="fa fa-flag" aria-hidden="true"></i>' || document.getElementById(id).innerHTML == '?' || document.getElementById(id).style.background == clicked)
         return;
@@ -236,7 +220,6 @@ function timer() {
     }
     t = setTimeout('timer()',1000);
 }
-
 function mark(obj) {
     if (!is_start)
     {
@@ -262,7 +245,6 @@ function mark(obj) {
     }    
     document.getElementById('remain').innerHTML = remaining < 10 ? '00' + remaining : remaining < 100 ? '0' + remaining : remaining;
 }
-
 function dfs(i, j)
 {
     let stack = [[i,j]];
@@ -273,6 +255,11 @@ function dfs(i, j)
         let id = 'div_'+ (y*w + x);
         document.getElementById(id).style.background = clicked;
         document.getElementById(id).className = 'dark';
+        if (num_map[y][x] > 0)
+        {
+            document.getElementById(id).innerHTML = num_map[y][x];
+            document.getElementById(id).style.color = colors[num_map[y][x]];
+        }
         let new_id = 'div_'+ ((y-1)*w + x);
         if (y-1 >= 0 && num_map[y-1][x] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
            stack.push([y-1, x]);
@@ -285,9 +272,47 @@ function dfs(i, j)
         new_id = 'div_'+ (y*w + x+1);
         if (x+1 < w && num_map[y][x+1] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
            stack.push([y, x+1]);
+
+        new_id = 'div_'+ ((y-1)*w + x-1);
+        if (y-1 >= 0 && x-1 >= 0 && num_map[y-1][x] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x-1]);
+        new_id = 'div_'+ ((y+1)*w + x+1);
+        if (y+1 < h && x+1 < h && num_map[y+1][x] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1,x+1]);
+        new_id = 'div_'+ ((y+1)*w + x-1);
+        if (y+1 < h && x-1 >= 0 && num_map[y+1][x-1] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1, x-1]);
+        new_id = 'div_'+ ((y-1)*w + x+1);
+        if (y-1 >= 0 && x+1 < w && num_map[y-1][x+1] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x+1]);
+
+        new_id = 'div_'+ ((y-1)*w + x);
+        if (y-1 >= 0 && num_map[y][x] === 0 && num_map[y-1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x]);
+        new_id = 'div_'+ ((y+1)*w + x);
+        if (y+1 < h && num_map[y][x] === 0 && num_map[y+1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1,x]);
+        new_id = 'div_'+ (y*w + x-1);
+        if (x-1 >= 0 && num_map[y][x] === 0 && num_map[y][x-1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y, x-1]);
+        new_id = 'div_'+ (y*w + x+1);
+        if (x+1 < w && num_map[y][x] === 0 && num_map[y][x+1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y, x+1]);
+
+        new_id = 'div_'+ ((y-1)*w + x-1);
+        if (y-1 >= 0 && num_map[y][x] === 0 && x-1 >= 0 && num_map[y-1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x-1]);
+        new_id = 'div_'+ ((y+1)*w + x+1);
+        if (y+1 < h && num_map[y][x] === 0 && x+1 < h && num_map[y+1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1,x+1]);
+        new_id = 'div_'+ ((y+1)*w + x-1);
+        if (y+1 < h && num_map[y][x] === 0 && x-1 >= 0 && num_map[y+1][x-1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1, x-1]);
+        new_id = 'div_'+ ((y-1)*w + x+1);
+        if (y-1 >= 0 && num_map[y][x] === 0 && x+1 < w && num_map[y-1][x+1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x+1]);
     }
 }
-
 function start_over()
 {
     window.open("./day13.html","_self");
