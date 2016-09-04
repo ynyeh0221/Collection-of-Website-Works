@@ -244,8 +244,8 @@ function update_gamearea() {
     gamearea.clear();
     my_plane.speedX = 0;
     my_plane.speedY = 0;
-    if (gamearea.key && gamearea.key == 37) {if (my_plane.x > 3) my_plane.speedX = -3; }
-    if (gamearea.key && gamearea.key == 39) {if (my_plane < fieldwidth-1-3) my_plane.speedX = 3; }
+    if (gamearea.key && gamearea.key == 37) {my_plane.speedX = -3; }
+    if (gamearea.key && gamearea.key == 39) {my_plane.speedX = 3; }
     if (gamearea.key && gamearea.key == 32) {
         if (can_b)
         {
