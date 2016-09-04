@@ -1,4 +1,4 @@
-# Websites
+# Collection of Website Works
 
 The idea is from Jennifer's 180 practices (https://jenniferdewalt.com/)
 
