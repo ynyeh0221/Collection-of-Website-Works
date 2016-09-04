@@ -91,6 +91,7 @@ function mouseClick(id) {
         document.getElementById(id).innerHTML = '<i class="fa fa-bomb" aria-hidden="true"></i>';
         document.getElementById(id).className = 'bomb';
         document.getElementById(id).style.background = "rgb(225, 0, 0)";
+        document.getElementById('start_over').innerHTML = '<i class="fa fa-frown-o" aria-hidden="true"></i>';
         clearTimeout(t);
         mouseClick = function() {};
         mark = function() {};
