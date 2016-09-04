@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WebSite Practice Day 13</title>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="day13.css">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<script src="./jquery.min.js"></script>
+<script>
+var is_start = false, w = 9, h = 9, num_of_mines = 10, board = [], num_map = [], remaining = num_of_mines, s = 0, t, clicked = 'rgb(160, 160, 160)', unclick = "rgb(224, 224, 224)";
+var colors = ['white','blue','green','red','#000033','#660000','#009999','black','#606060'];
+function board_init(width, height)
+{
+    for (let i = 0; i < height; i++)
+    {
+        board.push([]);
+        num_map.push([]);
+        for (let j = 0; j < width; j++)
+        {
+            board[i].push(0);
+            num_map[i].push(-1);
+        }         
+    }
+    for (let i = 0; i < num_of_mines; i++)
+    {
+        let y = Math.floor(Math.random() * height), x = Math.floor(Math.random() * width);
+        if (board[y][x] == 1)
+            i --;
+        else
+            board[y][x] = 1;
+    }
+    for (let i = 0; i < height; i++)
+    {
+        for (let j = 0; j < width; j++)
+        {
+            if (board[i][j] == 1)
+                continue;
+            let neighbor_mines = 0;
+            if (i-1 >= 0)
+            {
+                neighbor_mines += board[i-1][j];
+                if (j-1 >= 0)
+                     neighbor_mines += board[i-1][j-1];
+                if (j+1 < width)
+                     neighbor_mines += board[i-1][j+1];
+            }
+            if (i+1 < height)
+            {
+                neighbor_mines += board[i+1][j];
+                if (j-1 >= 0)
+                     neighbor_mines += board[i+1][j-1];
+                if (j+1 < width)
+                     neighbor_mines += board[i+1][j+1];
+            }
+            if (j-1 >= 0)
+                neighbor_mines += board[i][j-1];
+            if (j+1 < width)
+                neighbor_mines += board[i][j+1];
+            num_map[i][j] = neighbor_mines;
+        }
+    }
+    document.getElementById('timer').innerHTML = '000';
+    document.getElementById('remain').innerHTML = remaining < 10 ? '00' + remaining : remaining < 100 ? '0' + remaining : remaining;
+}
+$(document).ready(function(){
+  for(i = 0; i < h; i++) {
+    for(j = 0; j < w; j++) {
+        let id = 'div_'+ (i*w + j);
+        $('body').append('<div onclick="mouseClick(id)" class = "square" id='+ id +' />');
+        let grid = document.getElementById(id);
+        grid.style.left = (40*j) + 'px';
+        grid.style.top = (40*i) + 'px';
+        grid.style.background = unclick;
+        grid.setAttribute('oncontextmenu','mark(this)');
+        grid.innerHTML = '';
+    }
+  }
+  board_init(w, h);
+});
+function mouseClick(id) {
+    if (document.getElementById(id).innerHTML == '<i class="fa fa-flag" aria-hidden="true"></i>' || document.getElementById(id).innerHTML == '?' || document.getElementById(id).style.background == clicked)
+        return;
+    if (!is_start)
+    {
+        is_start = true;
+        timer();
+    }
+    let idx = parseInt(id.split('_')[1], 10);
+    if (board[Math.floor(idx / w)][idx % w] == 1)
+    {
+        document.getElementById(id).innerHTML = '<i class="fa fa-bomb" aria-hidden="true"></i>';
+        document.getElementById(id).className = 'bomb';
+        document.getElementById(id).style.background = "rgb(225, 0, 0)";
+        clearTimeout(t);
+        mouseClick = function() {};
+        mark = function() {};
+    }
+    else
+    {
+        let i = Math.floor(idx / w), j = idx % w;
+        document.getElementById(id).style.background = clicked;
+        document.getElementById(id).className = 'dark';
+        if (num_map[i][j] > 0)
+        {
+            document.getElementById(id).innerHTML = num_map[i][j];
+            document.getElementById(id).style.color = colors[num_map[i][j]];
+        }
+        else
+            dfs(i, j);
+    }
+}
+function timer() {
+    s ++;
+    document.getElementById('timer').innerHTML = s < 10 ? '00' + s : s < 100 ? '0' + s : s;
+    document.getElementById('remain').innerHTML = remaining < 10 ? '00' + remaining : remaining < 100 ? '0' + remaining : remaining;
+    if (remaining == 0)
+    {
+        let check = 0;
+        for (let i = 0; i < h; i++)
+        {
+            for (let j = 0; j < w; j++)
+            {
+                let id = 'div_'+ (i*w + j);
+                if (board[i][j] == 1 && document.getElementById(id).innerHTML == '<i class="fa fa-flag" aria-hidden="true"></i>')
+                    check ++;
+                if (check == num_of_mines)
+                {
+                    alert("You Win!!!!!");
+                    document.getElementById('start_over').style.color = 'gold';
+                    mouseClick = function() {};
+                    mark = function() {};
+                    return;
+                }
+            }
+        }
+    }
+    t = setTimeout('timer()',1000);
+}
+function mark(obj) {
+    if (!is_start)
+    {
+        is_start = true;
+        timer();
+    }
+    if (remaining <= 0 || obj.style.background == clicked)
+        return;
+    if (obj.innerHTML == '<i class="fa fa-flag" aria-hidden="true"></i>')
+    {
+        obj.innerHTML = '?';
+        remaining ++;
+    }
+    else if (obj.innerHTML == '?')
+    {
+        obj.style.background = unclick;
+        obj.innerHTML = '';
+    }
+    else
+    {
+        obj.innerHTML='<i class="fa fa-flag" aria-hidden="true"></i>';
+        remaining --;
+    }    
+    document.getElementById('remain').innerHTML = remaining < 10 ? '00' + remaining : remaining < 100 ? '0' + remaining : remaining;
+}
+function dfs(i, j)
+{
+    let stack = [[i,j]];
+    while (stack.length > 0)
+    {
+        let cur = stack.pop();
+        let y = cur[0], x = cur[1];
+        let id = 'div_'+ (y*w + x);
+        document.getElementById(id).style.background = clicked;
+        document.getElementById(id).className = 'dark';
+        if (num_map[y][x] > 0)
+        {
+            document.getElementById(id).innerHTML = num_map[y][x];
+            document.getElementById(id).style.color = colors[num_map[y][x]];
+        }
+        let new_id = 'div_'+ ((y-1)*w + x);
+        if (y-1 >= 0 && num_map[y-1][x] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x]);
+        new_id = 'div_'+ ((y+1)*w + x);
+        if (y+1 < h && num_map[y+1][x] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1,x]);
+        new_id = 'div_'+ (y*w + x-1);
+        if (x-1 >= 0 && num_map[y][x-1] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y, x-1]);
+        new_id = 'div_'+ (y*w + x+1);
+        if (x+1 < w && num_map[y][x+1] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y, x+1]);
+
+        new_id = 'div_'+ ((y-1)*w + x-1);
+        if (y-1 >= 0 && x-1 >= 0 && num_map[y-1][x] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x-1]);
+        new_id = 'div_'+ ((y+1)*w + x+1);
+        if (y+1 < h && x+1 < h && num_map[y+1][x] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1,x+1]);
+        new_id = 'div_'+ ((y+1)*w + x-1);
+        if (y+1 < h && x-1 >= 0 && num_map[y+1][x-1] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1, x-1]);
+        new_id = 'div_'+ ((y-1)*w + x+1);
+        if (y-1 >= 0 && x+1 < w && num_map[y-1][x+1] === 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x+1]);
+
+        new_id = 'div_'+ ((y-1)*w + x);
+        if (y-1 >= 0 && num_map[y][x] === 0 && num_map[y-1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x]);
+        new_id = 'div_'+ ((y+1)*w + x);
+        if (y+1 < h && num_map[y][x] === 0 && num_map[y+1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1,x]);
+        new_id = 'div_'+ (y*w + x-1);
+        if (x-1 >= 0 && num_map[y][x] === 0 && num_map[y][x-1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y, x-1]);
+        new_id = 'div_'+ (y*w + x+1);
+        if (x+1 < w && num_map[y][x] === 0 && num_map[y][x+1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y, x+1]);
+
+        new_id = 'div_'+ ((y-1)*w + x-1);
+        if (y-1 >= 0 && num_map[y][x] === 0 && x-1 >= 0 && num_map[y-1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x-1]);
+        new_id = 'div_'+ ((y+1)*w + x+1);
+        if (y+1 < h && num_map[y][x] === 0 && x+1 < h && num_map[y+1][x] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1,x+1]);
+        new_id = 'div_'+ ((y+1)*w + x-1);
+        if (y+1 < h && num_map[y][x] === 0 && x-1 >= 0 && num_map[y+1][x-1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y+1, x-1]);
+        new_id = 'div_'+ ((y-1)*w + x+1);
+        if (y-1 >= 0 && num_map[y][x] === 0 && x+1 < w && num_map[y-1][x+1] > 0 && document.getElementById(new_id).style.background == unclick && document.getElementById(new_id).innerHTML == '')
+           stack.push([y-1, x+1]);
+    }
+}
+function start_over()
+{
+    window.open("./day13.html","_self");
+}
+</script>
+</head>
+<body onContextMenu="window.event.returnValue=false">
+<div id = 'wrapper'>
+    <div id = 'base'></div>
+    <div id="remain" class = 'box num'></div>
+    <div id = 'start_over' class = 'box smile' onclick = 'start_over()'><i class="fa fa-smile-o" aria-hidden="true"></i></div>
+    <div id="timer" class = 'box num'></div>
+</div>
+</body>
+</html>
