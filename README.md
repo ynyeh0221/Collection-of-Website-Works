@@ -29,3 +29,5 @@ Day 12: Shooting Game https://ynyeh0221.github.io/Websites/day12.html
 Day 13: Minesweeper https://ynyeh0221.github.io/Websites/day13.html
 
 Day 14: Binary Calculator https://ynyeh0221.github.io/Websites/day14.html
+
+Day 15: Stage Light https://ynyeh0221.github.io/Websites/day15.html
