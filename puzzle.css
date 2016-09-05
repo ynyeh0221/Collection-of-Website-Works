@@ -29,6 +29,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
+            background-size: 100%;
             background-image:url('./2.jpeg');
         }
         .btn-container > .btn3{
@@ -37,6 +38,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
+            background-size: 100%;
             background-image:url('./3.jpeg');
         }
         .btn-container > .btn4{
@@ -45,6 +47,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
+            background-size: 100%;
             background-image:url('./4.jpeg');
         }
         .btn-container > .btn5{
@@ -53,6 +56,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
+            background-size: 100%;
             background-image:url('./5.jpeg');
         }
         .btn-container > .btn6{
@@ -61,6 +65,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
+            background-size: 100%;
             background-image:url('./6.jpeg');
         }
         .btn-container > .btn7{
@@ -69,6 +74,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
+            background-size: 100%;
             background-image:url('./7.jpeg');
         }
         .btn-container > .btn8{
@@ -77,6 +83,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
+            background-size: 100%;
             background-image:url('./8.jpeg');
         }
         .btn-container > .btn9{
