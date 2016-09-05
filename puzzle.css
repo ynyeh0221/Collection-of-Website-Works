@@ -30,11 +30,8 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background:url('./2.jpeg');
-            -webkit-background-size: cover; /* For WebKit*/
-            -moz-background-size: cover;    /* Mozilla*/
-            -o-background-size: cover;      /* Opera*/
-            background-size: cover;         /* Generic*/
+            background:url('./2.jpeg') no-repeat;
+            background-size:contain;
         }
         .btn-container > .btn3{
             width:320px;
@@ -42,11 +39,8 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background:url('./3.jpeg') no-repeat center center fixed;
-            -webkit-background-size: cover; /* For WebKit*/
-            -moz-background-size: cover;    /* Mozilla*/
-            -o-background-size: cover;      /* Opera*/
-            background-size: cover;         /* Generic*/
+            background:url('./3.jpeg') no-repeat;
+            background-size:contain;
         }
         .btn-container > .btn4{
             width:320px;
@@ -54,11 +48,8 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('./4.jpeg') no-repeat center center fixed;
-            -webkit-background-size: cover; /* For WebKit*/
-            -moz-background-size: cover;    /* Mozilla*/
-            -o-background-size: cover;      /* Opera*/
-            background-size: cover;         /* Generic*/
+            background-image:url('./4.jpeg') no-repeat;
+            background-size:contain;
         }
         .btn-container > .btn5{
             width:320px;
@@ -66,11 +57,8 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('./5.jpeg') no-repeat center center fixed;
-            -webkit-background-size: cover; /* For WebKit*/
-            -moz-background-size: cover;    /* Mozilla*/
-            -o-background-size: cover;      /* Opera*/
-            background-size: cover;         /* Generic*/
+            background-image:url('./5.jpeg') no-repeat;
+            background-size:contain;
         }
         .btn-container > .btn6{
             width:320px;
@@ -78,11 +66,8 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('./6.jpeg') no-repeat center center fixed;
-            -webkit-background-size: cover; /* For WebKit*/
-            -moz-background-size: cover;    /* Mozilla*/
-            -o-background-size: cover;      /* Opera*/
-            background-size: cover;         /* Generic*/
+            background-image:url('./6.jpeg') no-repeat;
+            background-size:contain;
         }
         .btn-container > .btn7{
             width:320px;
@@ -90,11 +75,8 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('./7.jpeg') no-repeat center center fixed;
-            -webkit-background-size: cover; /* For WebKit*/
-            -moz-background-size: cover;    /* Mozilla*/
-            -o-background-size: cover;      /* Opera*/
-            background-size: cover;         /* Generic*/
+            background-image:url('./7.jpeg') no-repeat;
+            background-size:contain;
         }
         .btn-container > .btn8{
             width:320px;
@@ -102,11 +84,8 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('./8.jpeg') no-repeat center center fixed;
-            -webkit-background-size: cover; /* For WebKit*/
-            -moz-background-size: cover;    /* Mozilla*/
-            -o-background-size: cover;      /* Opera*/
-            background-size: cover;         /* Generic*/
+            background-image:url('./8.jpeg') no-repeat;
+            background-size:contain;
         }
         .btn-container > .btn9{
             width:320px;
