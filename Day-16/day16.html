@@ -93,6 +93,8 @@ function Component(width, height, color, x, y, type)
     this.x = x;
     this.y = y;
     this.speedX = 0;
+    if (type == 'cloud')
+        this.speedX = - 0.5 * Math.random() - 1;
     this.speedY = 0;
     this.type = type;
     this.update = function() {
@@ -111,7 +113,6 @@ function Component(width, height, color, x, y, type)
             this.image = new Image();
             this.image.src = color;
             ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-            this.speedX = - 2 * Math.random() - 0.5;
         }
         else
         {
