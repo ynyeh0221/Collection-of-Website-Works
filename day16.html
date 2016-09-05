@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+#myCanvas {
+  width: 1350px;
+  height: 650px;
+}
+.day {
+  background: -webkit-linear-gradient(left, #004c99, #0066cc,#3399ff);
+  background: -o-linear-gradient(right, #004c99,#0066cc, #3399ff);
+  background: -moz-linear-gradient(right, #004c99,#0066cc,#3399ff);
+  background: linear-gradient(to right, #004c99,#0066cc,#3399ff);
+}
+.day2night {
+  background: -webkit-linear-gradient(left, #000066, #004c99, #0066cc);
+  background: -o-linear-gradient(right, #000066,#004c99,#0066cc);
+  background: -moz-linear-gradient(right, #000066,#004c99,#0066cc);
+  background: linear-gradient(to right, #000066,#004c99,#0066cc);
+}
+.night {
+  background: -webkit-linear-gradient(left, #000033, #000066,#000099);
+  background: -o-linear-gradient(right, #000033, #000066,#000099);
+  background: -moz-linear-gradient(right, #000033, #000066,#000099);
+  background: linear-gradient(to right, #000033, #000066,#000099);
+}
+#start {
+  position: absolute;
+  left: 46%;
+  top: 45%;
+  font-size: 30px;
+  z-index: 20;
+}
+</style>
+</head>
+<body onload = "startGame()">
+<canvas id = 'myCanvas' class = 'day'></canvas>
+<script>
+var s = 0, my_plane, my_cloud = null, my_cloud2 = null, detection_threshold = 10, myLives;
+
+function timer() {
+    s ++;
+    t = setTimeout('timer()',1000);
+    if (Math.floor(s / 10) % 4 == 0)
+         document.getElementById("myCanvas").className = 'day';
+    else if (Math.floor(s / 10) % 4 == 2)
+         document.getElementById("myCanvas").className = 'night';
+    else
+         document.getElementById("myCanvas").className = 'day2night';
+    if (s % 5 === 0)
+        gamearea.score += 10;
+}
+
+function startGame() {
+    my_plane = new Component(30, 25, "plane.gif", 10, 50, 'plane');
+    my_cloud = new Component(90, 50, "cloud1.gif", 400 + Math.random() * 150, Math.random() * 100, 'cloud');
+    my_cloud2 = new Component(80, 50, "cloud2.gif", 600 + Math.random() * 150, Math.random() * 100, 'cloud');
+    myScore = new Component("18px", "Consolas", "white", 30, 100, "text");
+    gamearea.start();
+    timer();
+}
+
+var gamearea = {
+    canvas : document.getElementById("myCanvas"),
+    start : function() {
+        this.canvas.style.cursor = "none"; 
+        this.context = this.canvas.getContext("2d");
+        this.score = 0;
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.interval = setInterval(updateGameArea, 10);
+        window.addEventListener('mousemove', function (e) {
+            gamearea.x = e.pageX;
+            gamearea.y = e.pageY;
+        })
+    },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    stop : function() {
+        clearInterval(this.interval);
+        clearTimeout(t);
+    }
+}
+
+function Component(width, height, color, x, y, type)
+{
+    this.image = new Image();
+    this.image.src = color;
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.type = type;
+    this.update = function() {
+        ctx = gamearea.context;
+        if (type == 'plane')
+        {
+            ctx.drawImage(this.image, 
+            this.x, 
+            this.y,
+            this.width, this.height);
+        }
+        else if (type == 'cloud')
+        {
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+            this.speedX = - 2 * Math.random() - 0.5;
+        }
+        else
+        {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        }
+    }
+    this.newPos = function() {
+        this.x += this.speedX;
+        this.y += this.speedY; 
+    }
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x + detection_threshold;
+        var otherright = otherobj.x + (otherobj.width) - detection_threshold;
+        var othertop = otherobj.y + detection_threshold;
+        var otherbottom = otherobj.y + (otherobj.height) - detection_threshold;
+        var crash = true;
+        if ((mybottom < othertop) ||
+               (mytop > otherbottom) ||
+               (myright < otherleft) ||
+               (myleft > otherright)) {
+           crash = false;
+        }
+        return crash;
+    }
+}
+
+function updateGameArea() {
+    gamearea.clear();
+    if (my_plane.crashWith(my_cloud) || my_plane.crashWith(my_cloud2))
+        gamearea.stop();
+    myScore.text="SCORE: " + gamearea.score;
+    myScore.update();
+    if (gamearea.x > 0 && gamearea.y > 0 && gamearea.x < gamearea.canvas.width && gamearea.y < gamearea.canvas.height) {
+        my_plane.x = gamearea.x;
+        my_plane.y = gamearea.y; 
+    }
+    my_cloud.newPos();
+    my_cloud.update();
+    my_cloud2.newPos();
+    my_cloud2.update();
+    if (my_cloud.x < 0 - my_cloud.width)
+    {
+       if (document.getElementById("myCanvas").className == 'day') 
+           my_cloud = new Component(90, 50, "cloud1.gif", 300 + Math.random() * 150, Math.random() * 120 - 10, 'cloud');
+       else if (document.getElementById("myCanvas").className == 'night') 
+           my_cloud = new Component(90, 50, "n_cloud1.gif", 300 + Math.random() * 150, Math.random() * 120 - 10, 'cloud');
+       else
+           my_cloud = new Component(90, 50, "dn_cloud1.gif", 300 + Math.random() * 150, Math.random() * 120 - 10, 'cloud');
+    }
+    if (my_cloud2.x < 0 - my_cloud2.width)
+    {
+       if (document.getElementById("myCanvas").className == 'day')
+           my_cloud2 = new Component(80, 50, "cloud2.gif", 500 + Math.random() * 150, Math.random() * 120 - 10, 'cloud');
+       else if (document.getElementById("myCanvas").className == 'night')
+           my_cloud2 = new Component(80, 50, "n_cloud2.gif", 500 + Math.random() * 150, Math.random() * 120 - 10, 'cloud');
+       else
+           my_cloud2 = new Component(80, 50, "dn_cloud2.gif", 500 + Math.random() * 150, Math.random() * 120 - 10, 'cloud');
+    }
+    my_plane.update();
+}
+</script>
+</body>
+</html>
