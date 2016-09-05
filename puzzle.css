@@ -20,7 +20,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('http://ynyeh0221.er-webs.com/cat/1.jpg');
+            background-image:url('./1.jpg');
         }
         .btn-container > .btn2{
             width:320px;
@@ -28,7 +28,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('http://ynyeh0221.er-webs.com/cat/2.jpg');
+            background-image:url('./2.jpg');
         }
         .btn-container > .btn3{
             width:320px;
@@ -36,7 +36,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('http://ynyeh0221.er-webs.com/cat/3.jpg');
+            background-image:url('./3.jpg');
         }
         .btn-container > .btn4{
             width:320px;
@@ -44,7 +44,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('http://ynyeh0221.er-webs.com/cat/4.jpg');
+            background-image:url('./4.jpg');
         }
         .btn-container > .btn5{
             width:320px;
@@ -52,7 +52,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('http://ynyeh0221.er-webs.com/cat/5.jpg');
+            background-image:url('./5.jpg');
         }
         .btn-container > .btn6{
             width:320px;
@@ -60,7 +60,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('http://ynyeh0221.er-webs.com/cat/6.jpg');
+            background-image:url('./6.jpg');
         }
         .btn-container > .btn7{
             width:320px;
@@ -68,7 +68,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('http://ynyeh0221.er-webs.com/cat/7.jpg');
+            background-image:url('./7.jpg');
         }
         .btn-container > .btn8{
             width:320px;
@@ -76,7 +76,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('http://ynyeh0221.er-webs.com/cat/8.jpg');
+            background-image:url('./8.jpg');
         }
         .btn-container > .btn9{
             width:320px;
