@@ -95,7 +95,7 @@ function Component(width, height, color, x, y, type)
     this.speedX = 0;
     this.speedY = 0;
     if (type == 'cloud')
-        this.speedX = - 2 * Math.random() - 0.5;
+        this.speedX = - 1.5 * Math.random() - 0.5;
     this.type = type;
     this.update = function() {
         ctx = gamearea.context;
