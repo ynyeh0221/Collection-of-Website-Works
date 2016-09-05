@@ -2,10 +2,13 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script src="./jquery.min.js"></script>
 <style>
 #myCanvas {
+  position: absolute;
   width: 1350px;
   height: 650px;
+  z-index: -1;
 }
 .day {
   background: -webkit-linear-gradient(left, #004c99, #0066cc,#3399ff);
@@ -25,20 +28,23 @@
   background: -moz-linear-gradient(right, #000033, #000066,#000099);
   background: linear-gradient(to right, #000033, #000066,#000099);
 }
-#start {
+# rain {
   position: absolute;
-  left: 46%;
-  top: 45%;
-  font-size: 30px;
-  z-index: 20;
+  width: 1350px;
+  height: 650px;
+  z-index: 50;
 }
 </style>
 </head>
 <body onload = "startGame()">
 <canvas id = 'myCanvas' class = 'day'></canvas>
+<canvas id = 'rain'></canvas>
 <script>
-var s = 0, my_plane, my_cloud = null, my_cloud2 = null, detection_threshold = 10, myLives;
-
+var s = 0, start_s = 0, tt, raining = false, my_plane, my_cloud = null, my_cloud2 = null, detection_threshold = 10, myLives;
+var c = document.getElementById('rain');
+c.width = 1350;
+c.height = 650;
+c.style.cursor = "none"; 
 function timer() {
     s ++;
     t = setTimeout('timer()',1000);
@@ -51,16 +57,14 @@ function timer() {
     if (s % 5 === 0)
         gamearea.score += 10;
 }
-
 function startGame() {
     my_plane = new Component(30, 25, "plane.gif", 10, 50, 'plane');
-    my_cloud = new Component(90, 50, "cloud1.gif", 500 + Math.random() * 150, Math.random() * 100, 'cloud');
-    my_cloud2 = new Component(80, 50, "cloud2.gif", 700 + Math.random() * 150, Math.random() * 100, 'cloud');
+    my_cloud = new Component(90, 50, "cloud1.gif", 400 + Math.random() * 150, Math.random() * 100, 'cloud');
+    my_cloud2 = new Component(80, 50, "cloud2.gif", 600 + Math.random() * 150, Math.random() * 100, 'cloud');
     myScore = new Component("18px", "Consolas", "white", 30, 100, "text");
     gamearea.start();
     timer();
 }
-
 var gamearea = {
     canvas : document.getElementById("myCanvas"),
     start : function() {
@@ -82,11 +86,8 @@ var gamearea = {
         clearTimeout(t);
     }
 }
-
 function Component(width, height, color, x, y, type)
 {
-    this.image = new Image();
-    this.image.src = color;
     this.width = width;
     this.height = height;
     this.x = x;
@@ -98,6 +99,8 @@ function Component(width, height, color, x, y, type)
         ctx = gamearea.context;
         if (type == 'plane')
         {
+            this.image = new Image();
+            this.image.src = color;
             ctx.drawImage(this.image, 
             this.x, 
             this.y,
@@ -105,6 +108,8 @@ function Component(width, height, color, x, y, type)
         }
         else if (type == 'cloud')
         {
+            this.image = new Image();
+            this.image.src = color;
             ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
             this.speedX = - 2 * Math.random() - 0.5;
         }
@@ -138,7 +143,6 @@ function Component(width, height, color, x, y, type)
         return crash;
     }
 }
-
 function updateGameArea() {
     gamearea.clear();
     if (my_plane.crashWith(my_cloud) || my_plane.crashWith(my_cloud2))
@@ -172,6 +176,78 @@ function updateGameArea() {
            my_cloud2 = new Component(80, 50, "dn_cloud2.gif", 500 + Math.random() * 150, Math.random() * 120 - 10, 'cloud');
     }
     my_plane.update();
+    if (!raining)
+    {
+        if (s % 20 === 0 && Math.random() > 0.75)
+        {
+            start_s = s;
+            raining = true;
+            gamearea.canvas.style.zIndex = -1;
+        }
+    }
+    if (raining)
+    {
+        weather();
+        if (s - start_s >= 5)
+        {
+            raining = false;
+            gamearea.canvas.style.zIndex = 10;
+            clearTimeout(tt);
+            return;
+        }
+    }
+}
+
+function weather()
+{
+  if(c.getContext)
+  {
+    let ctx = c.getContext('2d'), w = c.width, h = c.height;
+    ctx.strokeStyle = 'rgba(203, 204, 255, 0.5)';
+    ctx.lineCap = 'round'; 
+    ctx.lineWidth = 1;
+    var init = [];
+    var maxrain = 1000;
+    for(let i = 0; i < maxrain; i++)
+    {
+      init.push({
+        x: Math.random() * w, y: Math.random() * h, l: Math.random() * 1,
+        xs: -4 + Math.random() * 5 + 2, ys: Math.random() * 25 + 20
+      })
+    }
+    
+    var rp = [];
+    for(let i = 0; i < maxrain; i++)
+      rp[i] = init[i];
+    
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for(let i = 0; i < maxrain; i++)
+      {
+        var p = rp[i];
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + p.l * p.xs, p.y + p.l * p.ys);
+        ctx.stroke();
+      }
+      raindrop();
+    }
+    
+    function raindrop() {
+      for(let i = 0; i < maxrain; i++)
+      {
+        var p = rp[i];
+        p.x += p.xs;
+        p.y += p.ys;
+        if(p.x > w || p.y > h)
+        {
+          p.x = Math.random() * w;
+          p.y = -15;
+        }
+      }
+    }
+    tt = setTimeout(draw, 100);    
+  }
 }
 </script>
 </body>
