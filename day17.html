@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="keywords" content="HTML,CSS,Python,JavaScript">
+        <meta name="author" content="Yi-Nung Yeh">
+        <title>Puzzle</title>
+        <link rel="stylesheet" href="./puzzle.css">
+        <link href='https://fonts.googleapis.com/css?family=Walter+Turncoat|Source+Sans+Pro' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+        <h3 id="demo" align="center"></h3>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div align="center" class="btn-container">
+            <button class="btn8" id="btn1" onclick="myFunction(this)"></button>
+            <button class="btn5" id="btn2" onclick="myFunction(this)"></button>
+            <button class="btn3" id="btn3" onclick="myFunction(this)"></button>
+            <button class="btn4" id="btn4" onclick="myFunction(this)"></button>
+            <button class="btn1" id="btn5" onclick="myFunction(this)"></button>
+            <button class="btn9" id="btn6" onclick="myFunction(this)"></button>
+            <button class="btn2" id="btn7" onclick="myFunction(this)"></button>
+            <button class="btn6" id="btn8" onclick="myFunction(this)"></button>
+            <button class="btn7" id="btn9" onclick="myFunction(this)"></button>
+        </div>
+        <script>
+            var c=0;
+            document.getElementById("demo").innerHTML = "Number of movement: "+c;
+            function myFunction(el)
+            {
+                var id= el.id;
+                currentspace=0;
+                var ss=""
+                for(i=1;i<=9;i++)
+                {
+                    var s="btn"+i;
+                    if(document.getElementById(s).className=="btn9")
+                    {
+                        currentspace=parseInt(s[3]);
+                        ss=s;
+                        break;
+                    }
+                }
+                currentclick=parseInt(id[3]);
+                if((currentspace==currentclick+1 && currentclick!==3 && currentclick!==6) || (currentspace==currentclick-1 && currentclick!==4 && currentclick!==7) || currentspace==currentclick+3 || currentspace==currentclick-3)
+                {
+                    var temp=document.getElementById(ss).className;
+                    document.getElementById(ss).className=document.getElementById(id).className;
+                    document.getElementById(id).className=temp;
+                    c++;
+                    document.getElementById("demo").innerHTML = "Number of movement: "+c;
+                }
+                var count=0;
+                for(i=1;i<=9;i++)
+                {
+                    var sss="btn"+i;
+                    if(document.getElementById(sss).className==sss)
+                        count++;
+                }
+                if(count==9)
+                    alert("You Win!!!!!");
+            }
+        </script>
+    </body>
+</html>
