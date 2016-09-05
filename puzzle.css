@@ -20,6 +20,7 @@ body{
             font-size:24px;
             float:left;
             border:none;
+            background-size:cover;
             background-image:url('./1.jpeg');
         }
         .btn-container > .btn2{
