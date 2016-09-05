@@ -21,8 +21,11 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-image:url('./1.jpeg');
-            background-size: 100%;
+            background-image:url('./1.jpeg') no-repeat center center fixed;
+            -webkit-background-size: cover; /* For WebKit*/
+            -moz-background-size: cover;    /* Mozilla*/
+            -o-background-size: cover;      /* Opera*/
+            background-size: cover;         /* Generic*/
         }
         .btn-container > .btn2{
             width:320px;
@@ -30,8 +33,11 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background-size: 100%;
-            background-image:url('./2.jpeg');
+            background-image:url('./2.jpeg') no-repeat center center fixed;
+            -webkit-background-size: cover; /* For WebKit*/
+            -moz-background-size: cover;    /* Mozilla*/
+            -o-background-size: cover;      /* Opera*/
+            background-size: cover;         /* Generic*/
         }
         .btn-container > .btn3{
             width:320px;
