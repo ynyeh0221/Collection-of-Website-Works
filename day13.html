@@ -114,27 +114,6 @@ function timer() {
     s ++;
     document.getElementById('timer').innerHTML = s < 10 ? '00' + s : s < 100 ? '0' + s : s;
     document.getElementById('remain').innerHTML = remaining < 10 ? '00' + remaining : remaining < 100 ? '0' + remaining : remaining;
-    if (remaining == 0)
-    {
-        let check = 0;
-        for (let i = 0; i < h; i++)
-        {
-            for (let j = 0; j < w; j++)
-            {
-                let id = 'div_'+ (i*w + j);
-                if (board[i][j] == 1 && document.getElementById(id).innerHTML == '<i class="fa fa-flag" aria-hidden="true"></i>')
-                    check ++;
-                if (check == num_of_mines)
-                {
-                    alert("You Win!!!!!");
-                    document.getElementById('start_over').style.color = 'gold';
-                    mouseClick = function() {};
-                    mark = function() {};
-                    return;
-                }
-            }
-        }
-    }
     t = setTimeout('timer()',1000);
 }
 function mark(obj) {
@@ -161,6 +140,28 @@ function mark(obj) {
         remaining --;
     }    
     document.getElementById('remain').innerHTML = remaining < 10 ? '00' + remaining : remaining < 100 ? '0' + remaining : remaining;
+    if (remaining == 0)
+    {
+        let check = 0;
+        for (let i = 0; i < h; i++)
+        {
+            for (let j = 0; j < w; j++)
+            {
+                let id = 'div_'+ (i*w + j);
+                if (board[i][j] == 1 && document.getElementById(id).innerHTML == '<i class="fa fa-flag" aria-hidden="true"></i>')
+                    check ++;
+                if (check == num_of_mines)
+                {
+                    alert("You Win!!!!!");
+                    document.getElementById('start_over').style.color = 'gold';
+                    clearTimeout(t);
+                    mouseClick = function() {};
+                    mark = function() {};
+                    return;
+                }
+            }
+        }
+    }
 }
 function dfs(i, j)
 {
