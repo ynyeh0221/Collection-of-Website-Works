@@ -33,3 +33,5 @@ Day 14: Binary Calculator https://ynyeh0221.github.io/Collection-of-Website-Work
 Day 15: Stage Light https://ynyeh0221.github.io/Collection-of-Website-Works/day15.html
 
 Day 16: Don't Hit the Clouds https://ynyeh0221.github.io/Collection-of-Website-Works/day16.html
+
+Day 17: Puzzle https://ynyeh0221.github.io/Collection-of-Website-Works/day17.html
