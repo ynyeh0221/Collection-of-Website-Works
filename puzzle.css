@@ -21,11 +21,8 @@ body{
             font-size:24px;
             float:left;
             border:none;
-            background:url('./1.jpeg');
-            -webkit-background-size: cover; /* For WebKit*/
-            -moz-background-size: cover;    /* Mozilla*/
-            -o-background-size: cover;      /* Opera*/
-            background-size: cover;         /* Generic*/
+            background:url('./1.jpeg') no-repeat;
+            background-size:contain;
         }
         .btn-container > .btn2{
             width:320px;
