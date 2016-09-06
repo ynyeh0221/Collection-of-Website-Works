@@ -37,3 +37,5 @@ Day 16: Don't Hit the Clouds https://ynyeh0221.github.io/Collection-of-Website-W
 Day 17: Puzzle https://ynyeh0221.github.io/Collection-of-Website-Works/day17.html
 
 Day 18: Don't Hit the Clouds 2 https://ynyeh0221.github.io/Collection-of-Website-Works/Day-17/day18.html
+
+Day 19: Pinwheel https://ynyeh0221.github.io/Collection-of-Website-Works/day19.html
