@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    padding-top: 200px;
+    padding-left: 200px;
+}
+.triangle {
+    position: absolute;
+    border-color: transparent transparent #0000aa transparent;
+    border-style: solid solid solid solid;
+    border-width: 45px;
+    height: 0px;
+    width: 0px
+}
+.large {
+    position: absolute;
+    border-color: transparent transparent #0000ff transparent;
+    margin-left: -63px;
+    margin-top: 26px;
+    border-width: 64px;
+    transform: rotate(-45deg)
+}
+#l2 {
+    position: absolute;
+    margin-left: 0px;
+    margin-top: 180px;
+    transform: rotate(-90deg);
+}
+#l3 {
+    position: absolute;
+    margin-left: 180px;
+    margin-top: 181px;
+    transform: rotate(-180deg);
+}
+#l4 {
+    position: absolute;
+    margin-left: 180px;
+    margin-top: 0px;
+    transform: rotate(-270deg);
+}
+.r1 {
+    -ms-transform-origin: 85px 85px; /* IE 9 */
+    -webkit-transform-origin: 85px 85px; /* Chrome, Safari, Opera */
+    transform-origin: 85px 85px;
+    -webkit-animation: r1 10s infinite linear;
+    -moz-animation: r1 10s infinite linear;
+    -o-animation: r1 10s infinite linear;
+    animation: r1 10s infinite linear;
+}
+@-webkit-keyframes r1 {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(1080deg);
+	}
+}
+@-moz-keyframes r1 {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(1080deg);
+	}
+}
+@-o-keyframes r1 {
+	from {
+		-o-transform: rotate(0deg);
+	}
+	to {
+		-o-transform: rotate(1080deg);
+	}
+}
+@keyframes r1 {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(1080deg);
+	}
+}
+
+.r2 {
+    -ms-transform-origin: 85px 85px; /* IE 9 */
+    -webkit-transform-origin: 85px 85px; /* Chrome, Safari, Opera */
+    transform-origin: 85px 85px;
+    -webkit-animation: r2 20s infinite ease-out;
+    -moz-animation: r2 20s infinite ease-out;
+    -o-animation: r2 20s infinite ease-out;
+    animation: r2 20s infinite ease-out;
+}
+@-webkit-keyframes r2 {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(3240deg);
+	}
+}
+@-moz-keyframes r2 {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(3240deg);
+	}
+}
+@-o-keyframes r2 {
+	from {
+		-o-transform: rotate(0deg);
+	}
+	to {
+		-o-transform: rotate(3240deg);
+	}
+}
+@keyframes r2 {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(3240deg);
+	}
+}
+
+.r3 {
+    -ms-transform-origin: 85px 85px; /* IE 9 */
+    -webkit-transform-origin: 85px 85px; /* Chrome, Safari, Opera */
+    transform-origin: 85px 85px;
+    -webkit-animation: r3 30s infinite ease-out;
+    -moz-animation: r3 30s infinite ease-out;
+    -o-animation: r3 30s infinite ease-out;
+    animation: r3 30s infinite ease-out;
+}
+@-webkit-keyframes r3 {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(10080deg);
+	}
+}
+@-moz-keyframes r3 {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(10080deg);
+	}
+}
+@-o-keyframes r3 {
+	from {
+		-o-transform: rotate(0deg);
+	}
+	to {
+		-o-transform: rotate(10080deg);
+	}
+}
+@keyframes r3 {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(10080deg);
+	}
+}
+
+#center {
+    position: absolute;
+    margin-left: 85px;
+    margin-top: 85px;
+    width:10px;
+    height:10px;
+    border-radius:99em;
+    background-color: #000;
+    z-index: 10;
+}
+#pinwheel {
+    width: 180px;
+    height: 180px;
+    transform: rotate(0deg);
+}
+#stick {
+    position: absolute;
+    margin-left: 85px;
+    margin-top: 85px;
+    width:10px;
+    height:300px;
+    background-color: #000;
+    z-index: -1;
+}
+</style>
+</head>
+<body>
+<div id = 'stick'></div>
+<div id = "pinwheel" onclick = "rotating()">
+  <div id = 'l1'>
+    <div class="triangle"></div>
+    <div class="triangle large"></div>
+  </div>
+  <div id = 'l2'>
+    <div class="triangle" style = "border-color: transparent transparent #990000 transparent;"></div>
+    <div class="triangle large"style = "border-color: transparent transparent #ff0000 transparent;"></div>
+  </div>
+  <div id = 'l3'>
+    <div class="triangle" style = "border-color: transparent transparent #006600 transparent;"></div>
+    <div class="triangle large"style = "border-color: transparent transparent #00cc00 transparent;"></div>
+  </div>
+  <div id = 'l4'>
+    <div class="triangle" style = "border-color: transparent transparent #999900 transparent;"></div>
+    <div class="triangle large"style = "border-color: transparent transparent #ffff00 transparent;"></div>
+  </div>
+  <div id = "center"></div>
+</div>
+<script>
+var pw = document.getElementById("pinwheel");
+function rotating()
+{
+    if (pw.className === '')
+        pw.className = "r1";
+    else if (pw.className === 'r1')
+        pw.className = "r2";
+    else if (pw.className === 'r2')
+        pw.className = "r3";
+}
+</script>
+</body>
+</html>
