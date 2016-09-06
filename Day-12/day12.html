@@ -7,30 +7,41 @@
 body {
   font-family: 'Josefin Sans', sans-serif;
 }
-#myCanvas {
+#canvas1, #canvas2 {
+  position: absolute;
   width: 1300px;
   height: 600px;
-  background: white; 
+  z-index: -1;
+}
+#myCanvas {
+  position: absolute;
+  left: 7px;
+  top: 22px;
+  width: 1300px;
+  height: 600px;
+  background: rgba(0,0,0,0); 
   border: 1px solid #202020;
-  display: none;
 }
 #teach1 {
   position: absolute;
   left: 350px;
   top: 100px;
   font-size: 40px;
+  color: #fff;
 }
 #teach2 {
   position: absolute;
   left: 500px;
   top: 200px;
   font-size: 40px;
+  color: #fff;
 }
 #start {
   position: absolute;
   left: 560px;
   top: 300px;
   font-size: 30px;
+  z-index: 10;
 }
 #result {
   position: absolute;
@@ -38,10 +49,12 @@ body {
   top: 100px;
   font-size: 60px;
   display: none;
+  z-index: 10;
+  color: #fff;
 }
 #try_again {
   position: absolute;
-  left: 600px;
+  left: 560px;
   top: 300px;
   font-size: 30px;
   display: none;
@@ -96,8 +109,53 @@ body {
   animation-iteration-count: infinite;
 }
 </style>
+<script type="text/javascript">
+            window.onload = function() {
+                var img = new Image();
+                img.onload = function() {
+                    var canvas1 = document.getElementById('canvas1');
+                    var canvas2 = document.getElementById('canvas2');
+                    canvas1.style.cursor = "none";
+                    canvas2.style.cursor = "none";
+                    var context1 = canvas1.getContext('2d');
+                    var context2 = canvas2.getContext('2d');
+                    
+                    var imageWidth = img.height;
+                    var y1 = 0;
+                    var y2 = -imageWidth;
+                    
+                    var context = context2;
+                    setTimeout(function() {
+                        context.drawImage(img, 0, y1);
+                        context.drawImage(img, 0, y2);
+                        if(context === context2)
+                        {
+                            document.body.replaceChild(canvas1, canvas2);
+                            context = context1;
+                        }
+                        else
+                        {
+                            document.body.replaceChild(canvas2, canvas1);
+                            context = context2;                    
+                        }
+                        if(y1 >= canvas1.height)
+                            y1 = -imageWidth;
+                        else
+                            y1 += 1.5;
+                        if(y2 >= canvas1.height)
+                            y2 = -imageWidth;
+                        else
+                            y2 += 1.5;
+                        setTimeout(arguments.callee, 100);
+                    }, 100);
+                };
+                img.src = 'universe.jpg';
+            };
+        </script>
 </head>
 <body>
+<canvas id="canvas1"></canvas>
+<canvas id="canvas2"></canvas>
 <h1 id = 'teach1'>left/right arrow keys: move the shooter</h1>
 <h1 id = 'teach2'>spacebar: shoot</h1>
 <h3 id = 'start' class="hvr-buzz" onclick = "startGame()">Start?</h3>
@@ -113,8 +171,7 @@ function getRandomColor() {
     }
     return color;
 }
-
-var fieldwidth = 1300, fieldheight = 600, bs = [], can_b = true, maxb = 200, es = [], maxe = 15, my_plane, myScore, myLives, inc_score = 10;
+var fieldwidth = 1300, fieldheight = 600, bs = [], can_b = true, maxb = 200, es = [], maxe = 15, my_plane, myScore, myLives, inc_score = 10, detection_threshold = 0;
 var gamearea = {
     canvas: document.getElementById("myCanvas"),
     start: function() {
@@ -139,23 +196,20 @@ var gamearea = {
         clearInterval(this.interval);
     }
 }
-
 function startGame() {
     document.getElementById("teach1").style.display = "none";
     document.getElementById("teach2").style.display = "none";
     document.getElementById("start").style.display = "none";
-    document.getElementById("myCanvas").style.display = "block";
-    my_plane = new plane(30, 30, "#202020", fieldwidth/2, fieldheight-30);
+    my_plane = new plane(60, 60, "bplane.png", fieldwidth/2, fieldheight-60);
     for (let i = 0; i < maxe; i++)
     {
-        let new_e = new enemy(Math.random() * 1300, Math.random() * 600 - 600, getRandomColor());
+        let new_e = new enemy(50, 50, "monster.png", Math.random() * 1300, Math.random() * 600 - 600);
         es.push(new_e);
     }
-    myLives = new plane("30px", "Consolas", "black", 30, 50, "text");
-    myScore = new plane("30px", "Consolas", "black", 30, 100, "text");
+    myLives = new plane("30px", "Consolas", "#fff", 30, 50, "text");
+    myScore = new plane("30px", "Consolas", "#fff", 30, 100, "text");
     gamearea.start();
 }
-
 function plane(width, height, color, x, y, type)
 {
     this.type = type;
@@ -165,6 +219,8 @@ function plane(width, height, color, x, y, type)
     this.y = y;
     this.speedX = 0;
     this.speedY = 0;
+    this.image = new Image();
+    this.image.src = color;
     this.update = function() {
         ctx = gamearea.context;
         if (this.type == "text")
@@ -175,8 +231,10 @@ function plane(width, height, color, x, y, type)
         }
         else
         {
-            ctx.fillStyle = color;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
+            ctx.drawImage(this.image, 
+            this.x, 
+            this.y,
+            this.width, this.height);
         }
     }
     this.new_position = function() {
@@ -184,27 +242,28 @@ function plane(width, height, color, x, y, type)
         this.y += this.speedY; 
     } 
 }
-
-function enemy(x, y, color)
+function enemy(width, height, color, x, y, type)
 {
     this.x = x;
     this.y = y;
+    this.width = width;
+    this.height = height;
     this.speedX = 0;
     this.speedY = 0.5;
-    this.radius = 12;
+    this.image = new Image();
+    this.image.src = color;
     this.update = function() {
         ctx = gamearea.context;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
-        ctx.fillStyle = color;
-        ctx.fill();
+        ctx.drawImage(this.image, 
+        this.x, 
+        this.y,
+        this.width, this.height);
     }
     this.new_position = function() {
         this.x += this.speedX;
         this.y += this.speedY; 
     } 
 }
-
 function bullet(width, height, color, x, y)
 {
     this.width = width;
@@ -227,10 +286,10 @@ function bullet(width, height, color, x, y)
         var myright = this.x + (this.width);
         var mytop = this.y;
         var mybottom = this.y + (this.height);
-        var otherleft = otherobj.x - otherobj.radius;
-        var otherright = otherobj.x + otherobj.radius;
-        var othertop = otherobj.y - otherobj.radius;
-        var otherbottom = otherobj.y + otherobj.radius;
+        var otherleft = otherobj.x + detection_threshold;
+        var otherright = otherobj.x + (otherobj.width) - detection_threshold;
+        var othertop = otherobj.y + detection_threshold;
+        var otherbottom = otherobj.y + (otherobj.height) - detection_threshold;
         var crash = true;
         if ((mybottom < othertop) ||
                (mytop > otherbottom) ||
@@ -241,13 +300,12 @@ function bullet(width, height, color, x, y)
         return crash;
     }
 }
-
 function update_gamearea() {
     gamearea.clear();
     my_plane.speedX = 0;
     my_plane.speedY = 0;
-    if (gamearea.key && gamearea.key == 37) {my_plane.speedX = -3; }
-    if (gamearea.key && gamearea.key == 39) {my_plane.speedX = 3; }
+    if (gamearea.key && gamearea.key == 37) {my_plane.speedX = -8; }
+    if (gamearea.key && gamearea.key == 39) {my_plane.speedX = 8; }
     if (gamearea.key && gamearea.key == 32) {
         if (can_b)
         {
@@ -296,7 +354,7 @@ function update_gamearea() {
     }
     for (let i = es.length; i < maxe; i++)
     {
-        let new_e = new enemy(Math.random() * 1300, Math.random() * 500 - 500, getRandomColor());
+        let new_e = new enemy(50, 50, "monster.png", Math.random() * 1300, Math.random() * 500 - 500);
         es.push(new_e);
     }
     for (let b in bs)
