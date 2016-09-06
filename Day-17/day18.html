@@ -42,32 +42,26 @@
                     setTimeout(function() {
                         context.drawImage(img, x1, 0);
                         context.drawImage(img, x2, 0);
-                        
-                        
-                        if(context === context2) {
+                        if(context === context2)
+                        {
                             document.body.replaceChild(canvas1, canvas2);
                             context = context1;
                         }
-                        else {
+                        else
+                        {
                             document.body.replaceChild(canvas2, canvas1);
                             context = context2;                    
                         }
-
-                        if(x1 === -imageWidth) {
+                        if(x1 === -imageWidth)
                             x1 = imageWidth;
-                        }
-                        else {
+                        else
                             x1--;
-                        }
-
-                        if(x2 === -imageWidth) {
+                        if(x2 === -imageWidth)
                             x2 = imageWidth;
-                        }
-                        else {
+                        else
                             x2--;
-                        }
-                        setTimeout(arguments.callee, 9);
-                    }, 9);
+                        setTimeout(arguments.callee, 5);
+                    }, 5);
                 };
                 img.src = 'sky.png';
             };
