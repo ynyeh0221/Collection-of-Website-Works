@@ -123,7 +123,7 @@ function Component(width, height, color, x, y, type)
     this.y = y;
     this.speedX = 0;
     if (type == 'cloud')
-        this.speedX = - 0.5 * Math.random() - 1;
+        this.speedX = - 1 * Math.random() - 1;
     this.speedY = 0;
     this.type = type;
     this.update = function() {
