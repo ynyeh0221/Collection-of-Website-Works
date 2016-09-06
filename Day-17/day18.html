@@ -55,13 +55,13 @@
                         if(x1 === -imageWidth)
                             x1 = imageWidth;
                         else
-                            x1--;
+                            x1 -= 2;
                         if(x2 === -imageWidth)
                             x2 = imageWidth;
                         else
-                            x2--;
-                        setTimeout(arguments.callee, 2);
-                    }, 2);
+                            x2 -= 2;
+                        setTimeout(arguments.callee, 5);
+                    }, 5);
                 };
                 img.src = 'sky.png';
             };
