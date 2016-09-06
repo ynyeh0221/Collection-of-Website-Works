@@ -52,11 +52,11 @@
                             document.body.replaceChild(canvas2, canvas1);
                             context = context2;                    
                         }
-                        if(x1 === -imageWidth)
+                        if(x1 <= -imageWidth)
                             x1 = imageWidth;
                         else
                             x1 -= 1.5;
-                        if(x2 === -imageWidth)
+                        if(x2 <= -imageWidth)
                             x2 = imageWidth;
                         else
                             x2 -= 1.5;
