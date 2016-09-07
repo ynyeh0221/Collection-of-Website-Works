@@ -45,9 +45,10 @@ var pasth = null, pastm1 = null, pastm2 = null;
 function check()
 {
     let currentdate = new Date(), h = currentdate.getHours(), m = currentdate.getMinutes();
-    if (h > 12)
+    if (h >= 12)
     {
-        h -= 12;
+        if (h > 12)
+            h -= 12;
         document.getElementById('am').style.color = "#000";
         document.getElementById('am').style.textShadow = "none";
         document.getElementById('pm').style.color = "red";
