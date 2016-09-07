@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practices Day 20</title>
+<link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
+<style>
+body {
+  text-align: center;
+  background: #202020;
+  color = #000;
+  font-family: 'Fredoka One', cursive;
+  font-size: 28px;
+}
+div {
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  margin: 30px;
+}
+#container {
+  width: 730px;
+}
+</style>
+</head>
+<body onload = "check()">
+<div id = "container">
+<div id = 'h1'>one</div><div id = 'h2'>two</div><div id = 'h3'>three</div><div  id = 'h2=four</div>
+<div  id = 'h5'>five</div><div id = 'h6'>six</div><div id = 'h7'>seven</div><div id = 'h8'>eight</div>
+<div id = 'h9'>nine</div><div id = 'h10'>ten</div><div id = 'h11'>eleven</div><div id = 'h12'>twelve</div><br>
+<div id = 'm20'>twenty</div><div id = 'm30'>thirty</div><div id = 'm40'>fourty</div>
+<div id = 'm50'>fifty</div><br>
+<div id = 'm0'>zero</div><div id = 'm1'>one</div><div id = 'm2'>two</div><div id = 'm3'>three</div><div id = 'm4'>four</div>
+<div id = 'm5'>five</div><div id = 'm6'>six</div><div id = 'm7'>seven</div><div id = 'm8'>eight</div><div id = 'm9'>nine</div>
+<div id = 'm10'>ten</div><br>
+<div id = 'm11'>eleven</div><div id = 'm12'>twelve</div>
+<div id = 'm13'>thirteen</div><div id = 'm14'>fourteen</div><div id = 'm15'>fifteen</div>
+<div id = 'm16'>sixteen</div><div id = 'm17'>seventeen</div>
+<div id = 'm18'>eighteen</div><div id = 'm19'>nineteen</div>
+<br>
+<div id = 'am'>am</div><div id = 'pm'>pm</div>
+</div>
+<script>
+var pasth = null, pastm1 = null, pastm2 = null;
+function check()
+{
+    let currentdate = new Date(), h = currentdate.getHours(), m = currentdate.getMinutes();
+    if (h > 12)
+    {
+        h -= 12;
+        document.getElementById('am').style.color = "#000";
+        document.getElementById('am').style.textShadow = "none";
+        document.getElementById('pm').style.color = "red";
+        document.getElementById('pm').style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
+    }
+    else
+    {
+        document.getElementById('pm').style.color = "#000";
+        document.getElementById('pm').style.textShadow = "none";
+        document.getElementById('am').style.color = "red";
+        document.getElementById('am').style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
+    }
+    if (pasth)
+    {
+        document.getElementById(pasth).style.color = "#000";
+        document.getElementById(pasth).style.textShadow = "none";
+    }
+    if (pastm1)
+    {
+        document.getElementById(pastm1).style.color = "#000";
+        document.getElementById(pastm1).style.textShadow = "none";
+    }
+    if (pastm2)
+    {
+        document.getElementById(pastm2).style.color = "#000";
+        document.getElementById(pastm2).style.textShadow = "none";
+    }
+    document.getElementById('h'+ h).style.color = "red";
+    document.getElementById('h'+ h).style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
+    if (Math.floor(m/10) > 0)
+    {
+        document.getElementById('m'+ Math.floor(m/10) * 10).style.color = "red";
+        document.getElementById('m'+ Math.floor(m/10) * 10).style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
+    }
+    document.getElementById('m'+ m % 10).style.color = "red";
+    document.getElementById('m'+ m % 10).style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
+    pasth = 'h' + h;
+    pastm1 = 'm'+ Math.floor(m/10) * 10;
+    pastm2 = 'm'+ m % 10;
+    timer();
+}
+function timer()
+{
+    setTimeout(check, 10000);
+}
+</script>
+</body>
+</html>
