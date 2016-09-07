@@ -119,6 +119,11 @@ function component(width, height, color, x, y, type) {
     this.newPos = function() {
         this.speedY += this.gravity;
         this.x += this.speedX;
+        if (type == "ball")
+        {
+           if (this.x >= myGameArea.canvas.width)
+               this.x = myGameArea.canvas.width;
+        }
         this.y += this.speedY;
     }
     this.crashWith = function(otherobj) {
