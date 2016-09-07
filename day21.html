@@ -4,9 +4,10 @@
 <style>
 body {
   background: #202020;
-  text-align: center;
 }
 #myCanvas {
+  position: absolute;
+  left: 500px;
   border: 1.5px solid #fff;
   background: #180c01;
 }
@@ -58,7 +59,7 @@ var myGameArea = {
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
         window.addEventListener('mousemove', function (e) {
-            myGameArea.x = e.pageX;
+            myGameArea.x = e.pageX - 500;
             myGameArea.y = e.pageY;
         });
         window.addEventListener('click', function () {
@@ -123,6 +124,8 @@ function component(width, height, color, x, y, type) {
         {
            if (this.x >= myGameArea.canvas.width)
                this.x = myGameArea.canvas.width;
+           else if (this.x <= 0)
+               this.x = 0;
         }
         this.y += this.speedY;
     }
