@@ -76,16 +76,32 @@ function check()
     }
     document.getElementById('h'+ h).style.color = "red";
     document.getElementById('h'+ h).style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
-    if (Math.floor(m/10) > 0)
+    if (m >= 10 && m <= 19)
+    {
+        document.getElementById('m'+ m).style.color = "red";
+        document.getElementById('m'+ m).style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
+        pasth = 'h' + h;
+        pastm1 = 'm'+ m;
+        pastm2 = 'm'+ m;
+    }
+    else if (Math.floor(m/10) > 0)
     {
         document.getElementById('m'+ Math.floor(m/10) * 10).style.color = "red";
         document.getElementById('m'+ Math.floor(m/10) * 10).style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
+        document.getElementById('m'+ m % 10).style.color = "red";
+        document.getElementById('m'+ m % 10).style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
+        pasth = 'h' + h;
+        pastm1 = 'm'+ Math.floor(m/10) * 10;
+        pastm2 = 'm'+ m % 10;
     }
-    document.getElementById('m'+ m % 10).style.color = "red";
-    document.getElementById('m'+ m % 10).style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
-    pasth = 'h' + h;
-    pastm1 = 'm'+ Math.floor(m/10) * 10;
-    pastm2 = 'm'+ m % 10;
+    else
+    {
+        document.getElementById('m'+ m % 10).style.color = "red";
+        document.getElementById('m'+ m % 10).style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
+        pasth = 'h' + h;
+        pastm1 = 'm'+ Math.floor(m/10) * 10;
+        pastm2 = 'm'+ m % 10;
+    }
     timer();
 }
 function timer()
