@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  background: #202020;
+  text-align: center;
+}
+#myCanvas {
+  border: 1.5px solid #fff;
+  background: #180c01;
+}
+</style>
+</head>
+<body onload = "startGame()">
+
+<canvas id = "myCanvas"></canvas>
+<script>
+var ball, b = null, pins = [], win1, win2, win3, lose1, lose2, lose3, lose4, able = true;
+function startGame() {
+    myGameArea.start();
+    for (let i = 0; i < 10; i++)
+    {
+        if (i % 2 === 0)
+        {
+            for (let j = 0; j <= myGameArea.canvas.width; j += myGameArea.canvas.width / 10)
+            {
+                let p = new component(0, 0, "#fff", j, 100 + 40 * i, "pin");
+                pins.push(p);
+            }
+        }
+        else
+        {
+            for (let j = myGameArea.canvas.width / 20; j < myGameArea.canvas.width; j += myGameArea.canvas.width / 10)
+            {
+                let p = new component(0, 0, "#fff", j, 100 + 40 * i, "pin");
+                pins.push(p);
+            }
+        }
+    }
+    ball = new component(0, 0, "#9bc1bc", 78, 20, "ball");
+    lose1 = new component(80, 15, "#ed6a5a", 0, 585);
+    win1 = new component(48, 15, "#f4f1bb", 80, 585);
+    lose2 = new component(48, 15, "#ed6a5a", 128, 585);
+    win2 = new component(48, 15, "#f4f1bb", 176, 585);
+    lose3 = new component(48, 15, "#ed6a5a", 224, 585);
+    win3 = new component(48, 15, "#f4f1bb", 272, 585);
+    lose4 = new component(80, 15, "#ed6a5a", 320, 585);
+}
+
+var myGameArea = {
+    canvas : document.getElementById("myCanvas"),
+    start : function() {
+        this.canvas.width = 400;
+        this.canvas.height = 600;
+        this.canvas.style.cursor = "none";
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.interval = setInterval(updateGameArea, 20);
+        window.addEventListener('mousemove', function (e) {
+            myGameArea.x = e.pageX;
+            myGameArea.y = e.pageY;
+        });
+        window.addEventListener('click', function () {
+            if (able)
+            {
+                b = new component(0, 0, "#9bc1bc", myGameArea.x, ball.radius, "ballm");
+                able = false;
+            }
+        });
+    },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function component(width, height, color, x, y, type) {
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.gravity = 0;
+    this.bounce = 0.6;
+    this.color = color;
+    if (type == "ballm")
+    {
+        this.speedY = 1;
+        this.gravity = 0.5;
+    }
+    this.type = type;
+    this.update = function() {
+        ctx = myGameArea.context;
+        if (type == "pin")
+        {
+            this.radius = 2;
+            this.mass = 9999999999999999999;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+        else if (type == "ball" || type == "ballm")
+        {
+            this.radius = 15;
+            this.mass = 0.001;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+        else
+        {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
+    this.newPos = function() {
+        this.speedY += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY;
+    }
+    this.crashWith = function(otherobj) {
+        var crash = false;
+        if (Math.pow(this.x - otherobj.x, 2) + Math.pow(this.y - otherobj.y, 2) < Math.pow(this.radius + otherobj.radius, 2))
+             crash = true;
+        return crash;
+    }
+}
+
+function updateGameArea() {
+    myGameArea.clear();
+    if (myGameArea.x && myGameArea.y) {
+        ball.x = myGameArea.x;
+    }
+    ball.newPos();
+    ball.update();
+    if (b !== null)
+    {
+        b.newPos();
+        for (let i in pins)
+        {
+            if (b.crashWith(pins[i]))
+            {
+                b.speedX = b.bounce * (b.speedX * (b.mass-pins[i].mass) + (2 * pins[i].mass * pins[i].speedX)) / (b.mass + pins[i].mass);
+                b.speedY = b.bounce * (b.speedY * (b.mass-pins[i].mass) + (2 * pins[i].mass * pins[i].speedY)) / (b.mass + pins[i].mass);
+                b.y += b.speedY + b.gravity;
+                if (b.crashWith(pins[i]))
+                    b.speedX += b.x > pins[i].x ? 1 : -1;
+                b.y -= b.speedY + b.gravity;
+            } 
+        }
+        if (b.y <= b.radius)
+            b.speedY = -b.speedY;
+        if (b.y >= myGameArea.canvas.height)
+        {
+            b.speedY = 0;
+            let threshold = 10;
+            if ((b.x-b.radius >= 80 - threshold && b.x + b.radius <= 128 + threshold) || (b.x-b.radius >= 176 - threshold && b.x + b.radius <= 224 + threshold) || (b.x-b.radius >= 272 - threshold && b.x + b.radius <= 320 + threshold))
+                alert("WIN!!!");
+            b = null;
+            able = true;
+        }
+        b.update();
+    }
+    for (let i in pins)
+        pins[i].update();
+    lose1.update();
+    win1.update();
+    lose2.update();
+    win2.update();
+    lose3.update();
+    win3.update();
+    lose4.update();
+}
+</script>
+</body>
+</html>
