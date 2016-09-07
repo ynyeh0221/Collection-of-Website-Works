@@ -41,3 +41,5 @@ Day 18: Don't Hit the Clouds 2 https://ynyeh0221.github.io/Collection-of-Website
 Day 19: Pinwheel https://ynyeh0221.github.io/Collection-of-Website-Works/day19.html
 
 Day 20: Text Clock https://ynyeh0221.github.io/Collection-of-Website-Works/day20.html
+
+Day 21: Plinky Game https://ynyeh0221.github.io/Collection-of-Website-Works/day21.html
