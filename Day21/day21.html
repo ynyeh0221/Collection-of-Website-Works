@@ -119,7 +119,7 @@ var myGameArea = {
             {
                 b = new component(0, 0, "#9bc1bc", myGameArea.x, ball.radius, "ballm");
                 able = false;
-                win.style.zIndex="-1";
+                win.style.display = "none";
             }
         });
     },
@@ -224,7 +224,7 @@ function updateGameArea() {
             let threshold = 10;
             
             if ((b.x-b.radius >= 80 - threshold && b.x + b.radius <= 128 + threshold) || (b.x-b.radius >= 176 - threshold && b.x + b.radius <= 224 + threshold) || (b.x-b.radius >= 272 - threshold && b.x + b.radius <= 320 + threshold))
-                win.style.zIndex="5";
+                win.style.display="block";
             else
                 boing();
             b = null;
