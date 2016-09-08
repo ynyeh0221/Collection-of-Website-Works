@@ -504,6 +504,8 @@ function go()
 var justify = function(str, len) {
   str = str.replace(/\n/g, ' ');
   str = str.split(' ');
+  if (str.length === 1)
+      return str[0];
   let res = [], words = 0, line = [];
   for (let i = 0; i < str.length; i++)
   {
