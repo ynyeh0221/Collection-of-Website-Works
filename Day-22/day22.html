@@ -3,123 +3,7 @@
 <head>
 <title>Website Practice Day 22</title>
 <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
-<style>
-body {
-  font-family: 'PT Sans', sans-serif;
-  background: FireBrick;
-  color: Khaki;
-  font-weight: bold;
-}
-#container {
-  width: 1300px;
-}
-h1, h3, label {
-  text-shadow: 6px 6px 0px rgba(0,0,0,0.2);
-}
-#before {
-  position: absolute;
-  top: 55px;
-  left: 10px;
-}
-#after {
-  position: absolute;
-  top: 55px;
-  left: 550px;
-}
-#i {
-  position: absolute;
-  top: 100px;
-  width: 500px;
-  height: 450px;
-  word-break: break-all;
-  margin: 1em;
-}
-#o {
-  position: absolute;
-  top: 100px;
-  left: 550px;
-  width: 650px;
-  height: 450px;
-  margin: 1em;
-}
-#select_l {
-  position: absolute;
-  top: 555px;
-  left: 10px;
-}
-#r1 {
-  position: absolute;
-  top: 575px;
-  left: 160px;
-  margin: 1em;
-}
-#r2 {
-  position: absolute;
-  top: 575px;
-  left: 260px;
-  margin: 1em;
-}
-#r3 {
-  position: absolute;
-  top: 575px;
-  left: 360px;
-  margin: 1em;
-}
-#r4 {
-  position: absolute;
-  top: 575px;
-  left: 460px;
-  margin: 1em;
-}
-#r5 {
-  position: absolute;
-  top: 575px;
-  left: 560px;
-  margin: 1em;
-}
-#r6 {
-  position: absolute;
-  top: 575px;
-  left: 660px;
-  margin: 1em;
-}
-#l1 {
-  position: absolute;
-  top: 563px;
-  left: 180px;
-  margin: 1em;
-}
-#l2 {
-  position: absolute;
-  top: 563px;
-  left: 280px;
-  margin: 1em;
-}
-#l3 {
-  position: absolute;
-  top: 563px;
-  left: 380px;
-  margin: 1em;
-}
-#l4 {
-  position: absolute;
-  top: 563px;
-  left: 480px;
-  margin: 1em;
-}
-#l5 {
-  position: absolute;
-  top: 563px;
-  left: 580px;
-  margin: 1em;
-}
-#l6 {
-  position: absolute;
-  top: 563px;
-  left: 680px;
-  margin: 1em;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="day22.css">
 </head>
 <body>
 <div id = "container">
@@ -466,6 +350,8 @@ And new pervert a reconciled maid!</textarea><br>
   <input type="radio" id = "r4" name="len" value="60" onclick = "go()"><label id = "l4" for="r4">60</label>
   <input type="radio" id = "r5" name="len" value="70" onclick = "go()"><label id = "l5" for="r5">70</label>
   <input type="radio" id = "r6" name="len" value="80" onclick = "go()"><label id = "l6" for="r6">80</label>
+  <input type="radio" id = "r7" name="len" value="90" onclick = "go()"><label id = "l7" for="r5">90</label>
+  <input type="radio" id = "r8" name="len" value="100" onclick = "go()"><label id = "l8" for="r6">100</label>
 </form>
 </div>
 <script>
@@ -484,6 +370,10 @@ function go()
       l = document.getElementById('r5').value;
   else if (document.getElementById('r6').checked)
       l = document.getElementById('r6').value;
+  else if (document.getElementById('r7').checked)
+      l = document.getElementById('r7').value;
+  else if (document.getElementById('r8').checked)
+      l = document.getElementById('r8').value;
   document.getElementById("o").innerHTML = '';
   document.getElementById("o").innerHTML = justify(s, l);
 }
