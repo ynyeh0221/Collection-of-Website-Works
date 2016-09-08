@@ -16,8 +16,46 @@ body {
 <body onload = "startGame()">
 
 <canvas id = "myCanvas"></canvas>
+<audio id="audio1">
+   <source src="pianoC.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio2">
+   <source src="pianoD.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio3">
+   <source src="pianoE.mp3" type="audio/mp3">
+ </audio>
+<audio id="audio4">
+   <source src="pianoF.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio5">
+   <source src="pianoG.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio6">
+   <source src="pianoA.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio7">
+   <source src="pianoB.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio8">
+   <source src="pianoC2.mp3" type="audio/mp3">
+ </audio>
 <script>
-var ball, b = null, pins = [], win1, win2, win3, lose1, lose2, lose3, lose4, able = true;
+var audioElementCount = 8;
+var audioElementIndex = 1;
+function boing() {
+    let audioElementName = "audio" + audioElementIndex;
+    let audio = document.getElementById(audioElementName);
+    audio.currentTime = 0;
+    audio.play();
+    if (audioElementIndex == audioElementCount) {
+        audioElementIndex = 1;
+    }
+    else {
+        audioElementIndex += 1;
+    }
+}
+var ball, b = null, pins = [], win1, win2, win3, lose1, lose2, lose3, lose4, able = true, prepin = null;
 function startGame() {
     myGameArea.start();
     for (let i = 0; i < 10; i++)
@@ -151,12 +189,16 @@ function updateGameArea() {
         {
             if (b.crashWith(pins[i]))
             {
+                if (pins[i] !== prepin)
+                    boing();
+                prepin = pins[i];
                 b.speedX = b.bounce * (b.speedX * (b.mass-pins[i].mass) + (2 * pins[i].mass * pins[i].speedX)) / (b.mass + pins[i].mass);
                 b.speedY = b.bounce * (b.speedY * (b.mass-pins[i].mass) + (2 * pins[i].mass * pins[i].speedY)) / (b.mass + pins[i].mass);
                 b.y += b.speedY + b.gravity;
                 if (b.crashWith(pins[i]))
                     b.speedX += b.x > pins[i].x ? 1 : -1;
                 b.y -= b.speedY + b.gravity;
+                break;
             } 
         }
         if (b.y <= b.radius)
