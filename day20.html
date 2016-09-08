@@ -25,8 +25,8 @@ div {
 </head>
 <body onload = "check()">
 <div id = "container">
-<div id = 'h1'>one</div><div id = 'h2'>two</div><div id = 'h3'>three</div><div  id = 'h2=four</div>
-<div  id = 'h5'>five</div><div id = 'h6'>six</div><div id = 'h7'>seven</div><div id = 'h8'>eight</div>
+<div id = 'h1'>one</div><div id = 'h2'>two</div><div id = 'h3'>three</div><div  id = 'h4'>four</div>
+<div id = 'h5'>five</div><div id = 'h6'>six</div><div id = 'h7'>seven</div><div id = 'h8'>eight</div>
 <div id = 'h9'>nine</div><div id = 'h10'>ten</div><div id = 'h11'>eleven</div><div id = 'h12'>twelve</div><br>
 <div id = 'm20'>twenty</div><div id = 'm30'>thirty</div><div id = 'm40'>fourty</div>
 <div id = 'm50'>fifty</div><br>
@@ -44,7 +44,7 @@ div {
 var pasth = null, pastm1 = null, pastm2 = null;
 function check()
 {
-    let currentdate = new Date(), h = currentdate.getHours(), m = currentdate.getMinutes();
+    var currentdate = new Date(), h = currentdate.getHours(), m = currentdate.getMinutes();
     if (h >= 12)
     {
         if (h > 12)
@@ -81,8 +81,9 @@ function check()
     document.getElementById('h'+ h).style.color = "red";
     document.getElementById('h'+ h).style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
     pasth = 'h' + h;
-    if (m >= 10  && m <= 19)
+    if (m <= 19 && m >= 10)
     {
+        console.log(123);
         document.getElementById('m'+ m).style.color = "red";
         document.getElementById('m'+ m).style.textShadow = "0px 0px 6px rgba(255,0,0,0.7), 0px 0px 30px rgba(255,255,255,0.5)";
         pastm1 = 'm'+ m;
