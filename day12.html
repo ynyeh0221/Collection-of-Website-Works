@@ -162,14 +162,58 @@ body {
 <canvas id = "myCanvas"></canvas>
 <h1 id = 'result'></h1>
 <h3><a id = 'try_again' class="hvr-buzz" href = "day12.html" style = "text-decoration: none;">Try Again?</a></h3>
+<audio id="audio1">
+   <source src="shoot1.mp3" type="audio/mp3">
+   <source src="shoot2.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio2">
+   <source src="shoot1.mp3" type="audio/mp3">
+   <source src="shoot2.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio3">
+   <source src="shoot1.mp3" type="audio/mp3">
+   <source src="shoot2.mp3" type="audio/mp3">
+ </audio>
+<audio id="e_audio1">
+   <source src="explosion1.mp3" type="audio/mp3">
+   <source src="explosion2.mp3" type="audio/mp3">
+ </audio>
+ <audio id="e_audio2">
+   <source src="explosion1.mp3" type="audio/mp3">
+   <source src="explosion2.mp3" type="audio/mp3">
+ </audio>
+ <audio id="e_audio3">
+   <source src="explosion1.mp3" type="audio/mp3">
+   <source src="explosion2.mp3" type="audio/mp3">
+ </audio>
 <script>
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
+var audioElementCount = 3;
+var audioElementIndex = 1;
+function boing() {
+    let audioElementName = "audio" + audioElementIndex;
+    let audio = document.getElementById(audioElementName);
+    audio.currentTime = 0;
+    audio.play();
+    if (audioElementIndex == audioElementCount) {
+        audioElementIndex = 1;
     }
-    return color;
+    else {
+        audioElementIndex += 1;
+    }
+}
+var e_audioElementCount = 3;
+var e_audioElementIndex = 1;
+function e_boing() {
+    let audioElementName = "e_audio" + e_audioElementIndex;
+    let audio = document.getElementById(audioElementName);
+    audio.currentTime = 0;
+    audio.play();
+    if (e_audioElementIndex == e_audioElementCount) {
+        e_audioElementIndex = 1;
+    }
+    else {
+        e_audioElementIndex += 1;
+    }
 }
 var fieldwidth = 1300, fieldheight = 600, bs = [], can_b = true, maxb = 200, es = [], maxe = 15, my_plane, myScore, myLives, inc_score = 10, detection_threshold = 0;
 var gamearea = {
@@ -315,7 +359,8 @@ function update_gamearea() {
             if (bs.length > maxb)
                 bs.shift();
             bs.push(temp);
-            setTimeout(function(){can_b = true;}, 250)
+            setTimeout(function(){can_b = true;}, 250);
+            boing();
         }
     }
     for (let j = 0; j < es.length; j++)
@@ -344,6 +389,7 @@ function update_gamearea() {
         {
             if (bs[i].crashWith(es[j]))
             {
+                e_boing();
                 bs.splice(i, 1);
                 es.splice(j, 1);
                 i --;
