@@ -209,6 +209,8 @@ function updateGameArea() {
             let threshold = 10;
             if ((b.x-b.radius >= 80 - threshold && b.x + b.radius <= 128 + threshold) || (b.x-b.radius >= 176 - threshold && b.x + b.radius <= 224 + threshold) || (b.x-b.radius >= 272 - threshold && b.x + b.radius <= 320 + threshold))
                 alert("WIN!!!");
+            else
+                boing();
             b = null;
             able = true;
         }
