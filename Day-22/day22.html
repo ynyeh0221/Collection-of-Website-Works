@@ -13,12 +13,22 @@ body {
 #container {
   width: 1300px;
 }
-h1 {
+h1, h3 {
   text-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+}
+#before {
+  position: absolute;
+  top: 55px;
+  left: 10px;
+}
+#after {
+  position: absolute;
+  top: 55px;
+  left: 550px;
 }
 #i {
   position: absolute;
-  top: 80px;
+  top: 100px;
   width: 500px;
   height: 500px;
   word-break: break-all;
@@ -26,15 +36,20 @@ h1 {
 }
 #o {
   position: absolute;
-  top: 80px;
+  top: 100px;
   left: 550px;
   width: 650px;
   height: 500px;
   margin: 1em;
 }
+#select_l {
+  position: absolute;
+  top: 605px;
+  left: 150px;
+}
 #b {
   position: absolute;
-  top: 590px;
+  top: 610px;
   width: 80px;
   height: 35px;
   background: Khaki;
@@ -47,74 +62,74 @@ h1 {
 }
 #r1 {
   position: absolute;
-  top: 600px;
-  left: 200px;
+  top: 625px;
+  left: 300px;
   margin: 1em;
 }
 #r2 {
   position: absolute;
-  top: 600px;
-  left: 300px;
+  top: 625px;
+  left: 400px;
   margin: 1em;
 }
 #r3 {
   position: absolute;
-  top: 600px;
-  left: 400px;
+  top: 625px;
+  left: 500px;
   margin: 1em;
 }
 #r4 {
   position: absolute;
-  top: 600px;
-  left: 500px;
+  top: 625px;
+  left: 600px;
   margin: 1em;
 }
 #r5 {
   position: absolute;
-  top: 600px;
-  left: 600px;
+  top: 625px;
+  left: 700px;
   margin: 1em;
 }
 #r6 {
   position: absolute;
-  top: 600px;
-  left: 700px;
+  top: 625px;
+  left: 800px;
   margin: 1em;
 }
 #l1 {
   position: absolute;
-  top: 588px;
-  left: 220px;
+  top: 613px;
+  left: 320px;
   margin: 1em;
 }
 #l2 {
   position: absolute;
-  top: 588px;
-  left: 320px;
+  top: 613px;
+  left: 420px;
   margin: 1em;
 }
 #l3 {
   position: absolute;
-  top: 588px;
-  left: 420px;
+  top: 613px;
+  left: 520px;
   margin: 1em;
 }
 #l4 {
   position: absolute;
-  top: 588px;
-  left: 520px;
+  top: 613px;
+  left: 620px;
   margin: 1em;
 }
 #l5 {
   position: absolute;
-  top: 588px;
-  left: 620px;
+  top: 613px;
+  left: 720px;
   margin: 1em;
 }
 #l6 {
   position: absolute;
-  top: 588px;
-  left: 720px;
+  top: 613px;
+  left: 820px;
   margin: 1em;
 }
 </style>
@@ -122,6 +137,8 @@ h1 {
 <body>
 <div id = "container">
 <h1>Text Align Justifier</h1>
+<h3 id = "before">Before (Paste your article here)</h3>
+<h3 id = "after">After</h3>
 <textarea cols="50" id = "i">FROM off a hill whose concave womb reworded
 A plaintful story from a sistering vale,
 My spirits to attend this double voice accorded,
@@ -455,6 +472,7 @@ Would yet again betray the fore-betray'd,
 And new pervert a reconciled maid!</textarea><br>
 <textarea cols="100" id = "o"></textarea>
 <button id = "b" onclick = "go()" href="javascript:;">align</button>
+<h3 id = "select_l">Length of row: </h3>
 <form action="">
   <input type="radio" id = "r1" name="len" value="30" checked><label id = "l1" for="r1">30</label>
   <input type="radio" id = "r2" name="len" value="40"><label id = "l2" for="r2">40</label>
