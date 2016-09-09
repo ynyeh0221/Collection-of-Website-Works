@@ -374,8 +374,8 @@ function go()
       l = document.getElementById('r7').value;
   else if (document.getElementById('r8').checked)
       l = document.getElementById('r8').value;
-  document.getElementById("o").innerHTML = '';
-  document.getElementById("o").innerHTML = justify(s, l);
+  document.getElementById("o").value = '';
+  document.getElementById("o").value = justify(s, l);
 }
 var justify = function(str, len) {
   str = str.replace(/\n/g, ' ');
