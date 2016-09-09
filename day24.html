@@ -394,12 +394,6 @@ function de()
 {  
   let s = document.getElementById("o").value.replace(/\n/g,'');
   document.getElementById("o").value = s;
-  for (let i in s)
-  {
-      if(s[i] === '\n')
-          console.log(123)
-  }
-  document.getElementById("i").value = '';
   document.getElementById("i").value = s.fromBase64();
 }
 </script>
