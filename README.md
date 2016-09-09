@@ -45,3 +45,5 @@ Day 20: Text Clock https://ynyeh0221.github.io/Collection-of-Website-Works/day20
 Day 21: Plinky Game https://ynyeh0221.github.io/Collection-of-Website-Works/day21.html
 
 Day 22: Text Align Justifier https://ynyeh0221.github.io/Collection-of-Website-Works/day22.html
+
+Day 23: Clear the Bubbles! https://ynyeh0221.github.io/Collection-of-Website-Works/day23.html
