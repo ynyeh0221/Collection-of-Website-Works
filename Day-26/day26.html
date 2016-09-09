@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 25</title>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="day26.css">
+</head>
+<body>
+<div id = "container">
+<h1>CSV Parser</h1>
+<h3 id = "before">Before</h3>
+<h3 id = "after">After</h3>
+<textarea cols="50" id = "i"></textarea><br>
+<textarea cols="50" id = "o"></textarea>
+<input type="file" id="file" />
+<h3 id = "sname">Separator: </h3>
+<h3 id = "qname">Quote: </h3>
+<input type="radio" id = "r1" name="sep" value=',' onclick = "go()"><label id = "l1" for="r1">,</label>
+<input type="radio" id = "r2" name="sep" value='\t' onclick = "go()"><label id = "l2" for="r2">\t</label>
+<input type="radio" id = "r3" name="sep" value=' ' onclick = "go()"><label id = "l3" for="r3">space</label>
+<input type="radio" id = "r4" name="sep" value='.' onclick = "go()"><label id = "l4" for="r4">.</label>
+<input type="radio" id = "r5" name="quote" value='\"' onclick = "go()"><label id = "l5" for="r5">"</label>
+<input type="radio" id = "r6" name="quote" value='\'' onclick = "go()"><label id = "l6" for="r6">'</label>
+<input type="radio" id = "r7" name="quote" value='\\' onclick = "go()"><label id = "l7" for="r7">\</label>
+<input type="radio" id = "r8" name="quote" value='\$' onclick = "go()"><label id = "l8" for="r8">$</label>
+</div>
+<script>
+var s = null, q = null;
+function readSingleFile(e) {
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    displayContents(contents);
+  };
+  reader.readAsText(file);
+}
+
+function go() {
+  if (document.getElementById('r1').checked)
+      s = ',';
+  else if (document.getElementById('r2').checked)
+      s = '\t';
+  else if (document.getElementById('r3').checked)
+      s = ' ';
+  else if (document.getElementById('r4').checked)
+      s = '.';
+  if (document.getElementById('r5').checked)
+      q = '"';
+  else if (document.getElementById('r6').checked)
+      q = '\'';
+  else if (document.getElementById('r7').checked)
+      q = '\\';
+  else if (document.getElementById('r8').checked)
+      q = '\$';
+  if (document.getElementById('i').value)
+      document.getElementById('o').value = JSON.stringify(parseCSV(document.getElementById('i').value, s, q));
+}
+
+function displayContents(contents) {
+  document.getElementById('i').value = contents;
+  document.getElementById('o').value = JSON.stringify(parseCSV(contents, s, q));
+}
+document.getElementById('file').addEventListener('change', readSingleFile, false);
+
+function parseCSV(input, separator, quote) {
+  separator = separator || ',';
+  quote = quote || '"';
+  input = input.replace(/(?:\r\n|\r|\n)/g, '\n');
+  if (input == '')
+    return [[""]];
+  let res = [], temp = '', in_quote = false, qnum = 0;
+  for (let i = 0; i < input.length; i++)
+  {
+    if (i === 0) res.push([]);
+    if (input[i] == separator && !in_quote)
+    {
+      res[res.length-1].push(temp);
+      temp = '';
+    }
+    else if (input[i] == quote && !in_quote)
+    {
+      in_quote = true;
+      qnum += 1;
+    }
+    else if (input[i] == quote && in_quote)
+    {
+      if (qnum % 2 == 1 && (input[i+1] == separator || input[i+1] == '\n'))
+      {
+        in_quote = false;
+        qnum = 0;
+      }
+      else
+      {
+        if (i > 0 && input[i-1] == quote && input[i] == quote)
+        {
+          qnum += 1;
+          continue;
+        }
+        temp += input[i];
+        qnum += 1;
+      }
+    }
+    else if (input[i] == '\n' && !in_quote)
+    {
+      res[res.length-1].push(temp);
+      temp = '';
+      res.push([]);
+    }
+    else
+    {
+      if (i > 0 && input[i-1] == quote && input[i] == quote)
+        continue;
+      temp += input[i];
+    }
+    if (i == input.length-1)
+    {
+      if (temp[temp.length-1] == quote) temp = temp.substring(0, temp.length-1);
+      res[res.length-1].push(temp);
+    }
+  }
+  return res;
+}
+</script>
+</body>
+</html>
