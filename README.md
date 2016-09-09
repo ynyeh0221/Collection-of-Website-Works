@@ -49,3 +49,5 @@ Day 22: Text Align Justifier https://ynyeh0221.github.io/Collection-of-Website-W
 Day 23: Clear the Bubbles! https://ynyeh0221.github.io/Collection-of-Website-Works/day23.html
 
 Day 24: Base64 Encoder/Decoder https://ynyeh0221.github.io/Collection-of-Website-Works/day24.html
+
+Day 25: ASCII85 Encoder/Decoder https://ynyeh0221.github.io/Collection-of-Website-Works/day25.html
