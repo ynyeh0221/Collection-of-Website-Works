@@ -36,7 +36,7 @@ h1, h3, label {
   height: 500px;
   margin: 1em;
 }
-.push_button{
+.push_button {
 	position:relative;
 	color:#000080;
 	display:block;
@@ -55,7 +55,10 @@ h1, h3, label {
         -moz-box-shadow: 0px 9px 0px #bdb76b;
         box-shadow: 0px 9px 0px #bdb76b;
 }
-.push_button:active{
+.push_button:hover {
+    font-size: 20px;
+}
+.push_button:active {
     -webkit-box-shadow: 0px 2px 0px #bdb76b;
     -moz-box-shadow: 0px 2px 0px #bdb76b;
     box-shadow: 0px 2px 0px #bdb76b;
