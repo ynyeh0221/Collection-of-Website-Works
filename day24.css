@@ -58,6 +58,9 @@ h1, h3, label {
 }
 .push_button:hover {
     color: #9999ff;
+    -webkit-box-shadow: 0px 9px 0px #bdb76b;
+    -moz-box-shadow: 0px 9px 0px #bdb76b;
+    box-shadow: 0px 9px 0px #bdb76b;
 }
 .push_button:active {
     -webkit-box-shadow: 0px 2px 0px #bdb76b;
