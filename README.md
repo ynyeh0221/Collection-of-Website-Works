@@ -47,3 +47,5 @@ Day 21: Plinky Game https://ynyeh0221.github.io/Collection-of-Website-Works/day2
 Day 22: Text Align Justifier https://ynyeh0221.github.io/Collection-of-Website-Works/day22.html
 
 Day 23: Clear the Bubbles! https://ynyeh0221.github.io/Collection-of-Website-Works/day23.html
+
+Day 24: Base64 Encoder/Decoder https://ynyeh0221.github.io/Collection-of-Website-Works/day24.html
