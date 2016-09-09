@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WebSite Practice Day 23</title>
+<script src="./jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<style>
+body {
+    width: 704px;
+    height: 704px;
+    background: #1a0d00;
+}
+.square {
+    position: absolute;
+    width: 36px; 
+    height: 36px;
+    border: 4px solid #1a0d00;
+    border-radius:25px;
+    margin: 4px;
+}
+.square:hover {
+    -moz-box-shadow: inset 0 0 20px #fff,inset 0 0 10px #fff;
+    -webkit-box-shadow: inset 0 0 20px #fff, inset 0 0 10px #fff;
+    box-shadow: inset 0 0 20px #fff, inset 0 0 10px #fff;
+}
+#score {
+    position: absolute;
+    left: 850px;
+    top: 50px;
+    color: #fff;
+    font-size: 80px;
+    font-family: 'PT Sans', sans-serif;
+}
+</style>
+<script>
+var audioElementCount = 3, audioElementIndex = 1;
+function boing() {
+    let audioElementName = "audio" + audioElementIndex;
+    let audio = document.getElementById(audioElementName);
+    audio.currentTime = 0;
+    audio.play();
+    if (audioElementIndex == audioElementCount) {
+        audioElementIndex = 1;
+    }
+    else {
+        audioElementIndex += 1;
+    }
+}
+var colors = ["rgb(26, 83, 92)", "rgb(78, 205, 196)", "rgb(247, 255, 247)", "rgb(255, 107, 107)", "rgb(255, 230, 109)", "rgb(202, 142, 255)"];
+var click1 = null, click2 = null, score = 0;
+$(document).ready(function(){
+  for(i = 0; i < 16; i++) {
+    for(j = 0; j < 16; j++) {
+        var id = i*16 + j;
+        $('body').append('<div class = "square" onclick = "check(id)" id='+ id +' />');
+        document.getElementById(id).style.left = (100 + (40*j)) + 'px';
+        document.getElementById(id).style.top = (20 + (40*i)) + 'px';
+        document.getElementById(id).style.background = colors[Math.floor(Math.random() * 6)];
+    }
+  }
+});
+function check(sid)
+{
+    boing();
+    if (click1 === null)
+    {
+        click1 = sid;
+        return;
+    }
+    else
+    {
+        if (click1 == sid 
+            || (sid != parseInt(click1) + 16 && sid != parseInt(click1) - 16 && sid != parseInt(click1) + 1 && sid != parseInt(click1) - 1)
+            || document.getElementById(click1).style.background == document.getElementById(sid).style.background)
+        {
+            click1 = null;
+            click2 = null;
+            return;
+        }
+        click2 = sid;
+        swap(click1, click2);
+        let path1 = dfs(click1, document.getElementById(click1).style.background);
+        let path2 = dfs(click2, document.getElementById(click2).style.background);
+        if (path1.length < 3 && path2.length < 3)
+        {
+            swap(click1, click2);
+            click1 = null;
+            click2 = null;
+            return;
+        }
+        score += 1 * (path1.length + path2.length);
+        document.getElementById("score").innerHTML = score < 10 ? "Score: " + '000' + score : score < 100 ? "Score: " + '00' + score : score < 1000 ? "Score: " + '0' + score : "Score: " + score;
+        click1 = null;
+        click2 = null;
+        if (path1.length >= 3)
+        {
+            for (let i = 0; i < path1.length; i++)
+                document.getElementById(path1[i]).style.background = "rgb(0, 0, 0)";
+        }
+        if (path2.length >= 3)
+        {
+            for (let i = 0; i < path2.length; i++)
+                document.getElementById(path2[i]).style.background = "rgb(0, 0, 0)";
+        }
+        for (let ii = 15; ii >= 0; ii--)
+        {
+            for (let j = 0; j < 16; j++)
+            {
+                let posi = ii, i = ii;
+                if (document.getElementById(i * 16 + j).style.background == "rgb(0, 0, 0)")
+                {
+                    while (i-1 >= 0 && document.getElementById((i-1) * 16 + j).style.background == "rgb(0, 0, 0)")
+                       i--;
+                    if (i-1 >= 0)
+                    {
+                        document.getElementById(posi * 16 + j).style.background = document.getElementById((i-1) * 16 + j).style.background;
+                        document.getElementById((i-1) * 16 + j).style.background = "rgb(0, 0, 0)";
+                    }
+                }
+            }
+        }
+        for (let i = 0; i < 16; i++)
+        {
+            for (let j = 0; j < 16; j++)
+            {
+                if (document.getElementById(i * 16 + j).style.background == "rgb(0, 0, 0)")
+                    document.getElementById(i * 16 + j).style.background = colors[Math.floor(Math.random() * 6)];
+            }
+        }
+    }
+}
+function dfs(sid, color)
+{
+    let i = Math.floor(parseInt(sid) / 16), j = parseInt(sid) % 16;
+    let stack = [[i,j]], path = [], visited = [];
+    for (let i = 0; i < 16; i++)
+    {
+        visited.push([]);
+        for (let j = 0; j < 16; j++)
+            visited[i].push(false);
+    }
+    while (stack.length > 0)
+    {
+        let cur = stack.pop(), ii = cur[0], jj = cur[1];
+        path.push(ii * 16 + jj);
+        visited[ii][jj] = true;
+        if (ii-1 >= 0 && document.getElementById((ii-1) * 16 + jj).style.background == color && !visited[ii-1][jj])
+            stack.push([ii-1,jj]);
+        if (ii+1 < 16 && document.getElementById((ii+1) * 16 + jj).style.background == color && !visited[ii+1][jj])
+            stack.push([ii+1,jj]);
+        if (jj-1 >= 0 && document.getElementById(ii * 16 + jj-1).style.background == color && !visited[ii][jj-1])
+            stack.push([ii,jj-1]);
+        if (jj+1 < 16 && document.getElementById(ii * 16 + jj+1).style.background == color && !visited[ii][jj+1])
+            stack.push([ii,jj+1]);
+    }
+    return path;
+}
+function swap(a, b)
+{
+    let temp = document.getElementById(a).style.background;
+    document.getElementById(a).style.background = document.getElementById(b).style.background;
+    document.getElementById(b).style.background = temp;
+}
+</script>
+</head>
+<body>
+<h3 id = "score">Score: 0000</h3>
+<audio id="audio1">
+   <source src="cat_like1a.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio2">
+   <source src="cat_like1a.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio3">
+   <source src="cat_like1a.mp3" type="audio/mp3">
+ </audio>
+</body>
+</html>
