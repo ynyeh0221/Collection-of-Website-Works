@@ -239,6 +239,51 @@ function check(sid)
                     document.getElementById(i * len + j).style.background = colors[Math.floor(Math.random() * 6)];
             }
         }
+
+        let paths = path1.slice().concat(path2);
+        for (let nc = 0; nc < 3; nc ++) //Check for combo
+        {
+            let temp_path = [];
+            for (let i = 0; i < paths.length; i++)
+            {
+                let p = dfs(paths[i], document.getElementById(paths[i]).style.background);
+                if (p.length >= 3)
+                {
+                    temp_path = temp_path.concat(p);
+                    for (let j in p)
+                        document.getElementById(p[j]).style.background = "rgb(0, 0, 0)";
+                }
+            }
+            if (temp_path.length === 0)
+                break;
+            score += 1 * (temp_path.length);
+            for (let ii = len - 1; ii >= 0; ii--)
+            {
+                for (let j = 0; j < len; j++)
+                {
+                    let posi = ii, i = ii;
+                    if (document.getElementById(i * len + j).style.background == "rgb(0, 0, 0)")
+                    {
+                        while (i-1 >= 0 && document.getElementById((i-1) * len + j).style.background == "rgb(0, 0, 0)")
+                           i--;
+                        if (i-1 >= 0)
+                        {
+                            document.getElementById(posi * len + j).style.background = document.getElementById((i-1) * len + j).style.background;
+                            document.getElementById((i-1) * len + j).style.background = "rgb(0, 0, 0)";
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < len; i++)
+            {
+                for (let j = 0; j < len; j++)
+                {
+                    if (document.getElementById(i * len + j).style.background == "rgb(0, 0, 0)")
+                        document.getElementById(i * len + j).style.background = colors[Math.floor(Math.random() * 6)];
+                }
+            }
+            paths = temp_path.slice();
+        }
     }
 }
 function dfs(sid, color)
