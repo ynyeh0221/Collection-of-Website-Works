@@ -6,8 +6,8 @@
 <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <style>
 body {
-    width: 704px;
-    height: 704px;
+    width: 1300px;
+    height: 650px;
     background: #1a0d00;
 }
 .square {
@@ -26,10 +26,89 @@ body {
 #score {
     position: absolute;
     left: 850px;
+    top: 150px;
+    color: #fff;
+    font-size: 80px;
+    font-family: 'PT Sans', sans-serif;
+}
+#time {
+    position: absolute;
+    left: 850px;
     top: 50px;
     color: #fff;
     font-size: 80px;
     font-family: 'PT Sans', sans-serif;
+}
+#stop {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 1350px;
+    height: 700px;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    z-index: 9;
+}
+#result {
+    position: absolute;
+    left: 380px;
+    top: 100px;
+    font-size: 150px;
+    font-weight: bold;
+    font-family: 'PT Sans', sans-serif;
+    color: rgba(255,255,255,1);
+    display: none;
+    z-index: 10;
+}
+#start_over {
+    position: absolute;
+    left: 560px;
+    top: 350px;
+    font-size: 50px;
+    font-weight: bold;
+    font-family: 'PT Sans', sans-serif;
+    color: Khaki;
+    display: none;
+    z-index: 10;
+}
+/* Buzz effect css button */
+@-webkit-keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+@keyframes hvr-buzz {
+  50% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  100% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+}
+.hvr-buzz {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+}
+.hvr-buzz:hover, .hvr-buzz:focus, .hvr-buzz:active {
+  -webkit-animation-name: hvr-buzz;
+  animation-name: hvr-buzz;
+  -webkit-animation-duration: 0.15s;
+  animation-duration: 0.15s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
 }
 </style>
 <script>
@@ -47,17 +126,50 @@ function boing() {
     }
 }
 var colors = ["rgb(26, 83, 92)", "rgb(78, 205, 196)", "rgb(247, 255, 247)", "rgb(255, 107, 107)", "rgb(255, 230, 109)", "rgb(202, 142, 255)"];
-var click1 = null, click2 = null, score = 0, len = 16;
+var click1 = null, click2 = null, score = 0, len = 16, m = 3, s = 0, t;
+function count()
+{
+    s --;
+    if (m === 0 && s === 0)
+    {
+        document.getElementById("stop").style.display = "block";
+        document.getElementById("result").style.display = "block";
+        document.getElementById("start_over").style.display = "block";
+        clearTimeout(t);
+        document.getElementById("time").innerHTML = "Time: " + '00' + ':' + '00';
+        check = function(){};
+        return;
+    }
+    if (s < 0)
+    {
+        s = 59;
+        if (m > 0)
+            m -= 1;
+    }
+    if (m < 1)
+        document.getElementById("time").style.color = "#ff0000";
+    if (s < 10)
+        document.getElementById("time").innerHTML = "Time: " + '0' + m + ':' + '0' + s;
+    else
+        document.getElementById("time").innerHTML = "Time: " + '0' + m + ':' + s;
+    timer();
+}
+function timer()
+{
+    t = setTimeout(count, 1000);
+}
 $(document).ready(function(){
   for(i = 0; i < len; i++) {
     for(j = 0; j < len; j++) {
         var id = i*len + j;
         $('body').append('<div class = "square" onclick = "check(id)" id='+ id +' />');
         document.getElementById(id).style.left = (100 + (40*j)) + 'px';
-        document.getElementById(id).style.top = (20 + (40*i)) + 'px';
+        document.getElementById(id).style.top = (10 + (40*i)) + 'px';
         document.getElementById(id).style.background = colors[Math.floor(Math.random() * 6)];
     }
   }
+  document.getElementById("time").innerHTML = "Time: " + '0' + m + ':' + '0' + s;
+  timer();
 });
 function check(sid)
 {
@@ -102,7 +214,7 @@ function check(sid)
             for (let i = 0; i < path2.length; i++)
                 document.getElementById(path2[i]).style.background = "rgb(0, 0, 0)";
         }
-        for (let ii = 15; ii >= 0; ii--)
+        for (let ii = len - 1; ii >= 0; ii--)
         {
             for (let j = 0; j < len; j++)
             {
@@ -161,9 +273,14 @@ function swap(a, b)
     document.getElementById(a).style.background = document.getElementById(b).style.background;
     document.getElementById(b).style.background = temp;
 }
+function start_over()
+{
+    window.open("./day23.html","_self");
+}
 </script>
 </head>
 <body>
+<h3 id = "time"></h3>
 <h3 id = "score">Score: 0000</h3>
 <audio id="audio1">
    <source src="cat_like1a.mp3" type="audio/mp3">
@@ -174,5 +291,8 @@ function swap(a, b)
  <audio id="audio3">
    <source src="cat_like1a.mp3" type="audio/mp3">
  </audio>
+<div id = "stop"></div>
+<h1 id = "result">Time's Up</h1>
+<h4 id = "start_over" class = "hvr-buzz" onclick = "start_over()">Start Over?</h4>
 </body>
 </html>
