@@ -39,6 +39,7 @@ h1, h3, label {
 .push_button {
 	position:relative;
 	color:#000080;
+	font-size: 18px;
 	display:block;
 	text-decoration:none;
 	margin:0 auto;
@@ -73,7 +74,6 @@ h1, h3, label {
   height: 60px;
   font-family: 'PT Sans', sans-serif;
   font-weight: bolder;
-  font-size: 18px;
   background: Khaki;
   border: none;
 }
