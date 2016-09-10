@@ -55,3 +55,5 @@ Day 25: ASCII85 Encoder/Decoder https://ynyeh0221.github.io/Collection-of-Websit
 Day 26: CSV Parser https://ynyeh0221.github.io/Collection-of-Website-Works/day26.html
 
 Day 27: Digital Clock with Balls https://ynyeh0221.github.io/Collection-of-Website-Works/day27.html
+
+Day 28: Low Poly Digital Clock with Balls https://ynyeh0221.github.io/Collection-of-Website-Works/day28.html
