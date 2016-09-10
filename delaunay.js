@@ -1,3 +1,5 @@
+// This js file is written by https://github.com/ironwallaby/delaunay
+
 var Delaunay;
 
 (function() {
