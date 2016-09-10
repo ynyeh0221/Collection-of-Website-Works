@@ -56,4 +56,4 @@ Day 26: CSV Parser https://ynyeh0221.github.io/Collection-of-Website-Works/day26
 
 Day 27: Digital Clock with Balls https://ynyeh0221.github.io/Collection-of-Website-Works/day27.html
 
-Day 28: Low Poly Digital Clock with Balls https://ynyeh0221.github.io/Collection-of-Website-Works/day28.html
+Day 28: Low Poly https://ynyeh0221.github.io/Collection-of-Website-Works/day28.html
