@@ -4,9 +4,12 @@
 <title>Website Practice Day 28</title>
 <script type="text/javascript" src="./delaunay.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<script type="text/javascript" src="./mootools.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+
 <style>
 body {
-    height: 1450px;
+    height: 1600px;
     background: #202020;
     font-family: 'Raleway', sans-serif;
 }
@@ -18,9 +21,85 @@ body {
     height: 1350px;
     background: rgba(0,0,0,0);
 }
+
+#l1 {
+    position: absolute;
+    top: 100px;
+    left: 125px;
+    color: #fff;
+}
+
+#s1 {
+    position: absolute;
+    top: 130px;
+    left: 125px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+
+#slideHandle1 {
+    position: absolute;
+    left: 125px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#pos1 {
+    position: absolute;
+    top: 130px;
+    left: 350px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+
+#l2 {
+    position: absolute;
+    top: 160px;
+    left: 125px;
+    color: #fff;
+}
+
+#s2 {
+    position: absolute;
+    top: 190px;
+    left: 125px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+
+#slideHandle2 {
+    position: absolute;
+    left: 125px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#pos2 {
+    position: absolute;
+    top: 190px;
+    left: 350px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
 #l {
     position: absolute;
-    top: 70px;
+    top: 230px;
     left: 125px;
     color: #fff;
     font-size: 25px;
@@ -28,7 +107,7 @@ body {
 }
 #imageLoader {
     position: absolute;
-    top: 110px;
+    top: 270px;
     left: 125px;
     color: #fff;
     font-size: 18px;
@@ -36,13 +115,13 @@ body {
 }
 #b {
     position: absolute;
-    top: 150px;
+    top: 310px;
     left: 125px;
     font-size: 18px;
 }
 #myCanvas {
     position: absolute;
-    top: 200px;
+    top: 360px;
     left: 125px;
     background: #404040;
 }
@@ -50,6 +129,13 @@ body {
 </head>
 <body>
 <div id = "container">
+    <label id = 'l1'>Number of random points: </label>
+    <div id="s1"><div id="slideHandle1"></div></div>
+    <div id="pos1"></div>
+    <label id = 'l2'>Number of random edge points: </label>
+    <div id="s2"><div id="slideHandle2"></div></div>
+    <div id="pos2"></div>
+
     <h1 style = "text-align: center; color:#fff; font-size: 50px">Low Poly</h1>
     <label id = "l">Upload Image File:</label><br/>
     <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
@@ -57,8 +143,13 @@ body {
     <canvas id="myCanvas"></canvas>
 </div>
 <script type="text/javascript">
+    window.addEvent('domready', function(){
+        var slider1 = new Slider('s1', 'slideHandle1',{onComplete: function(val){$('pos1').setHTML(val);}});
+        var slider2 = new Slider('s2', 'slideHandle2',{onComplete: function(val){$('pos2').setHTML(val);}});
+    });
+
     //parameters
-    var num_of_randompoints = 1000, ratio_of_random_edge_points = 50, triangle_th = 230;
+    var num_of_randompoints = 100, ratio_of_random_edge_points = 100, triangle_th = 230;
     //
     var imageLoader = document.getElementById('imageLoader');
     var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), img, cw = 1100, ch = 1100;
@@ -87,6 +178,8 @@ body {
 
     function process()
     {
+        num_of_randompoints = parseInt(document.getElementById('pos1').innerHTML, 10) * 25 + 100;
+        ratio_of_random_edge_points = 100 - parseInt(document.getElementById('pos2').innerHTML, 10) + 1;
         sobel();
         for(let i = 0; i < num_of_randompoints; i ++) 
             triangle_points.push([Math.random()*img.width , Math.random()*img.height]);
