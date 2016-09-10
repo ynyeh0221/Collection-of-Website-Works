@@ -193,7 +193,9 @@ body {
             let img = new Image();
             img.onload = function()
             {    ori_canvas.width = img.width*cw/img.width;
-                 ori_canvas.height = img.height*cw/img.width;                              
+                 ori_canvas.height = img.height*cw/img.width;  
+                 canvas.width = img.width*cw/img.width;
+                 canvas.height = img.height*cw/img.width;                            
                  ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
                  img.width = ori_canvas.width;
                  img.height = ori_canvas.height;
