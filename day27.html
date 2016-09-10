@@ -13,7 +13,7 @@ body {
   border: 0px solid #e0e0e0;
   border-radius: 50px;
   background: #180c01;
-  box-shadow: inset 1px 2px 5px #000, inset 2px 5px 20px #000, inset 2px 5px 30px #000, inset -1.5px -2px 5px #fff, inset -1.5px -3px 3px #fff, 0px 20px 50px rgba(255,255,255,0.05), 0px 50px 100px rgba(255,255,255,0.05), 0px -50px 100px rgba(0,0,0,0.05);
+  box-shadow: inset 2px 2px 5px #000, inset 5px 5px 20px #000, inset 5px 5px 30px #000, inset -2px -2px 5px #fff, inset -2px -3px 3px #fff, 0px 20px 50px rgba(255,255,255,0.05), 0px 50px 100px rgba(255,255,255,0.05), 0px -50px 100px rgba(0,0,0,0.05);
 }
 </style>
 </head>
@@ -24,6 +24,11 @@ body {
 var ww = 4, hh = 7, d = 30, r = 8, nums = [], color = "#cccc00";
 var canvas = document.getElementById('myCanvas'), context = canvas.getContext('2d');
 var currentdate, h, m, s;
+var numbermap = [[1,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,1,1], [0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1], [1,1,1,1,0,0,0,1,0,0,0,1,1,1,1,1,1,0,0,0,1,0,0,0,1,1,1,1]
+, [1,1,1,1,0,0,0,1,0,0,0,1,1,1,1,1,0,0,0,1,0,0,0,1,1,1,1,1], [1,0,0,1,1,0,0,1,1,0,0,1,1,1,1,1,0,0,0,1,0,0,0,1,0,0,0,1], [1,1,1,1,1,0,0,0,1,0,0,0,1,1,1,1,0,0,0,1,0,0,0,1,1,1,1,1]
+, [1,1,1,1,1,0,0,0,1,0,0,0,1,1,1,1,1,0,0,1,1,0,0,1,1,1,1,1], [1,1,1,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1], [1,1,1,1,1,0,0,1,1,0,0,1,1,1,1,1,1,0,0,1,1,0,0,1,1,1,1,1]
+, [1,1,1,1,1,0,0,1,1,0,0,1,1,1,1,1,0,0,0,1,0,0,0,1,1,1,1,1]
+];
 canvas.width = 1300;
 canvas.height = 480;
 canvas.background = "#000";
@@ -60,204 +65,26 @@ function number(x, y, radius, distance, width, height, value)
             context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
             context.fillStyle = '#101010';
             context.fill();
+            context.lineWidth = 2;
             this.colormap.push('#101010');
         }
     }
     this.update = function()
     {
-        for (let i = 0; i < height; i++)
-        {
-            for (let j = 0; j < width; j++)
-                this.colormap[i*width + j] = '#202020';
-        }
         if (this.value == 'c')
         {
-            this.colormap[10] = color;
-            this.colormap[18] = color;
-        }
-        else if (this.value == 1)
-        {
-            this.colormap[3] = color;
-            this.colormap[7] = color;
-            this.colormap[11] = color;
-            this.colormap[15] = color;
-            this.colormap[19] = color;
-            this.colormap[23] = color;
-            this.colormap[27] = color;
-            this.colormap[31] = color;
-        }
-        else if (this.value == 2)
-        {
-            this.colormap[0] = color;
-            this.colormap[1] = color;
-            this.colormap[2] = color;
-            this.colormap[3] = color;
-            this.colormap[7] = color;
-            this.colormap[11] = color;
-            this.colormap[15] = color;
-            this.colormap[14] = color;
-            this.colormap[13] = color;
-            this.colormap[12] = color;
-            this.colormap[16] = color;
-            this.colormap[20] = color;
-            this.colormap[24] = color;
-            this.colormap[25] = color;
-            this.colormap[26] = color;
-            this.colormap[27] = color;
-        }
-        else if (this.value == 3)
-        {
-            this.colormap[0] = color;
-            this.colormap[1] = color;
-            this.colormap[2] = color;
-            this.colormap[3] = color;
-            this.colormap[7] = color;
-            this.colormap[11] = color;
-            this.colormap[15] = color;
-            this.colormap[14] = color;
-            this.colormap[13] = color;
-            this.colormap[12] = color;
-            this.colormap[19] = color;
-            this.colormap[23] = color;
-            this.colormap[24] = color;
-            this.colormap[25] = color;
-            this.colormap[26] = color;
-            this.colormap[27] = color;
-        }
-        else if (this.value == 4)
-        {
-            this.colormap[0] = color;
-            this.colormap[3] = color;
-            this.colormap[4] = color;
-            this.colormap[7] = color;
-            this.colormap[8] = color;
-            this.colormap[11] = color;
-            this.colormap[15] = color;
-            this.colormap[14] = color;
-            this.colormap[13] = color;
-            this.colormap[12] = color;
-            this.colormap[19] = color;
-            this.colormap[23] = color;
-            this.colormap[27] = color;
-        }
-        else if (this.value == 5)
-        {
-            this.colormap[0] = color;
-            this.colormap[1] = color;
-            this.colormap[2] = color;
-            this.colormap[3] = color;
-            this.colormap[15] = color;
-            this.colormap[14] = color;
-            this.colormap[13] = color;
-            this.colormap[12] = color;
-            this.colormap[4] = color;
-            this.colormap[8] = color;
-            this.colormap[19] = color;
-            this.colormap[23] = color;
-            this.colormap[24] = color;
-            this.colormap[25] = color;
-            this.colormap[26] = color;
-            this.colormap[27] = color;
-        }
-        else if (this.value == 6)
-        {
-            this.colormap[0] = color;
-            this.colormap[1] = color;
-            this.colormap[2] = color;
-            this.colormap[3] = color;
-            this.colormap[15] = color;
-            this.colormap[14] = color;
-            this.colormap[13] = color;
-            this.colormap[12] = color;
-            this.colormap[4] = color;
-            this.colormap[8] = color;
-            this.colormap[16] = color;
-            this.colormap[19] = color;
-            this.colormap[20] = color;
-            this.colormap[23] = color;
-            this.colormap[24] = color;
-            this.colormap[25] = color;
-            this.colormap[26] = color;
-            this.colormap[27] = color;
-        }
-        else if (this.value == 7)
-        {
-            this.colormap[0] = color;
-            this.colormap[1] = color;
-            this.colormap[2] = color;
-            this.colormap[3] = color;
-            this.colormap[7] = color;
-            this.colormap[11] = color;
-            this.colormap[15] = color;
-            this.colormap[19] = color;
-            this.colormap[23] = color;
-            this.colormap[27] = color;
-            this.colormap[31] = color;
-        }
-        else if (this.value == 8)
-        {
-            this.colormap[0] = color;
-            this.colormap[1] = color;
-            this.colormap[2] = color;
-            this.colormap[3] = color;
-            this.colormap[4] = color;
-            this.colormap[7] = color;
-            this.colormap[8] = color;
-            this.colormap[11] = color;
-            this.colormap[15] = color;
-            this.colormap[14] = color;
-            this.colormap[13] = color;
-            this.colormap[12] = color;
-            this.colormap[16] = color;
-            this.colormap[19] = color;
-            this.colormap[20] = color;
-            this.colormap[23] = color;
-            this.colormap[24] = color;
-            this.colormap[25] = color;
-            this.colormap[26] = color;
-            this.colormap[27] = color;
-        }
-        else if (this.value == 9)
-        {
-            this.colormap[0] = color;
-            this.colormap[1] = color;
-            this.colormap[2] = color;
-            this.colormap[3] = color;
-            this.colormap[4] = color;
-            this.colormap[7] = color;
-            this.colormap[8] = color;
-            this.colormap[11] = color;
-            this.colormap[15] = color;
-            this.colormap[14] = color;
-            this.colormap[13] = color;
-            this.colormap[12] = color;
-            this.colormap[19] = color;
-            this.colormap[23] = color;
-            this.colormap[24] = color;
-            this.colormap[25] = color;
-            this.colormap[26] = color;
-            this.colormap[27] = color;
-        }
-        else if (this.value === 0)
-        {
-            this.colormap[0] = color;
-            this.colormap[1] = color;
-            this.colormap[2] = color;
-            this.colormap[3] = color;
-            this.colormap[4] = color;
-            this.colormap[7] = color;
-            this.colormap[8] = color;
-            this.colormap[11] = color;
-            this.colormap[15] = color;
-            this.colormap[12] = color;
-            this.colormap[16] = color;
-            this.colormap[19] = color;
-            this.colormap[20] = color;
-            this.colormap[23] = color;
-            this.colormap[24] = color;
-            this.colormap[25] = color;
-            this.colormap[26] = color;
-            this.colormap[27] = color;
+            for (let i = 0; i < height; i++)
+            {
+                for (let j = 0; j < width; j++)
+                {
+                    var centerX = x + distance * j, centerY = y + distance * i;
+                    context.beginPath();
+                    context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+                    context.fillStyle = (i * width + j == 10 || i * width + j == 18) ? color: '#101010';
+                    context.fill();
+                }
+            }
+            return;   
         }
         for (let i = 0; i < height; i++)
         {
@@ -266,7 +93,7 @@ function number(x, y, radius, distance, width, height, value)
                 var centerX = x + distance * j, centerY = y + distance * i;
                 context.beginPath();
                 context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-                context.fillStyle = this.colormap[i * width + j];
+                context.fillStyle = numbermap[this.value][i * width + j] == 1 ? color : '#101010';
                 context.fill();
             }
         }        
