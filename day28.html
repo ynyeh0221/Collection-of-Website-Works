@@ -9,30 +9,22 @@
 
 <style>
 body {
-    height: 1600px;
+    height: 1250px;
     background: #202020;
     font-family: 'Raleway', sans-serif;
-}
-#container {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 1350px;
-    height: 1350px;
-    background: rgba(0,0,0,0);
 }
 
 #l1 {
     position: absolute;
-    top: 100px;
-    left: 125px;
+    top: 150px;
+    left: 20px;
     color: #fff;
 }
 
 #s1 {
     position: absolute;
-    top: 130px;
-    left: 125px;
+    top: 180px;
+    left: 20px;
     border: 1px solid #ccc;
     height: 20px;
     width: 200px;
@@ -40,7 +32,7 @@ body {
 
 #slideHandle1 {
     position: absolute;
-    left: 125px;
+    left: 20px;
     background-color: #cccc00;
     width: 10px;
     height: 20px;
@@ -49,8 +41,8 @@ body {
 
 #pos1 {
     position: absolute;
-    top: 130px;
-    left: 350px;
+    top: 180px;
+    left: 250px;
     border: 1px solid #ccc;
     height: 20px;
     width: 35px;
@@ -62,15 +54,15 @@ body {
 
 #l2 {
     position: absolute;
-    top: 160px;
-    left: 125px;
+    top: 210px;
+    left: 20px;
     color: #fff;
 }
 
 #s2 {
     position: absolute;
-    top: 190px;
-    left: 125px;
+    top: 240px;
+    left: 20px;
     border: 1px solid #ccc;
     height: 20px;
     width: 200px;
@@ -78,7 +70,7 @@ body {
 
 #slideHandle2 {
     position: absolute;
-    left: 125px;
+    left: 20px;
     background-color: #cccc00;
     width: 10px;
     height: 20px;
@@ -87,8 +79,8 @@ body {
 
 #pos2 {
     position: absolute;
-    top: 190px;
-    left: 350px;
+    top: 240px;
+    left: 250px;
     border: 1px solid #ccc;
     height: 20px;
     width: 35px;
@@ -99,36 +91,35 @@ body {
 }
 #l {
     position: absolute;
-    top: 230px;
-    left: 125px;
+    top: 280px;
+    left: 20px;
     color: #fff;
     font-size: 25px;
     font-family: 'Raleway', sans-serif;
 }
 #imageLoader {
     position: absolute;
-    top: 270px;
-    left: 125px;
+    top: 320px;
+    left: 20px;
     color: #fff;
     font-size: 18px;
     font-family: 'Raleway', sans-serif;
 }
 #b {
     position: absolute;
-    top: 310px;
-    left: 125px;
+    top: 360px;
+    left: 20px;
     font-size: 18px;
 }
 #myCanvas {
     position: absolute;
-    top: 360px;
-    left: 125px;
+    top: 160px;
+    left: 300px;
     background: #404040;
 }
 </style>
 </head>
 <body>
-<div id = "container">
     <label id = 'l1'>Number of random points: </label>
     <div id="s1"><div id="slideHandle1"></div></div>
     <div id="pos1"></div>
@@ -141,7 +132,6 @@ body {
     <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
     <button id = "b" onclick = "process()" class = "btn">Process</button><br>
     <canvas id="myCanvas"></canvas>
-</div>
 <script type="text/javascript">
     window.addEvent('domready', function(){
         var slider1 = new Slider('s1', 'slideHandle1',{onComplete: function(val){$('pos1').setHTML(val);}});
@@ -152,7 +142,7 @@ body {
     var num_of_randompoints = 100, ratio_of_random_edge_points = 100, triangle_th = 230;
     //
     var imageLoader = document.getElementById('imageLoader');
-    var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), img, cw = 1100, ch = 1100;
+    var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), img, cw = 1000, ch = 1000;
     var vertices = [], triangle_points = [];
     canvas.width = cw;
     canvas.height = ch;
