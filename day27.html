@@ -21,7 +21,7 @@ body {
 
 <canvas id = "myCanvas"></canvas>
 <script>
-var ww = 4, hh = 7, d = 30, r = 8, nums = [], color = "#cccc00";
+var ww = 4, hh = 7, d = 30, r = 8, nums = [], color = "#cccc00", balls = [];
 var canvas = document.getElementById('myCanvas'), context = canvas.getContext('2d');
 var currentdate, h, m, s;
 var numbermap = [[1,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,1,1], [0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1], [1,1,1,1,0,0,0,1,0,0,0,1,1,1,1,1,1,0,0,0,1,0,0,0,1,1,1,1]
@@ -50,25 +50,35 @@ function start() {
     setInterval(update_area, 20);
 }
 
+function ball(x, y, radius)
+{
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.speedX = Math.random() * 30 - 15;
+    this.speedY = 5;
+    this.bounce = 1;
+    this.update = function()
+    {
+        context = canvas.getContext('2d');
+        context.beginPath();
+        context.arc(this.x, this.y, radius, 0, 2 * Math.PI, false);
+        context.fillStyle = color;
+        context.fill();
+    }
+    this.newPos = function() {
+        this.x += this.speedX;
+        this.y += this.speedY; 
+    }
+}
+
 function number(x, y, radius, distance, width, height, value)
 {
     this.x = x;
     this.y = y;
     this.colormap = [];
     this.value = value;
-    for (let i = 0; i < height; i++)
-    {
-        for (let j = 0; j < width; j++)
-        {
-            var centerX = x + distance * j, centerY = y + distance * i;
-            context.beginPath();
-            context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-            context.fillStyle = '#101010';
-            context.fill();
-            context.lineWidth = 2;
-            this.colormap.push('#101010');
-        }
-    }
+    this.lastvalue = null;
     this.update = function()
     {
         if (this.value == 'c')
@@ -77,7 +87,8 @@ function number(x, y, radius, distance, width, height, value)
             {
                 for (let j = 0; j < width; j++)
                 {
-                    var centerX = x + distance * j, centerY = y + distance * i;
+                    var centerX = this.x + distance * j, centerY = this.y + distance * i;
+                    context = canvas.getContext('2d');
                     context.beginPath();
                     context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
                     context.fillStyle = (i * width + j == 10 || i * width + j == 18) ? color: '#101010';
@@ -90,18 +101,26 @@ function number(x, y, radius, distance, width, height, value)
         {
             for (let j = 0; j < width; j++)
             {
-                var centerX = x + distance * j, centerY = y + distance * i;
+                var centerX = this.x + distance * j, centerY = this.y + distance * i;
+                context = canvas.getContext('2d');
                 context.beginPath();
                 context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+                if (this.lastvalue && this.lastvalue != this.value && numbermap[this.lastvalue][i * width + j] === 1 && numbermap[this.value][i * width + j] === 0)
+                {
+                    let b = new ball(centerX, centerY, radius);
+                    balls.push(b);
+                }
                 context.fillStyle = numbermap[this.value][i * width + j] == 1 ? color : '#101010';
                 context.fill();
             }
-        }        
+        }
+        this.lastvalue = this.value;
     }
 }
 
 function update_area()
 {
+    clear();
     currentdate = new Date(), h = currentdate.getHours(), m = currentdate.getMinutes(), s = currentdate.getSeconds();
     nums[0].value = Math.floor(h / 10);
     nums[1].value = h % 10;
@@ -113,6 +132,22 @@ function update_area()
     nums[7].value = s % 10;
     for (let i = 0; i < 8; i++)
         nums[i].update();
+    for (let i = 0; i < balls.length; i++)
+    {
+        if (balls[i].y >= canvas.height - balls[i].radius)
+        {
+            balls[i].speedY = -balls[i].speedY * balls[i].bounce;
+            balls[i].speedX = balls[i].speedX * balls[i].bounce;
+        }
+        balls[i].newPos();
+        balls[i].update();
+        if (balls[i].x >= canvas.width || balls[i].x < 0 || balls[i].y <= 0)
+            balls.splice(i, 1);
+    }
+}
+
+function clear() {
+    context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 }
 </script>
 </body>
