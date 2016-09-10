@@ -57,8 +57,10 @@ function ball(x, y, radius)
     this.y = y;
     this.radius = radius;
     this.speedX = Math.random() * 30 - 15;
-    this.speedY = 5;
+    this.speedY = 10;
     this.bounce = 1;
+    this.gravity = 0.05;
+    this.gravityspeed = 0;
     this.update = function()
     {
         context = canvas.getContext('2d');
@@ -68,8 +70,9 @@ function ball(x, y, radius)
         context.fill();
     }
     this.newPos = function() {
+        this.gravityspeed += this.gravity;
         this.x += this.speedX;
-        this.y += this.speedY; 
+        this.y += this.speedY + this.gravityspeed; 
     }
 }
 
@@ -135,8 +138,9 @@ function update_area()
         nums[i].update();
     for (let i = 0; i < balls.length; i++)
     {
-        if (balls[i].y >= canvas.height - balls[i].radius)
+        if (balls[i].y >= canvas.height - 2 * balls[i].radius)
         {
+            balls[i].y = canvas.height - 2 * balls[i].radius;
             balls[i].speedY = -balls[i].speedY * balls[i].bounce;
             balls[i].speedX = balls[i].speedX * balls[i].bounce;
         }
