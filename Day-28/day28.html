@@ -171,7 +171,7 @@ body {
     });
 
     //parameters
-    var num_of_randompoints = 10, ratio_of_random_edge_points = 150, triangle_th = 200;
+    var num_of_randompoints = 1, ratio_of_random_edge_points = 750, triangle_th = 200;
     //
     var imageLoader = document.getElementById('imageLoader');
     var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), cw = 1000, ch = 1000;
@@ -208,8 +208,8 @@ body {
     function process()
     {
         var triangle_points = [];
-        num_of_randompoints = parseInt(document.getElementById('pos1').innerHTML, 10) * 2 + 10;
-        ratio_of_random_edge_points = 150 - parseInt(document.getElementById('pos2').innerHTML, 10);
+        num_of_randompoints = parseInt(document.getElementById('pos1').innerHTML, 10) * 2 + 1;
+        ratio_of_random_edge_points = 750 - 7 * parseInt(document.getElementById('pos2').innerHTML, 10);
         console.log(num_of_randompoints, ratio_of_random_edge_points)
         sobel();
         for(let i = 0; i < num_of_randompoints; i ++) 
