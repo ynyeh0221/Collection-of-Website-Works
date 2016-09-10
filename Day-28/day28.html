@@ -16,14 +16,14 @@ body {
 
 #l1 {
     position: absolute;
-    top: 150px;
+    top: 250px;
     left: 20px;
     color: #fff;
 }
 
 #s1 {
     position: absolute;
-    top: 180px;
+    top: 280px;
     left: 20px;
     border: 1px solid #ccc;
     height: 20px;
@@ -41,7 +41,7 @@ body {
 
 #pos1 {
     position: absolute;
-    top: 180px;
+    top: 280px;
     left: 250px;
     border: 1px solid #ccc;
     height: 20px;
@@ -54,14 +54,14 @@ body {
 
 #l2 {
     position: absolute;
-    top: 210px;
+    top: 320px;
     left: 20px;
     color: #fff;
 }
 
 #s2 {
     position: absolute;
-    top: 240px;
+    top: 350px;
     left: 20px;
     border: 1px solid #ccc;
     height: 20px;
@@ -79,7 +79,7 @@ body {
 
 #pos2 {
     position: absolute;
-    top: 240px;
+    top: 350px;
     left: 250px;
     border: 1px solid #ccc;
     height: 20px;
@@ -91,7 +91,7 @@ body {
 }
 #l {
     position: absolute;
-    top: 280px;
+    top: 150px;
     left: 20px;
     color: #fff;
     font-size: 25px;
@@ -99,7 +99,7 @@ body {
 }
 #imageLoader {
     position: absolute;
-    top: 320px;
+    top: 200px;
     left: 20px;
     color: #fff;
     font-size: 18px;
@@ -107,7 +107,7 @@ body {
 }
 #b {
     position: absolute;
-    top: 360px;
+    top: 400px;
     left: 20px;
     font-size: 18px;
 }
@@ -115,7 +115,36 @@ body {
     position: absolute;
     top: 160px;
     left: 300px;
+    z-index: 10;
+}
+#originalCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
     background: #404040;
+}
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #808080;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  font-family: 'Raleway', sans-serif;
+}
+
+.button:hover {background-color: #606060}
+
+.button:active {
+  background-color: #404040;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 </style>
 </head>
@@ -130,36 +159,44 @@ body {
     <h1 style = "text-align: center; color:#fff; font-size: 50px">Low Poly Generator</h1>
     <label id = "l">Upload Image File:</label><br/>
     <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
-    <button id = "b" onclick = "process()" class = "btn">Process</button><br>
+    <button id = "b" class = "button" onclick = "process()" class = "btn">Process</button><br>
     <canvas id="myCanvas"></canvas>
+    <canvas id="originalCanvas"></canvas>
 <script type="text/javascript">
     window.addEvent('domready', function(){
         var slider1 = new Slider('s1', 'slideHandle1',{onComplete: function(val){$('pos1').setHTML(val);}});
         var slider2 = new Slider('s2', 'slideHandle2',{onComplete: function(val){$('pos2').setHTML(val);}});
+        document.getElementById('pos1').innerHTML = '0';
+        document.getElementById('pos2').innerHTML = '0';
     });
 
     //parameters
     var num_of_randompoints = 100, ratio_of_random_edge_points = 100, triangle_th = 230;
     //
     var imageLoader = document.getElementById('imageLoader');
-    var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), img, cw = 1000, ch = 1000;
-    var vertices = [], triangle_points = [];
+    var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), cw = 1000, ch = 1000;
+    var ori_canvas = document.getElementById("originalCanvas"), ori_ctx = ori_canvas.getContext("2d")
+    var vertices = [];
     canvas.width = cw;
     canvas.height = ch;
+    ori_canvas.width = cw;
+    ori_canvas.height = ch;
     imageLoader.addEventListener('change', handleImage, false);
 
     function handleImage(e)
     {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
         var reader = new FileReader();
         reader.onload = function(event)
         {
-            img = new Image();
+            let img = new Image();
             img.onload = function()
-            {    canvas.width=img.width*cw/img.width;
-                 canvas.height=img.height*cw/img.width;                              
-                 ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
-                 img.width=canvas.width;
-                 img.height=canvas.height;
+            {    ori_canvas.width = img.width*cw/img.width;
+                 ori_canvas.height = img.height*cw/img.width;                              
+                 ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
+                 img.width = ori_canvas.width;
+                 img.height = ori_canvas.height;
             }
             img.src = event.target.result;
         }
@@ -168,22 +205,24 @@ body {
 
     function process()
     {
+        var triangle_points = [];
         num_of_randompoints = parseInt(document.getElementById('pos1').innerHTML, 10) * 35 + 100;
         ratio_of_random_edge_points = 100 - parseInt(document.getElementById('pos2').innerHTML, 10) + 1;
+        console.log(num_of_randompoints, ratio_of_random_edge_points)
         sobel();
         for(let i = 0; i < num_of_randompoints; i ++) 
-            triangle_points.push([Math.random()*img.width , Math.random()*img.height]);
+            triangle_points.push([Math.random()*canvas.width , Math.random()*canvas.height]);
         for(let l = 0; l < Math.floor(vertices.length / ratio_of_random_edge_points); l ++)
         {
             let random = (Math.random() * vertices.length) << 0;
             triangle_points.push(vertices[random]);
             vertices.splice(random , 1);
         }
-        triangle_points.push([0, 0] , [0, img.height] , [img.width, 0] , [img.width, img.height]);
+        triangle_points.push([0, 0] , [0, canvas.height] , [canvas.width, 0] , [canvas.width, canvas.height]);
         var triangles = Delaunay.triangulate(triangle_points);
         var x1, x2, x3, y1, y2, y3, centerX, centerY;
-        var imageData = ctx.getImageData(0, 0, img.width, img.height), data = imageData.data;
-        ctx.clearRect(0, 0, img.width, img.height);
+        var imgData = ori_ctx.getImageData(0, 0, canvas.width, canvas.height), data = imgData.data;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         for(let i=0; i < triangles.length; i += 3)
         {
             x1 = triangle_points[triangles[i]][0];
@@ -194,7 +233,7 @@ body {
             y3 = triangle_points[triangles[i+2]][1];
             centerX = Math.floor((x1 + x2 + x3) / 3);
             centerY = Math.floor((y1 + y2 + y3) / 3);
-            ind = (centerY * img.width + centerX) * 4;
+            ind = (centerY * canvas.width + centerX) * 4;
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(x1, y1);
@@ -209,10 +248,13 @@ body {
 
     function sobel()
     {
-        var imageData = ctx.getImageData(0,0,img.width,img.height), data = imageData.data;
+        vertices = [];
+        var imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height), data = [];
+        for (let i = 0; i < imageData.data.length; i++)
+            data.push(imageData.data[i]);
         var weights = [-1, 0, 1, -2, 0, 2, -1, 0 ,1], weights1 = [-1, -2, -1, 0, 0, 0, 1, 2, 1];
-        var side = Math.round(Math.sqrt(weights.length)), halfSide=Math.floor(side/2), w = img.width, h = img.height;
-        var output = ctx.createImageData(w, h), dst=output.data;
+        var side = Math.round(Math.sqrt(weights.length)), halfSide=Math.floor(side/2), w = canvas.width, h = canvas.height;
+        var output = ctx.createImageData(w, h), dst = output.data;
         for(let y = 0; y < h; y ++)
         {
             for(let x = 0; x < w; x ++)
