@@ -5,7 +5,8 @@
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <script type="text/javascript" src="./mootools.js"></script>
-<script type="text/javascript" src="./slider.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+
 <style>
 body {
     height: 1250px;
@@ -269,7 +270,8 @@ body {
         var slider2 = new Slider('s2', 'slideHandle2',{onComplete: function(val){$('pos2').setHTML(val);}});
         document.getElementById('pos1').innerHTML = '0';
         document.getElementById('pos2').innerHTML = '0';
-    });
+    });
+
     //parameters
     var gap = 5, radius = 1, type = "circle", possible_texts = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     //
@@ -335,44 +337,34 @@ body {
                 {
                     ctx.fillText(possible_texts[Math.floor(Math.random() * possible_texts.length)], j, i);
                     ctx.font = radius + "px Verdana";
-                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
-                    ctx.fill();
                 }
                 else if (type == "square")
                 {
                     ctx.beginPath();
                     ctx.rect(j, i, radius, radius);
-                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
-                    ctx.fill();
                 }
                 else if (type == "circle")
                 {
                     ctx.beginPath();
                     ctx.arc(j + offset, i + offset, radius, 0, 2 * Math.PI, false);
-                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
-                    ctx.fill();
                 }
                 else if (type == "love")
                 {
                     ctx.fillText('\uF004', j, i);
                     ctx.font = radius + "px FontAwesome";
-                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
-                    ctx.fill();
                 }
                 else if (type == "star")
                 {
                     ctx.fillText('\uF005', j, i);
                     ctx.font = radius + "px FontAwesome";
-                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
-                    ctx.fill();
                 }
                 else if (type == "warning")
                 {
                     ctx.fillText('\uF071', j, i);
                     ctx.font = radius + "px FontAwesome";
-                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
-                    ctx.fill();
                 }
+                ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
+                ctx.fill();
             }
         }
     }
