@@ -210,7 +210,7 @@ body {
         var triangle_points = [];
         num_of_randompoints = parseInt(document.getElementById('pos1').innerHTML, 10) * 2 + 1;
         ratio_of_random_edge_points = 750 - 7 * parseInt(document.getElementById('pos2').innerHTML, 10);
-        console.log(num_of_randompoints, ratio_of_random_edge_points)
+        
         sobel();
         for(let i = 0; i < num_of_randompoints; i ++) 
             triangle_points.push([Math.random()*canvas.width , Math.random()*canvas.height]);
