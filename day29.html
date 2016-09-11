@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 29</title>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script type="text/javascript" src="./mootools.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+<style>
+body {
+    height: 1250px;
+    background: #202020;
+    font-family: 'Raleway', sans-serif;
+}
+
+#l1 {
+    position: absolute;
+    top: 250px;
+    left: 20px;
+    color: #fff;
+}
+
+#s1 {
+    position: absolute;
+    top: 280px;
+    left: 20px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+
+#slideHandle1 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#pos1 {
+    position: absolute;
+    top: 280px;
+    left: 250px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+
+#l2 {
+    position: absolute;
+    top: 320px;
+    left: 20px;
+    color: #fff;
+}
+
+#s2 {
+    position: absolute;
+    top: 350px;
+    left: 20px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+
+#slideHandle2 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#pos2 {
+    position: absolute;
+    top: 350px;
+    left: 250px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+#l {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    color: #fff;
+    font-size: 25px;
+    font-family: 'Raleway', sans-serif;
+}
+#imageLoader {
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    color: #fff;
+    font-size: 18px;
+    font-family: 'Raleway', sans-serif;
+}
+#l3 {
+    position: absolute;
+    top: 390px;
+    left: 20px;
+    color: #fff;
+}
+
+#r1 {
+    position: absolute;
+    left: 20px;
+    top: 420px;
+}
+#ll1 {
+    position: absolute;
+    left: 50px;
+    top: 420px;
+    color: #fff;
+}
+
+#r2 {
+    position: absolute;
+    left: 20px;
+    top: 450px;
+}
+#ll2 {
+    position: absolute;
+    left: 50px;
+    top: 450px;
+    color: #fff;
+}
+
+#r3 {
+    position: absolute;
+    left: 20px;
+    top: 480px;
+}
+#ll3 {
+    position: absolute;
+    left: 50px;
+    top: 480px;
+    color: #fff;
+}
+
+#r4 {
+    position: absolute;
+    left: 20px;
+    top: 510px;
+}
+#ll4 {
+    position: absolute;
+    left: 50px;
+    top: 510px;
+    color: #fff;
+}
+
+#r5 {
+    position: absolute;
+    left: 20px;
+    top: 540px;
+}
+#ll5 {
+    position: absolute;
+    left: 50px;
+    top: 540px;
+    color: #fff;
+}
+
+#r6 {
+    position: absolute;
+    left: 20px;
+    top: 570px;
+}
+#ll6 {
+    position: absolute;
+    left: 50px;
+    top: 570px;
+    color: #fff;
+}
+
+#personal {
+   position: absolute;
+   left: 80px;
+   top: 480px;
+   width: 200px;
+   height: 20px;
+}
+
+#b {
+    position: absolute;
+    top: 610px;
+    left: 20px;
+    font-size: 18px;
+}
+
+#myCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    z-index: 10;
+}
+#originalCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    background: #404040;
+}
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #808080;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  font-family: 'Raleway', sans-serif;
+}
+
+.button:hover {background-color: #606060}
+
+.button:active {
+  background-color: #404040;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+</head>
+<body>
+    <h1 style = "text-align: center; color:#fff; font-size: 50px">Screen Printing Generator</h1>
+
+    <label id = 'l1'>Gap: </label>
+    <div id="s1"><div id="slideHandle1"></div></div>
+    <div id="pos1"></div>
+
+    <label id = 'l2'>Radius: </label>
+    <div id="s2"><div id="slideHandle2"></div></div>
+    <div id="pos2"></div>
+
+    <label id = 'l3'>Shape: </label>
+    <input type="radio" id = "r1" name="type" value="circle" checked><label id = "ll1" for="r1"><i class="fa fa-circle" aria-hidden="true"></i></label>
+    <input type="radio" id = "r2" name="type" value="square"><label id = "ll2" for="r2"><i class="fa fa-square" aria-hidden="true"></i></label>
+    <input type="radio" id = "r3" name="type" value="text"><label id = "ll3" for="r3"><i class="fa fa-font" aria-hidden="true"></i></label>
+    <input type="radio" id = "r4" name="type" value="love"><label id = "ll4" for="r4"><i class="fa fa-heart" aria-hidden="true"></i></label>
+    <input type="radio" id = "r5" name="type" value="star"><label id = "ll5" for="r5"><i class="fa fa-star" aria-hidden="true"></i></label>
+    <input type="radio" id = "r6" name="type" value="warning"><label id = "ll6" for="r5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></label>
+    <textarea id = "personal" rows="1" cols="50" placeholder="Use your letters..."></textarea>
+
+    <label id = "l">Upload Image File:</label><br/>
+    <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
+
+    <button id = "b" class = "button" onclick = "process()" class = "btn">Process</button><br>
+
+    <canvas id="myCanvas"></canvas>
+    <canvas id="originalCanvas"></canvas>
+
+<script type="text/javascript">
+    window.addEvent('domready', function(){
+        var slider1 = new Slider('s1', 'slideHandle1',{onComplete: function(val){$('pos1').setHTML(val);}});
+        var slider2 = new Slider('s2', 'slideHandle2',{onComplete: function(val){$('pos2').setHTML(val);}});
+        document.getElementById('pos1').innerHTML = '0';
+        document.getElementById('pos2').innerHTML = '0';
+    });
+    //parameters
+    var gap = 5, radius = 1, type = "circle", possible_texts = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    //
+    var imageLoader = document.getElementById('imageLoader');
+    var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), cw = 1000, ch = 1000;
+    var ori_canvas = document.getElementById("originalCanvas"), ori_ctx = ori_canvas.getContext("2d");
+    canvas.width = cw;
+    canvas.height = ch;
+    ori_canvas.width = cw;
+    ori_canvas.height = ch;
+    imageLoader.addEventListener('change', handleImage, false);
+
+    function handleImage(e)
+    {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var reader = new FileReader();
+        reader.onload = function(event)
+        {
+            let img = new Image();
+            img.onload = function()
+            {    ori_canvas.width = img.width*cw/img.width;
+                 ori_canvas.height = img.height*cw/img.width;  
+                 canvas.width = img.width*cw/img.width;
+                 canvas.height = img.height*cw/img.width;                            
+                 ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
+                 img.width = ori_canvas.width;
+                 img.height = ori_canvas.height;
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]); 
+    }
+
+    function process()
+    {
+        gap = parseInt(document.getElementById('pos1').innerHTML, 10) + 2;
+        radius = 0.5 * parseInt(document.getElementById('pos2').innerHTML, 10) + 1;
+        if (document.getElementById('r1').checked)
+            type = document.getElementById('r1').value;
+        else if (document.getElementById('r2').checked)
+            type = document.getElementById('r2').value;
+        else if (document.getElementById('r3').checked)
+            type = document.getElementById('r3').value;
+        else if (document.getElementById('r4').checked)
+            type = document.getElementById('r4').value;
+        else if (document.getElementById('r5').checked)
+            type = document.getElementById('r5').value;
+        else if (document.getElementById('r6').checked)
+            type = document.getElementById('r6').value;
+        var imgData = ori_ctx.getImageData(0, 0, canvas.width, canvas.height), data = imgData.data;
+        var offset = radius;
+        ctx.fillStyle="#fff";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        if (type == "text")
+            possible_texts = document.getElementById('personal').value || "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (let i = 0; i < canvas.height; i += gap)
+        {
+            for (let j = 0; j < canvas.width; j += gap)
+            {
+                let ind = (i * canvas.width + j) * 4;
+                if (type == "text")
+                {
+                    ctx.fillText(possible_texts[Math.floor(Math.random() * possible_texts.length)], j, i);
+                    ctx.font = radius + "px Verdana";
+                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
+                    ctx.fill();
+                }
+                else if (type == "square")
+                {
+                    ctx.beginPath();
+                    ctx.rect(j, i, radius, radius);
+                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
+                    ctx.fill();
+                }
+                else if (type == "circle")
+                {
+                    ctx.beginPath();
+                    ctx.arc(j + offset, i + offset, radius, 0, 2 * Math.PI, false);
+                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
+                    ctx.fill();
+                }
+                else if (type == "love")
+                {
+                    ctx.fillText('\uF004', j, i);
+                    ctx.font = radius + "px FontAwesome";
+                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
+                    ctx.fill();
+                }
+                else if (type == "star")
+                {
+                    ctx.fillText('\uF005', j, i);
+                    ctx.font = radius + "px FontAwesome";
+                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
+                    ctx.fill();
+                }
+                else if (type == "warning")
+                {
+                    ctx.fillText('\uF071', j, i);
+                    ctx.font = radius + "px FontAwesome";
+                    ctx.fillStyle = "rgb(" + data[ind] + "," + data[ind+1] + "," + data[ind+2] + ")";
+                    ctx.fill();
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>
