@@ -13,14 +13,12 @@ body {
     background: #202020;
     font-family: 'Raleway', sans-serif;
 }
-
 #l1 {
     position: absolute;
     top: 250px;
     left: 20px;
     color: #fff;
 }
-
 #s1 {
     position: absolute;
     top: 280px;
@@ -29,7 +27,6 @@ body {
     height: 20px;
     width: 200px;
 }
-
 #slideHandle1 {
     position: absolute;
     left: 20px;
@@ -38,7 +35,6 @@ body {
     height: 20px;
     cursor: pointer;
 }
-
 #pos1 {
     position: absolute;
     top: 280px;
@@ -51,14 +47,12 @@ body {
     color: #fff;
     font-size: 14px;
 }
-
 #l2 {
     position: absolute;
     top: 320px;
     left: 20px;
     color: #fff;
 }
-
 #s2 {
     position: absolute;
     top: 350px;
@@ -67,7 +61,6 @@ body {
     height: 20px;
     width: 200px;
 }
-
 #slideHandle2 {
     position: absolute;
     left: 20px;
@@ -76,7 +69,6 @@ body {
     height: 20px;
     cursor: pointer;
 }
-
 #pos2 {
     position: absolute;
     top: 350px;
@@ -138,25 +130,13 @@ body {
   box-shadow: 0 9px #999;
   font-family: 'Raleway', sans-serif;
 }
-
 .button:hover {background-color: #606060}
-
 .button:active {
   background-color: #404040;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
 </style>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-72896141-2', 'auto');
-  ga('send', 'pageview');
-
-</script>
 </head>
 <body>
     <label id = 'l1'>Number of random points: </label>
@@ -179,7 +159,6 @@ body {
         document.getElementById('pos1').innerHTML = '0';
         document.getElementById('pos2').innerHTML = '0';
     });
-
     //parameters
     var num_of_randompoints = 1, ratio_of_random_edge_points = 750, triangle_th = 200;
     //
@@ -192,7 +171,6 @@ body {
     ori_canvas.width = cw;
     ori_canvas.height = ch;
     imageLoader.addEventListener('change', handleImage, false);
-
     function handleImage(e)
     {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -214,7 +192,6 @@ body {
         }
         reader.readAsDataURL(e.target.files[0]); 
     }
-
     function process()
     {
         var triangle_points = [];
@@ -257,7 +234,6 @@ body {
             ctx.restore();
         }
     }
-
     function sobel()
     {
         vertices = [];
@@ -267,11 +243,12 @@ body {
         var weights = [-1, 0, 1, -2, 0, 2, -1, 0 ,1], weights1 = [-1, -2, -1, 0, 0, 0, 1, 2, 1];
         var side = Math.round(Math.sqrt(weights.length)), halfSide=Math.floor(side/2), w = canvas.width, h = canvas.height;
         var output = ctx.createImageData(w, h), dst = output.data;
+        var op = 1, alphaFac=op?1:0;
         for(let y = 0; y < h; y ++)
         {
             for(let x = 0; x < w; x ++)
             {
-                let sy = y, sx = x, dstOff = (y*w+x)*4, r = 0, g = 0, b = 0, r1=0, g1=0, b1=0;
+                let sy = y, sx = x, dstOff = (y*w+x)*4, r=0, g=0, b=0, a=0, r1=0, g1=0, b1=0, a1=0;
                 for(let cy = 0; cy < side; cy ++)
                 {
                     for(let cx = 0; cx < side; cx ++)
@@ -284,19 +261,23 @@ body {
                             r += data[srcOff]*wt;
                             g += data[srcOff+1]*wt;
                             b += data[srcOff+2]*wt;
+                            a += data[srcOff+3]*wt;
                             r1 += data[srcOff]*wt1;
                             g1 += data[srcOff+1]*wt1;
                             b1 += data[srcOff+2]*wt1;
+                            a1 += data[srcOff+3]*wt1;
                         }
                     }
                 }
                 dst[dstOff] = Math.sqrt(r*r+r1*r1);
                 dst[dstOff+1] = Math.sqrt(g*g+g1*g1);
                 dst[dstOff+2] = Math.sqrt(b*b+b1*b1);
+                dst[dstOff+3] = a+alphaFac*(255-a);
                 if (dst[dstOff] <= triangle_th && dst[dstOff+1] <= triangle_th && dst[dstOff+2] <= triangle_th)
                     vertices.push([x, y]); 
             }
         }
+        ori_ctx.putImageData(output,0,0);
     }
 </script>
 </body>
