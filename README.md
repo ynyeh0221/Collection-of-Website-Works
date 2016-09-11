@@ -1,7 +1,5 @@
 # Collection of Website Works
 
-The idea is from Jennifer's 180 practices (https://jenniferdewalt.com/)
-
 Day 1: Flood-filling https://ynyeh0221.github.io/Collection-of-Website-Works/day1.html
 
 Day 2: Secert Message https://ynyeh0221.github.io/Collection-of-Website-Works/day2.html
@@ -57,3 +55,5 @@ Day 26: CSV Parser https://ynyeh0221.github.io/Collection-of-Website-Works/day26
 Day 27: Digital Clock with Balls https://ynyeh0221.github.io/Collection-of-Website-Works/day27.html
 
 Day 28: Low Poly Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day28.html
+
+Day 29: Screen Printing Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day29.html
