@@ -3,9 +3,10 @@
 <head>
 <title>Website Practice Day 29</title>
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./font-awesome-4.6.3/css/font-awesome.min.css">
 <script type="text/javascript" src="./mootools.js"></script>
-<script type="text/javascript" src="./slider.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+
 <style>
 body {
     height: 1250px;
@@ -269,7 +270,8 @@ body {
         var slider2 = new Slider('s2', 'slideHandle2',{onComplete: function(val){$('pos2').setHTML(val);}});
         document.getElementById('pos1').innerHTML = '0';
         document.getElementById('pos2').innerHTML = '0';
-    });
+    });
+
     //parameters
     var gap = 5, radius = 1, type = "circle", possible_texts = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     //
