@@ -59,3 +59,5 @@ Day 28: Low Poly Generator https://ynyeh0221.github.io/Collection-of-Website-Wor
 Day 29: Screen Printing Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day29.html
 
 Day 30: Visualization of Bubble Sort https://ynyeh0221.github.io/Collection-of-Website-Works/day30.html
+
+Day 31: Floyd-Steinberg dithering Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day31.html
