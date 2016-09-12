@@ -160,7 +160,7 @@ body {
         document.getElementById('pos2').innerHTML = '0';
     });
     //parameters
-    var num_of_randompoints = 1, ratio_of_random_edge_points = 750, triangle_th = 200;
+    var num_of_randompoints = 1, ratio_of_random_edge_points = 750, triangle_th = 215;
     //
     var imageLoader = document.getElementById('imageLoader');
     var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), cw = 1000, ch = 1000;
@@ -195,7 +195,7 @@ body {
     function process()
     {
         var triangle_points = [];
-        num_of_randompoints = parseInt(document.getElementById('pos1').innerHTML, 10) * 2 + 1;
+        num_of_randompoints = parseInt(document.getElementById('pos1').innerHTML, 10) * 3 + 1;
         ratio_of_random_edge_points = 750 - 7 * parseInt(document.getElementById('pos2').innerHTML, 10);
         
         sobel();
