@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 32</title>
+<script type="text/javascript" src="./delaunay.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<script type="text/javascript" src="./mootools.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+
+<style>
+body {
+    height: 1250px;
+    background: #202020;
+    font-family: 'Raleway', sans-serif;
+}
+#l1 {
+    position: absolute;
+    top: 250px;
+    left: 20px;
+    color: #fff;
+}
+#s1 {
+    position: absolute;
+    top: 280px;
+    left: 20px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+#slideHandle1 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+#pos1 {
+    position: absolute;
+    top: 280px;
+    left: 250px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+#l2 {
+    position: absolute;
+    top: 320px;
+    left: 20px;
+    color: #fff;
+}
+#s2 {
+    position: absolute;
+    top: 350px;
+    left: 20px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+#slideHandle2 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+#pos2 {
+    position: absolute;
+    top: 350px;
+    left: 250px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+#l {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    color: #fff;
+    font-size: 25px;
+    font-family: 'Raleway', sans-serif;
+}
+#imageLoader {
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    color: #fff;
+    font-size: 18px;
+    font-family: 'Raleway', sans-serif;
+}
+#b {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    font-size: 18px;
+    z-index: 11;
+}
+#r {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    z-index: 10;
+}
+#g {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    z-index: 12;
+}
+#but {
+    position: absolute;
+    top: 300px;
+    left: 20px;
+    font-size: 18px;
+}
+#originalCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    background: #404040;
+}
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #808080;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  font-family: 'Raleway', sans-serif;
+}
+.button:hover {background-color: #606060}
+.button:active {
+  background-color: #404040;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+</head>
+<body>
+    <h1 style = "text-align: center; color:#fff; font-size: 50px">Floyd-Steinberg dithering Image Generator</h1>
+    <label id = "l">Upload Image File:</label><br/>
+    <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
+    <button id = "but" class = "button" onclick = "process()" class = "btn">Process</button><br><br>
+    <canvas id="r"></canvas>
+    <canvas id="g"></canvas>
+    <canvas id="b"></canvas>
+    <canvas id="originalCanvas"></canvas>
+<script type="text/javascript">
+    var imageLoader = document.getElementById('imageLoader');
+    var canvas = document.getElementById("r"), canvas1 = document.getElementById("g"), canvas2 = document.getElementById("b"),
+    ctx = canvas.getContext("2d"), ctx1 = canvas1.getContext("2d"), ctx2 = canvas2.getContext("2d"), cw = 1000, ch = 1000;
+    var ori_canvas = document.getElementById("originalCanvas"), ori_ctx = ori_canvas.getContext("2d")
+    var vertices = [];
+    canvas.width = cw;
+    canvas.height = ch;
+    canvas1.width = cw;
+    canvas1.height = ch;
+    canvas2.width = cw;
+    canvas2.height = ch;
+    ori_canvas.width = cw;
+    ori_canvas.height = ch;
+    imageLoader.addEventListener('change', handleImage, false);
+    function handleImage(e)
+    {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var reader = new FileReader();
+        reader.onload = function(event)
+        {
+            let img = new Image();
+            img.onload = function()
+            {    ori_canvas.width = img.width*cw/img.width;
+                 ori_canvas.height = img.height*cw/img.width;  
+                 canvas.width = img.width*cw/img.width;
+                 canvas.height = img.height*cw/img.width;  
+                 canvas1.width = img.width*cw/img.width;
+                 canvas1.height = img.height*cw/img.width;  
+                 canvas2.width = img.width*cw/img.width;
+                 canvas2.height = img.height*cw/img.width;                            
+                 ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
+                 img.width = ori_canvas.width;
+                 img.height = ori_canvas.height;
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]); 
+    }
+    function process()
+    {
+        dithering();
+    }
+    function dithering()
+    {
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        ctx1.clearRect(0,0,canvas.width, canvas.height);
+        ctx2.clearRect(0,0,canvas.width, canvas.height);
+        for (let color = 0; color < 3; color++)
+        {
+            var imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height), data = [], output = ctx.createImageData(canvas.width,canvas.height), res = output.data;
+            for (let i = 0; i < imageData.data.length; i++)
+                data.push(imageData.data[i]);
+            for (let y = 1; y < canvas.height-1; y++)
+            {
+                for (let x = 1; x < canvas.width-1; x++)
+                {
+                    let ind = (y * canvas.width + x) * 4;
+                    if (data[ind + color] < 128)
+                    {
+                        res[((y-1) * canvas.width + x-1) * 4 + color] = 0;
+                        res[((y-1) * canvas.width + x-1) * 4 + 3] = 0;
+                        quant_error = data[ind + color];
+                    }
+                    else
+                    {
+                        if (color == 1)
+                            res[((y-1) * canvas.width + x-1) * 4 + color-1] = 255;
+                        res[((y-1) * canvas.width + x-1) * 4 + color] = 255;
+                        res[((y-1) * canvas.width + x-1) * 4 + 3] = 255;
+                        quant_error = data[ind + color]-255;
+                    }
+                    data[(y * canvas.width + x+1) * 4 + color] = data[(y * canvas.width + x+1) * 4 + color] + quant_error * 7 / 16;
+
+                    data[((y+1) * canvas.width + x-1) * 4 + color] = data[((y+1) * canvas.width + x-1) * 4 + color] + quant_error * 3 / 16;
+
+                    data[((y+1) * canvas.width + x) * 4 + color] = data[((y+1) * canvas.width + x) * 4 + color] + quant_error * 5 / 16;
+ 
+                    data[((y+1) * canvas.width + x+1) * 4 + color] = data[((y+1) * canvas.width + x+1) * 4 + color] + quant_error * 1 / 16;
+                }
+            }
+            if (color === 0)
+                ctx.putImageData(output, 0, 0);
+            else if (color === 1)
+                ctx1.putImageData(output, 0, 0);
+            else
+                ctx2.putImageData(output, 0, 0);
+        }
+        ori_ctx.clearRect(0,0,canvas.width, canvas.height);
+    }
+</script>
+</body>
+</html>
