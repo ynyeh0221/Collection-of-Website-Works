@@ -18,11 +18,7 @@ body {
     border-radius:25px;
     margin: 4px;
 }
-.square:hover {
-    -moz-box-shadow: inset 0 0 20px #fff,inset 0 0 10px #fff;
-    -webkit-box-shadow: inset 0 0 20px #fff, inset 0 0 10px #fff;
-    box-shadow: inset 0 0 20px #fff, inset 0 0 10px #fff;
-}
+
 #score {
     position: absolute;
     left: 850px;
@@ -125,8 +121,8 @@ function boing() {
         audioElementIndex += 1;
     }
 }
-var colors = ["rgb(26, 83, 92)", "rgb(78, 205, 196)", "rgb(247, 255, 247)", "rgb(255, 107, 107)", "rgb(255, 230, 109)", "rgb(202, 142, 255)"];
-var click1 = null, click2 = null, score = 0, len = 16, m = 3, s = 0, t;
+var colors = ["rgb(26, 83, 92)", "rgb(78, 205, 196)", "rgb(247, 255, 247)", "rgb(255, 107, 107)", "rgb(255, 230, 109)"];
+var click = null, score = 0, bonus = 20, len = 16, m = 1, s = 0, t;
 function count()
 {
     s --;
@@ -146,7 +142,7 @@ function count()
         if (m > 0)
             m -= 1;
     }
-    if (m < 1)
+    if (m < 1 && s < 20)
         document.getElementById("time").style.color = "#ff0000";
     if (s < 10)
         document.getElementById("time").innerHTML = "Time: " + '0' + m + ':' + '0' + s;
@@ -165,7 +161,7 @@ $(document).ready(function(){
         $('body').append('<div class = "square" onclick = "check(id)" id='+ id +' />');
         document.getElementById(id).style.left = (100 + (40*j)) + 'px';
         document.getElementById(id).style.top = (10 + (40*i)) + 'px';
-        document.getElementById(id).style.background = colors[Math.floor(Math.random() * 6)];
+        document.getElementById(id).style.background = colors[Math.floor(Math.random() * colors.length)];
     }
   }
   document.getElementById("time").innerHTML = "Time: " + '0' + m + ':' + '0' + s;
@@ -173,47 +169,15 @@ $(document).ready(function(){
 });
 function check(sid)
 {
-    boing();
-    if (click1 === null)
-    {
-        click1 = sid;
-        return;
-    }
-    else
-    {
-        if (click1 == sid 
-            || (sid != parseInt(click1) + len && sid != parseInt(click1) - len && sid != parseInt(click1) + 1 && sid != parseInt(click1) - 1)
-            || document.getElementById(click1).style.background == document.getElementById(sid).style.background)
-        {
-            click1 = null;
-            click2 = null;
+        boing();
+        click = sid;
+        let path = dfs(click, document.getElementById(click).style.background);
+        if (path.length < 3)
             return;
-        }
-        click2 = sid;
-        swap(click1, click2);
-        let path1 = dfs(click1, document.getElementById(click1).style.background);
-        let path2 = dfs(click2, document.getElementById(click2).style.background);
-        if (path1.length < 3 && path2.length < 3)
-        {
-            swap(click1, click2);
-            click1 = null;
-            click2 = null;
-            return;
-        }
-        score += 1 * (path1.length + path2.length);
+        score += path.length >= 5 ? path.length : path.length + bonus;
         document.getElementById("score").innerHTML = score < 10 ? "Score: " + '000' + score : score < 100 ? "Score: " + '00' + score : score < 1000 ? "Score: " + '0' + score : "Score: " + score;
-        click1 = null;
-        click2 = null;
-        if (path1.length >= 3)
-        {
-            for (let i = 0; i < path1.length; i++)
-                document.getElementById(path1[i]).style.background = "rgb(0, 0, 0)";
-        }
-        if (path2.length >= 3)
-        {
-            for (let i = 0; i < path2.length; i++)
-                document.getElementById(path2[i]).style.background = "rgb(0, 0, 0)";
-        }
+        for (let i = 0; i < path.length; i++)
+            document.getElementById(path[i]).style.background = "rgb(0, 0, 0)";
         for (let ii = len - 1; ii >= 0; ii--)
         {
             for (let j = 0; j < len; j++)
@@ -231,60 +195,6 @@ function check(sid)
                 }
             }
         }
-        for (let i = 0; i < len; i++)
-        {
-            for (let j = 0; j < len; j++)
-            {
-                if (document.getElementById(i * len + j).style.background == "rgb(0, 0, 0)")
-                    document.getElementById(i * len + j).style.background = colors[Math.floor(Math.random() * 6)];
-            }
-        }
-
-        let paths = path1.slice().concat(path2);
-        for (let nc = 0; nc < 3; nc ++) //Check for combo
-        {
-            let temp_path = [];
-            for (let i = 0; i < paths.length; i++)
-            {
-                let p = dfs(paths[i], document.getElementById(paths[i]).style.background);
-                if (p.length >= 3)
-                {
-                    temp_path = temp_path.concat(p);
-                    for (let j in p)
-                        document.getElementById(p[j]).style.background = "rgb(0, 0, 0)";
-                }
-            }
-            if (temp_path.length === 0)
-                break;
-            score += 1 * (temp_path.length);
-            for (let ii = len - 1; ii >= 0; ii--)
-            {
-                for (let j = 0; j < len; j++)
-                {
-                    let posi = ii, i = ii;
-                    if (document.getElementById(i * len + j).style.background == "rgb(0, 0, 0)")
-                    {
-                        while (i-1 >= 0 && document.getElementById((i-1) * len + j).style.background == "rgb(0, 0, 0)")
-                           i--;
-                        if (i-1 >= 0)
-                        {
-                            document.getElementById(posi * len + j).style.background = document.getElementById((i-1) * len + j).style.background;
-                            document.getElementById((i-1) * len + j).style.background = "rgb(0, 0, 0)";
-                        }
-                    }
-                }
-            }
-            for (let i = 0; i < len; i++)
-            {
-                for (let j = 0; j < len; j++)
-                {
-                    if (document.getElementById(i * len + j).style.background == "rgb(0, 0, 0)")
-                        document.getElementById(i * len + j).style.background = colors[Math.floor(Math.random() * 6)];
-                }
-            }
-            paths = temp_path.slice();
-        }
-    }
 }
 function dfs(sid, color)
 {
