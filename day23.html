@@ -167,10 +167,10 @@ $(document).ready(function(){
   document.getElementById("time").innerHTML = "Time: " + '0' + m + ':' + '0' + s;
   timer();
 });
-function check(sid)
+function check(click)
 {
-        boing();
-        click = sid;
+        if (document.getElementById(click).style.background != "rgb(0, 0, 0)")
+            boing();
         let path = dfs(click, document.getElementById(click).style.background);
         if (path.length < 3)
             return;
