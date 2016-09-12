@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#myCanvas {
+    background: #000;
+}
+</style>
+</head>
+<body onload = "start()">
+
+<canvas id = "myCanvas"></canvas>
+<script>
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+canvas.width = 1350;
+canvas.height = 650;
+var points = [], totalpoints = 100, ii = 0, jj = 0, t;
+function start()
+{
+    for (let i = 0; i < totalpoints; i++)
+    {
+        let p = new point(40 + 13 * i, Math.floor(Math.random()*500) + 120, '#ffff00');
+        points.push(p);
+    }
+    t = setInterval(update, 50);
+}
+function point(x, y, color)
+{
+    this.x = x;
+    this.y = y;
+    this.radius = 8;
+    this.color = color;
+    this.update = function()
+    {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+}
+function update()
+{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.font = "30px Arial";
+    ctx.fillStyle = '#ff0000';
+    ctx.fillText("Sorted",30,35);
+    ctx.fillStyle = '#ffff00';
+    ctx.fillText("Unsorted/ Uncompared",30,70);
+    ctx.fillStyle = '#0000ff';
+    ctx.fillText("Unsorted/ Compared",30,105);
+    points[jj].color = '#0000ff';
+    if (600 - points[jj].y > 600 - points[jj+1].y)
+    {
+        let temp = points[jj].y;
+        points[jj].y = points[jj+1].y;
+        points[jj+1].y = temp;
+    }
+    jj ++;
+    if (ii == totalpoints-1 && jj == totalpoints-1-ii)
+    {
+        clearInterval(t);
+    }
+    else if (jj == totalpoints-1-ii)
+    {
+        for (let i = 0; i < jj; i++)
+            points[i].color = '#ffff00';
+        points[jj].color = '#ff0000';
+        jj = 0;
+        ii ++;
+    }
+    for (let i = 0; i < totalpoints; i++)
+        points[i].update();
+}
+</script>
+</body>
+</html>
