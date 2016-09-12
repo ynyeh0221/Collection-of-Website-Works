@@ -221,7 +221,6 @@ body {
                 data[((y+1) * canvas.width + x+1) * 4 + 2] = data[((y+1) * canvas.width + x+1) * 4 + 2] + quant_error * 1 / 16;
             }
         }
-        console.log(output)
         ctx.putImageData(output, 0, 0);
     }
 </script>
