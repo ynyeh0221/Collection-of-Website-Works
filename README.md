@@ -54,9 +54,9 @@ Day 26: CSV Parser https://ynyeh0221.github.io/Collection-of-Website-Works/day26
 
 Day 27: Digital Clock with Balls https://ynyeh0221.github.io/Collection-of-Website-Works/day27.html
 
-Day 28: Low Poly Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day28.html
+Day 28: Low Poly Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day28.html
 
-Day 29: Screen Printing Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day29.html
+Day 29: Screen Printing Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day29.html
 
 Day 30: Visualization of Bubble Sort https://ynyeh0221.github.io/Collection-of-Website-Works/day30.html
 
