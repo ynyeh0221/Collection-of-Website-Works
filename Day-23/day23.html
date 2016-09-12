@@ -222,12 +222,6 @@ function dfs(sid, color)
     }
     return path;
 }
-function swap(a, b)
-{
-    let temp = document.getElementById(a).style.background;
-    document.getElementById(a).style.background = document.getElementById(b).style.background;
-    document.getElementById(b).style.background = temp;
-}
 function start_over()
 {
     window.open("./day23.html","_self");
