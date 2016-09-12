@@ -206,9 +206,6 @@ body {
     }
     function dithering()
     {
-        ctx.clearRect(0,0,canvas.width, canvas.height);
-        ctx1.clearRect(0,0,canvas.width, canvas.height);
-        ctx2.clearRect(0,0,canvas.width, canvas.height);
         for (let color = 0; color < 3; color++)
         {
             var imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height), data = [], output = ctx.createImageData(canvas.width,canvas.height), res = output.data;
@@ -230,7 +227,7 @@ body {
                         if (color == 1)
                             res[((y-1) * canvas.width + x-1) * 4 + color-1] = 255;
                         res[((y-1) * canvas.width + x-1) * 4 + color] = 255;
-                        res[((y-1) * canvas.width + x-1) * 4 + 3] = 255;
+                        res[((y-1) * canvas.width + x-1) * 4 + 3] = 200+5*color;
                         quant_error = data[ind + color]-255;
                     }
                     data[(y * canvas.width + x+1) * 4 + color] = data[(y * canvas.width + x+1) * 4 + color] + quant_error * 7 / 16;
@@ -249,7 +246,8 @@ body {
             else
                 ctx2.putImageData(output, 0, 0);
         }
-        ori_ctx.clearRect(0,0,canvas.width, canvas.height);
+        ori_ctx.fillStyle = "#000";
+        ori_ctx.fillRect(0,0,canvas.width, canvas.height);
     }
 </script>
 </body>
