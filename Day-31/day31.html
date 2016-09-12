@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 31</title>
+<script type="text/javascript" src="./delaunay.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<script type="text/javascript" src="./mootools.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+
+<style>
+body {
+    height: 1250px;
+    background: #202020;
+    font-family: 'Raleway', sans-serif;
+}
+#l1 {
+    position: absolute;
+    top: 250px;
+    left: 20px;
+    color: #fff;
+}
+#s1 {
+    position: absolute;
+    top: 280px;
+    left: 20px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+#slideHandle1 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+#pos1 {
+    position: absolute;
+    top: 280px;
+    left: 250px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+#l2 {
+    position: absolute;
+    top: 320px;
+    left: 20px;
+    color: #fff;
+}
+#s2 {
+    position: absolute;
+    top: 350px;
+    left: 20px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+#slideHandle2 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+#pos2 {
+    position: absolute;
+    top: 350px;
+    left: 250px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+#l {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    color: #fff;
+    font-size: 25px;
+    font-family: 'Raleway', sans-serif;
+}
+#imageLoader {
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    color: #fff;
+    font-size: 18px;
+    font-family: 'Raleway', sans-serif;
+}
+#b {
+    position: absolute;
+    top: 300px;
+    left: 20px;
+    font-size: 18px;
+}
+#myCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    z-index: 10;
+}
+#originalCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    background: #404040;
+}
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #808080;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  font-family: 'Raleway', sans-serif;
+}
+.button:hover {background-color: #606060}
+.button:active {
+  background-color: #404040;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+</head>
+<body>
+    <h1 style = "text-align: center; color:#fff; font-size: 50px">Floyd-Steinberg dithering Image Generator</h1>
+    <label id = "l">Upload Image File:</label><br/>
+    <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
+    <button id = "b" class = "button" onclick = "process()" class = "btn">Process</button><br>
+    <canvas id="myCanvas"></canvas>
+    <canvas id="originalCanvas"></canvas>
+<script type="text/javascript">
+    var imageLoader = document.getElementById('imageLoader');
+    var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), cw = 1000, ch = 1000;
+    var ori_canvas = document.getElementById("originalCanvas"), ori_ctx = ori_canvas.getContext("2d")
+    var vertices = [];
+    canvas.width = cw;
+    canvas.height = ch;
+    ori_canvas.width = cw;
+    ori_canvas.height = ch;
+    imageLoader.addEventListener('change', handleImage, false);
+    function handleImage(e)
+    {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var reader = new FileReader();
+        reader.onload = function(event)
+        {
+            let img = new Image();
+            img.onload = function()
+            {    ori_canvas.width = img.width*cw/img.width;
+                 ori_canvas.height = img.height*cw/img.width;  
+                 canvas.width = img.width*cw/img.width;
+                 canvas.height = img.height*cw/img.width;                            
+                 ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
+                 img.width = ori_canvas.width;
+                 img.height = ori_canvas.height;
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]); 
+    }
+    function process()
+    {
+        dithering();
+    }
+    function dithering()
+    {
+        var imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height), data = imageData.data, output = ctx.createImageData(canvas.width,canvas.height), res = output.data;
+        for (let y = 1; y < canvas.height-1; y++)
+        {
+            for (let x = 1; x < canvas.width-1; x++)
+            {
+                let ind = (y * canvas.width + x) * 4;
+                if (data[ind] < 128)
+                {
+                    res[((y-1) * canvas.width + x-1) * 4] = 0;
+                    res[((y-1) * canvas.width + x-1) * 4 + 1] = 0;
+                    res[((y-1) * canvas.width + x-1) * 4 + 2] = 0;
+                    res[((y-1) * canvas.width + x-1) * 4 + 3] = data[((y-1) * canvas.width + x-1) * 4 + 3];
+                    quant_error = data[ind];
+                }
+                else
+                {
+                    res[((y-1) * canvas.width + x-1) * 4] = 255;
+                    res[((y-1) * canvas.width + x-1) * 4 + 1] = 255;
+                    res[((y-1) * canvas.width + x-1) * 4 + 2] = 255;
+                    res[((y-1) * canvas.width + x-1) * 4 + 3] = data[((y-1) * canvas.width + x-1) * 4 + 3];
+                    quant_error = data[ind]-255;
+                }
+                data[(y * canvas.width + x+1) * 4] = data[(y * canvas.width + x+1) * 4] + quant_error * 7 / 16;
+                data[(y * canvas.width + x+1) * 4 + 1] = data[(y * canvas.width + x+1) * 4 + 1] + quant_error * 7 / 16;
+                data[(y * canvas.width + x+1) * 4 + 2] = data[(y * canvas.width + x+1) * 4 + 2] + quant_error * 7 / 16;
+
+                data[((y+1) * canvas.width + x-1) * 4] = data[((y+1) * canvas.width + x-1) * 4] + quant_error * 3 / 16;
+                data[((y+1) * canvas.width + x-1) * 4 + 1] = data[((y+1) * canvas.width + x-1) * 4 + 1] + quant_error * 3 / 16;
+                data[((y+1) * canvas.width + x-1) * 4 + 2] = data[((y+1) * canvas.width + x-1) * 4 + 3] + quant_error * 3 / 16;
+
+                data[((y+1) * canvas.width + x) * 4] = data[((y+1) * canvas.width + x) * 4] + quant_error * 5 / 16;
+                data[((y+1) * canvas.width + x) * 4 + 1] = data[((y+1) * canvas.width + x) * 4 + 1] + quant_error * 5 / 16;
+                data[((y+1) * canvas.width + x) * 4 + 2] = data[((y+1) * canvas.width + x) * 4 + 2] + quant_error * 5 / 16;
+ 
+                data[((y+1) * canvas.width + x+1) * 4] = data[((y+1) * canvas.width + x+1) * 4] + quant_error * 1 / 16;
+                data[((y+1) * canvas.width + x+1) * 4 + 1] = data[((y+1) * canvas.width + x+1) * 4 + 1] + quant_error * 1 / 16;
+                data[((y+1) * canvas.width + x+1) * 4 + 2] = data[((y+1) * canvas.width + x+1) * 4 + 2] + quant_error * 1 / 16;
+            }
+        }
+        console.log(output)
+        ctx.putImageData(output, 0, 0);
+    }
+</script>
+</body>
+</html>
