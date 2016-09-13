@@ -69,7 +69,7 @@ var myGameArea = {
         });
     },
     clear : function() {
-        this.context.fillStyle = "rgba(0,0,0,0.3)"
+        this.context.fillStyle = "rgba(0,0,0,0.2)"
         this.context.fillRect(0, 0, w, h);
     }
 }
@@ -105,7 +105,7 @@ function firework(x, y, speedX, speedY, radius)
     this.speedX = speedX;
     this.speedY = speedY;
     this.radius = radius;
-    this.gravity = 0.35;
+    this.gravity = 0.1;
     this.gravityspeed = 0;
     this.update = function()
     {
@@ -120,7 +120,7 @@ function firework(x, y, speedX, speedY, radius)
         this.gravityspeed += this.gravity;
         this.x += this.speedX;
         this.y += this.speedY + this.gravityspeed;
-        this.radius += 0.02;
+        this.radius += 0.015;
     }
 }
 function updateGameArea()
@@ -135,7 +135,9 @@ function updateGameArea()
             e_boing();
             for (let i = 0; i < num_of_fragments; i++)
             {
-                let f = new firework(p.x, p.y, Math.floor(Math.random()*15)-8, Math.floor(Math.random()*15)-13, 3);
+                let sy = Math.random()*10-9;
+                sx = sy < -5 ? Math.random()*7.2 - 3.6 : sy < -0.5 ? Math.random() * 10 -5 : Math.random()*7.2 - 3.6;
+                let f = new firework(p.x, p.y, sx, sy, 3);
                 fragments.push(f);
             }
             endy = null;
