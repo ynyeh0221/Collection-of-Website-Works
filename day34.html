@@ -133,7 +133,6 @@ function updateGameArea()
         if (p.y <= endy)
         {
             e_boing();
-            fragments = [];
             for (let i = 0; i < num_of_fragments; i++)
             {
                 let sy = Math.random()*10-9;
@@ -150,6 +149,8 @@ function updateGameArea()
     {
         fragments[i].getPos();
         fragments[i].update();
+        if (fragments[i].y > h)
+            fragments.splice(i, 1);
     }
 }
 </script>
