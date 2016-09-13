@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 34</title>
+<link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+<style>
+#myCanvas {
+    background: #000;
+    z-index: 1;
+}
+#instruction {
+    position: absolute;
+    left: 400px;
+    top: 250px;
+    color: #ff0;
+    z-index: 10;
+    font-family: 'Varela Round', sans-serif;
+}
+</style>
+</head>
+<body onload = "startGame()">
+<h1 id = "instruction">Click the sky to let off fireworks!</h1>
+<canvas id = "myCanvas"></canvas>
+<audio id="e_audio1">
+   <source src="bomb.mp3" type="audio/mp3">
+ </audio>
+ <audio id="e_audio2">
+   <source src="bomb.mp3" type="audio/mp3">
+ </audio>
+ <audio id="e_audio3">
+   <source src="bomb.mp3" type="audio/mp3">
+ </audio>
+<script>
+var e_audioElementCount = 3;
+var e_audioElementIndex = 1;
+function e_boing() {
+    let audioElementName = "e_audio" + e_audioElementIndex;
+    let audio = document.getElementById(audioElementName);
+    audio.currentTime = 0;
+    audio.play();
+    if (e_audioElementIndex == e_audioElementCount) {
+        e_audioElementIndex = 1;
+    }
+    else {
+        e_audioElementIndex += 1;
+    }
+}
+var w = 1350, h = 600, p, endy, num_of_fragments = 300, fragments = [], able = true;
+var myGameArea = {
+    canvas : document.getElementById("myCanvas"),
+    start : function() {
+        this.canvas.width = w;
+        this.canvas.height = h;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.interval = setInterval(updateGameArea, 20);
+        window.addEventListener('mousemove', function (e) {
+            myGameArea.x = e.pageX;
+            myGameArea.y = e.pageY;
+        });
+        window.addEventListener('click', function () {
+            document.getElementById("instruction").style.display = "none";
+            if (able)
+            {
+                p = new path(myGameArea.x, h, 3);
+                endy = myGameArea.y;
+                able = false;
+            }
+        });
+    },
+    clear : function() {
+        this.context.fillStyle = "rgba(0,0,0,0.3)"
+        this.context.fillRect(0, 0, w, h);
+    }
+}
+function startGame()
+{
+    myGameArea.start();
+}
+function path(x, y, radius)
+{
+    this.x = x;
+    this.y = y;
+    this.speedX = 0;
+    this.speedY = -5;
+    this.radius = radius;
+    this.update = function()
+    {
+        var ctx = document.getElementById("myCanvas").getContext("2d");
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = "rgba(255, 255, 255, 1)";
+        ctx.fill();
+    }
+    this.getPos = function()
+    {
+        this.x += this.speedX;
+        this.y += this.speedY;
+    }
+}
+function firework(x, y, speedX, speedY, radius)
+{
+    this.x = x;
+    this.y = y;
+    this.speedX = speedX;
+    this.speedY = speedY;
+    this.radius = radius;
+    this.gravity = 0.35;
+    this.gravityspeed = 0;
+    this.update = function()
+    {
+        var ctx = document.getElementById("myCanvas").getContext("2d");
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = "rgba("+ (Math.floor(Math.random() * 200) + 55) +", " + (Math.floor(Math.random() * 200) + 55) +", " + (Math.floor(Math.random() * 200) + 55) + ", 0.8)";
+        ctx.fill();
+    }
+    this.getPos = function()
+    {
+        this.gravityspeed += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravityspeed;
+        this.radius += 0.02;
+    }
+}
+function updateGameArea()
+{
+    myGameArea.clear();
+    if (p)
+    {
+        p.getPos();
+        p.update();
+        if (p.y <= endy)
+        {
+            e_boing();
+            for (let i = 0; i < num_of_fragments; i++)
+            {
+                let f = new firework(p.x, p.y, Math.floor(Math.random()*15)-8, Math.floor(Math.random()*15)-13, 3);
+                fragments.push(f);
+            }
+            endy = null;
+            p = null;
+            able = true;
+        }
+    }
+    for (let i = 0; i < fragments.length; i++)
+    {
+        fragments[i].getPos();
+        fragments[i].update();
+    }
+}
+</script>
+</body>
+</html>
