@@ -133,6 +133,7 @@ function updateGameArea()
         if (p.y <= endy)
         {
             e_boing();
+            fragments = [];
             for (let i = 0; i < num_of_fragments; i++)
             {
                 let sy = Math.random()*10-9;
