@@ -178,6 +178,8 @@ body {
     function handleImage(e)
     {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx1.clearRect(0, 0, canvas.width, canvas.height);
+        ctx2.clearRect(0, 0, canvas.width, canvas.height);
         ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
         var reader = new FileReader();
         reader.onload = function(event)
