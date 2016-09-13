@@ -225,7 +225,7 @@ body {
                     else
                     {
                         res[((y-1) * canvas.width + x-1) * 4 + color] = 255;
-                        res[((y-1) * canvas.width + x-1) * 4 + 3] = color === 0 ? 255: color === 1 ? 240 : 240;
+                        res[((y-1) * canvas.width + x-1) * 4 + 3] = 255;
                         quant_error = data[ind + color]-255;
                     }
                     data[(y * canvas.width + x+1) * 4 + color] = data[(y * canvas.width + x+1) * 4 + color] + quant_error * 7 / 16;
