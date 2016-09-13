@@ -102,7 +102,7 @@ body {
     top: 160px;
     left: 300px;
     font-size: 18px;
-    z-index: 12;
+    z-index: 11;
 }
 #r {
     position: absolute;
@@ -114,7 +114,7 @@ body {
     position: absolute;
     top: 160px;
     left: 300px;
-    z-index: 11;
+    z-index: 12;
 }
 #but {
     position: absolute;
@@ -227,7 +227,7 @@ body {
                         if (color == 1)
                             res[((y-1) * canvas.width + x-1) * 4 + color-1] = 255;
                         res[((y-1) * canvas.width + x-1) * 4 + color] = 255;
-                        res[((y-1) * canvas.width + x-1) * 4 + 3] = 230 - 10*color;
+                        res[((y-1) * canvas.width + x-1) * 4 + 3] = color === 0 ? 230: color === 1 ? 210 : 220;
                         quant_error = data[ind + color]-255;
                     }
                     data[(y * canvas.width + x+1) * 4 + color] = data[(y * canvas.width + x+1) * 4 + color] + quant_error * 7 / 16;
