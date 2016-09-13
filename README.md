@@ -65,3 +65,5 @@ Day 31: Floyd-Steinberg dithering Image Generator https://ynyeh0221.github.io/Co
 Day 32: RGB Floyd-Steinberg dithering Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day32.html
 
 Day 33: Shortest Path Maze-Image Solver https://ynyeh0221.github.io/Collection-of-Website-Works/day33.html
+
+Day 34: Fireworks https://ynyeh0221.github.io/Collection-of-Website-Works/day34.html
