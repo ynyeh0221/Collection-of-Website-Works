@@ -117,7 +117,7 @@ function firework(x, y, speedX, speedY, radius)
     }
     this.getPos = function()
     {
-        this.radius -= 0.01;
+        this.radius = this.radius > 0.025 ? this.radius - 0.025 : 0.001;
         this.gravityspeed += this.gravity;
         this.x += this.speedX;
         this.y += this.speedY + this.gravityspeed;
