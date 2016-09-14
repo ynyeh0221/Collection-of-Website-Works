@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 35</title>
+<link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+<style>
+#myCanvas {
+    background: #000;
+}
+</style>
+</head>
+<body onload = "startGame()">
+<canvas id = "myCanvas"></canvas>
+<script>
+var w = 1350, h = 600, w1, l = 20, ww = Math.floor(w/(l*Math.sqrt(2))), hh = Math.floor(h/(l*Math.sqrt(2))), directions = ["lu", "ru", "ld", "rd"], walkers = [], max_walkers = 1;
+var myGameArea = {
+    canvas : document.getElementById("myCanvas"),
+    start : function() {
+        this.canvas.width = w;
+        this.canvas.height = h;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.interval = setInterval(updateGameArea, 30);
+    },
+    clear : function() {
+        this.context.fillStyle = "rgba(0,0,0,0.06)"
+        this.context.fillRect(0, 0, w, h);
+    }
+}
+
+function startGame()
+{
+    myGameArea.start();
+    for (let i = 0; i < max_walkers; i++)
+    {
+        let walk = new walker((l*Math.sqrt(2)) + Math.floor(Math.random()*ww)*(l*Math.sqrt(2)), Math.floor(Math.random()*hh)*(l*Math.sqrt(2)), "rgba(0,255,0," + 1 + ")", directions[Math.floor(Math.random() * 4)]);
+        walkers.push(walk);
+    }
+}
+
+function walker(x, y, color, dir)
+{
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.dir = dir;
+    this.update = function()
+    {
+        var ctx=document.getElementById("myCanvas").getContext("2d");
+        ctx.beginPath();
+        ctx.moveTo(this.x,this.y);
+        if (this.dir == "lu")
+            ctx.lineTo(this.x+l,this.y+l);
+        else if (this.dir == "ru")
+            ctx.lineTo(this.x-l,this.y+l);
+        else if (this.dir == "ld")
+            ctx.lineTo(this.x+l,this.y-l);
+        else
+            ctx.lineTo(this.x-l,this.y-l);
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = this.color;
+        ctx.stroke();
+        this.dir = directions[Math.floor(Math.random() * 4)];
+    }
+    this.getPos = function()
+    {
+        if (this.dir == "lu")
+        {
+            this.x -= l;
+            this.y -= l;
+        }
+        else if (this.dir == "ru")
+        {
+            this.x += l;
+            this.y -= l;
+        }
+        else if (this.dir == "ld")
+        {
+            this.x -= l;
+            this.y += l;
+        }
+        else
+        {
+            this.x += l;
+            this.y += l;
+        }
+    }
+}
+function updateGameArea()
+{
+    myGameArea.clear();
+    for (let i = 0; i < max_walkers; i++)
+    {
+        walkers[i].getPos();
+        walkers[i].update();
+        if (walkers[i].x < 0 || walkers[i].x > w || walkers[i].y < 0 || walkers[i].y > h)
+            walkers[i] = new walker((l*Math.sqrt(2)) + Math.floor(Math.random()*ww)*(l*Math.sqrt(2)), Math.floor(Math.random()*hh)*(l*Math.sqrt(2)), "rgba(0,255,0," + 1 + ")", directions[Math.floor(Math.random() * 4)]);
+    }
+}
+</script>
+</body>
+</html>
