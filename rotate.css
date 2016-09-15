@@ -1,0 +1,1117 @@
+body {
+    width: 1350px;
+    height: 600px;
+    background: #000;
+}
+div {
+    width: 20px;
+    height: 600px;
+    background: #fff;
+    opacity: 0.3;
+    border: 0x solid black;
+    transform-style: preserve-3d;
+}
+@-webkit-keyframes r1 {
+        25%  {background: red;}
+        75% {background: white;}
+	to {
+	    transform: rotateX(360deg);
+	}
+}
+@-moz-keyframes r1 {
+        25%  {background: red;}
+        75% {background: white;}
+	to {
+	    transform: rotateX(360deg);
+	}
+}
+@-o-keyframes r1 {
+        25%  {background: red;}
+        75% {background: white;}
+	to {
+	    transform: rotateX(360deg);
+	}
+}
+@keyframes r1 {
+	25%  {background: red;}
+        75% {background: white;}
+	to {
+	    transform: rotateX(360deg);
+	}
+}
+@-webkit-keyframes r2 {
+        22%  {background: red;}
+        72% {background: white;}
+	to {
+	    transform: rotateX(370deg);
+	}
+}
+@-moz-keyframes r2 {
+        22%  {background: red;}
+        72% {background: white;}
+	to {
+	    transform: rotateX(370deg);
+	}
+}
+@-o-keyframes r2 {
+        22%  {background: red;}
+        72% {background: white;}
+	to {
+	    transform: rotateX(370deg);
+	}
+}
+@keyframes r2 {
+        22%  {background: red;}
+        72% {background: white;}
+        to {
+	    transform: rotateX(370deg);
+	}
+}
+@-webkit-keyframes r3 {
+        19%  {background: red;}
+        69% {background: white;}
+	to {
+	    transform: rotateX(380deg);
+	}
+}
+@-moz-keyframes r3 {
+        19%  {background: red;}
+        69% {background: white;}
+	to {
+	    transform: rotateX(380deg);
+	}
+}
+@-o-keyframes r3 {
+        19%  {background: red;}
+        69% {background: white;}
+	to {
+	    transform: rotateX(380deg);
+	}
+}
+@keyframes r3 {
+        19%  {background: red;}
+        69% {background: white;}
+        to {
+	    transform: rotateX(380deg);
+	}
+}
+@-webkit-keyframes r4 {
+        16%  {background: red;}
+        66% {background: white;}
+	to {
+	    transform: rotateX(390deg);
+	}
+}
+@-moz-keyframes r4 {
+        16%  {background: red;}
+        66% {background: white;}
+	to {
+	    transform: rotateX(390deg);
+	}
+}
+@-o-keyframes r4 {
+        16%  {background: red;}
+        66% {background: white;}
+	to {
+	    transform: rotateX(390deg);
+	}
+}
+@keyframes r4 {
+        16%  {background: red;}
+        66% {background: white;}
+        to {
+	    transform: rotateX(390deg);
+	}
+}
+@-webkit-keyframes r5 {
+        13%  {background: red;}
+        63% {background: white;}
+	to {
+	    transform: rotateX(400deg);
+	}
+}
+@-moz-keyframes r5 {
+        13%  {background: red;}
+        63% {background: white;}
+	to {
+	    transform: rotateX(400deg);
+	}
+}
+@-o-keyframes r5 {
+        13%  {background: red;}
+        63% {background: white;}
+	to {
+	    transform: rotateX(400deg);
+	}
+}
+@keyframes r5 {
+        13%  {background: red;}
+        63% {background: white;}
+        to {
+	    transform: rotateX(400deg);
+	}
+}
+@-webkit-keyframes r6 {
+        10%  {background: red;}
+        60% {background: white;}
+	to {
+	    transform: rotateX(410deg);
+	}
+}
+@-moz-keyframes r6 {
+        10%  {background: red;}
+        60% {background: white;}
+	to {
+	    transform: rotateX(410deg);
+	}
+}
+@-o-keyframes r6 {
+        10%  {background: red;}
+        60% {background: white;}
+	to {
+	    transform: rotateX(410deg);
+	}
+}
+@keyframes r6 {
+        10%  {background: red;}
+        60% {background: white;}
+        to {
+	    transform: rotateX(410deg);
+	}
+}
+@-webkit-keyframes r7 {
+        7%  {background: red;}
+        57% {background: white;}
+	to {
+	    transform: rotateX(420deg);
+	}
+}
+@-moz-keyframes r7 {
+        7%  {background: red;}
+        57% {background: white;}
+	to {
+	    transform: rotateX(420deg);
+	}
+}
+@-o-keyframes r7 {
+        7%  {background: red;}
+        57% {background: white;}
+	to {
+	    transform: rotateX(420deg);
+	}
+}
+@keyframes r7 {
+        7%  {background: red;}
+        57% {background: white;}
+        to {
+	    transform: rotateX(420deg);
+	}
+}
+@-webkit-keyframes r8 {
+        4%  {background: red;}
+        54% {background: white;}
+	to {
+	    transform: rotateX(430deg);
+	}
+}
+@-moz-keyframes r8 {
+        4%  {background: red;}
+        54% {background: white;}
+	to {
+	    transform: rotateX(430deg);
+	}
+}
+@-o-keyframes r8 {
+        4%  {background: red;}
+        54% {background: white;}
+	to {
+	    transform: rotateX(430deg);
+	}
+}
+@keyframes r8 {
+        4%  {background: red;}
+        54% {background: white;}
+        to {
+	    transform: rotateX(430deg);
+	}
+}
+@-webkit-keyframes r9 {
+        1%  {background: red;}
+        51% {background: white;}
+	to {
+	    transform: rotateX(440deg);
+	}
+}
+@-moz-keyframes r9 {
+        1%  {background: red;}
+        51% {background: white;}
+	to {
+	    transform: rotateX(440deg);
+	}
+}
+@-o-keyframes r9 {
+        1%  {background: red;}
+        51% {background: white;}
+	to {
+	    transform: rotateX(440deg);
+	}
+}
+@keyframes r9 {
+        1%  {background: red;}
+        51% {background: white;}
+        to {
+	    transform: rotateX(440deg);
+	}
+}
+@-webkit-keyframes r10 {
+        
+        48% {background: white;}
+        98%  {background: red;}
+	to {
+	    transform: rotateX(450deg);
+	}
+}
+@-moz-keyframes r10 {
+        
+        48% {background: white;}
+        98%  {background: red;}
+	to {
+	    transform: rotateX(450deg);
+	}
+}
+@-o-keyframes r10 {
+        
+        48% {background: white;}
+        98%  {background: red;}
+	to {
+	    transform: rotateX(450deg);
+	}
+}
+@keyframes r10 {
+        
+        48% {background: white;}
+        98%  {background: red;}
+        to {
+	    transform: rotateX(450deg);
+	}
+}
+@-webkit-keyframes r11 {
+        
+        45% {background: white;}
+        95%  {background: red;}
+	to {
+	    transform: rotateX(460deg);
+	}
+}
+@-moz-keyframes r11 {
+        
+        45% {background: white;}
+        95%  {background: red;}
+	to {
+	    transform: rotateX(460deg);
+	}
+}
+@-o-keyframes r11 {
+        
+        45% {background: white;}
+        95%  {background: red;}
+	to {
+	    transform: rotateX(460deg);
+	}
+}
+@keyframes r11 {
+        
+        45% {background: white;}
+        95%  {background: red;}
+        to {
+	    transform: rotateX(460deg);
+	}
+}
+@-webkit-keyframes r12 {
+        
+        42% {background: white;}
+        92%  {background: red;}
+	to {
+	    transform: rotateX(470deg);
+	}
+}
+@-moz-keyframes r12 {
+        
+        42% {background: white;}
+        92%  {background: red;}
+	to {
+	    transform: rotateX(470deg);
+	}
+}
+@-o-keyframes r12 {
+        
+        42% {background: white;}
+        92%  {background: red;}
+	to {
+	    transform: rotateX(470deg);
+	}
+}
+@keyframes r12 {
+        
+        42% {background: white;}
+        92%  {background: red;}
+        to {
+	    transform: rotateX(470deg);
+	}
+}
+@-webkit-keyframes r13 {
+        
+        38% {background: white;}
+        88%  {background: red;}
+	to {
+	    transform: rotateX(480deg);
+	}
+}
+@-moz-keyframes r13 {
+        
+        38% {background: white;}
+        88%  {background: red;}
+	to {
+	    transform: rotateX(480deg);
+	}
+}
+@-o-keyframes r13 {
+        
+        38% {background: white;}
+        88%  {background: red;}
+	to {
+	    transform: rotateX(480deg);
+	}
+}
+@keyframes r13 {
+        
+        38% {background: white;}
+        88%  {background: red;}
+        to {
+	    transform: rotateX(480deg);
+	}
+}
+@-webkit-keyframes r14 {
+        
+        35% {background: white;}
+        85%  {background: red;}
+	to {
+	    transform: rotateX(490deg);
+	}
+}
+@-moz-keyframes r14 {
+        
+        35% {background: white;}
+        85%  {background: red;}
+	to {
+	    transform: rotateX(490deg);
+	}
+}
+@-o-keyframes r14 {
+        
+        35% {background: white;}
+        85%  {background: red;}
+	to {
+	    transform: rotateX(490deg);
+	}
+}
+@keyframes r14 {
+        
+        35% {background: white;}
+        85%  {background: red;}
+        to {
+	    transform: rotateX(490deg);
+	}
+}
+@-webkit-keyframes r15 {
+        
+        32% {background: white;}
+        82%  {background: red;}
+	to {
+	    transform: rotateX(500deg);
+	}
+}
+@-moz-keyframes r15 {
+        
+        32% {background: white;}
+        82%  {background: red;}
+	to {
+	    transform: rotateX(500deg);
+	}
+}
+@-o-keyframes r15 {
+        
+        32% {background: white;}
+        82%  {background: red;}
+	to {
+	    transform: rotateX(500deg);
+	}
+}
+@keyframes r15 {
+        
+        32% {background: white;}
+        82%  {background: red;}
+        to {
+	    transform: rotateX(500deg);
+	}
+}
+@-webkit-keyframes r16 {
+        
+        29% {background: white;}
+        79%  {background: red;}
+	to {
+	    transform: rotateX(510deg);
+	}
+}
+@-moz-keyframes r16 {
+        
+        29% {background: white;}
+        79%  {background: red;}
+	to {
+	    transform: rotateX(510deg);
+	}
+}
+@-o-keyframes r16 {
+        
+        29% {background: white;}
+        79%  {background: red;}
+	to {
+	    transform: rotateX(510deg);
+	}
+}
+@keyframes r16 {
+        
+        29% {background: white;}
+        79%  {background: red;}
+        to {
+	    transform: rotateX(510deg);
+	}
+}
+@-webkit-keyframes r17 {
+        
+        26% {background: white;}
+        76%  {background: red;}
+	to {
+	    transform: rotateX(520deg);
+	}
+}
+@-moz-keyframes r17 {
+        
+        26% {background: white;}
+        76%  {background: red;}
+	to {
+	    transform: rotateX(520deg);
+	}
+}
+@-o-keyframes r17 {
+        
+        26% {background: white;}
+        76%  {background: red;}
+	to {
+	    transform: rotateX(520deg);
+	}
+}
+@keyframes r17 {
+        
+        26% {background: white;}
+        76%  {background: red;}
+        to {
+	    transform: rotateX(520deg);
+	}
+}
+@-webkit-keyframes r18 {
+        
+        23% {background: white;}
+        73%  {background: red;}
+	to {
+	    transform: rotateX(530deg);
+	}
+}
+@-moz-keyframes r18 {
+        
+        23% {background: white;}
+        73%  {background: red;}
+	to {
+	    transform: rotateX(530deg);
+	}
+}
+@-o-keyframes r18 {
+        
+        23% {background: white;}
+        73%  {background: red;}
+	to {
+	    transform: rotateX(530deg);
+	}
+}
+@keyframes r18 {
+        
+        23% {background: white;}
+        73%  {background: red;}
+        to {
+	    transform: rotateX(530deg);
+	}
+}
+@-webkit-keyframes r19 {
+        
+        20% {background: white;}
+        70%  {background: red;}
+	to {
+	    transform: rotateX(540deg);
+	}
+}
+@-moz-keyframes r19 {
+        
+        20% {background: white;}
+        70%  {background: red;}
+	to {
+	    transform: rotateX(540deg);
+	}
+}
+@-o-keyframes r19 {
+        
+        20% {background: white;}
+        70%  {background: red;}
+	to {
+	    transform: rotateX(540deg);
+	}
+}
+@keyframes r19 {
+        
+        20% {background: white;}
+        70%  {background: red;}
+        to {
+	    transform: rotateX(540deg);
+	}
+}
+@-webkit-keyframes r20 {
+        
+        17% {background: white;}
+        67%  {background: red;}
+	to {
+	    transform: rotateX(550deg);
+	}
+}
+@-moz-keyframes r20 {
+        
+        17% {background: white;}
+        67%  {background: red;}
+	to {
+	    transform: rotateX(550deg);
+	}
+}
+@-o-keyframes r20 {
+        
+        17% {background: white;}
+        67%  {background: red;}
+	to {
+	    transform: rotateX(550deg);
+	}
+}
+@keyframes r20 {
+        
+        17% {background: white;}
+        67%  {background: red;}
+        to {
+	    transform: rotateX(550deg);
+	}
+}
+@-webkit-keyframes r21 {
+        
+        14% {background: white;}
+        64%  {background: red;}
+	to {
+	    transform: rotateX(560deg);
+	}
+}
+@-moz-keyframes r21 {
+        
+        14% {background: white;}
+        64%  {background: red;}
+	to {
+	    transform: rotateX(560deg);
+	}
+}
+@-o-keyframes r21 {
+        
+        14% {background: white;}
+        64%  {background: red;}
+	to {
+	    transform: rotateX(560deg);
+	}
+}
+@keyframes r21 {
+        
+        14% {background: white;}
+        64%  {background: red;}
+        to {
+	    transform: rotateX(560deg);
+	}
+}
+@-webkit-keyframes r22 {
+        
+        11% {background: white;}
+        61%  {background: red;}
+	to {
+	    transform: rotateX(570deg);
+	}
+}
+@-moz-keyframes r22 {
+        
+        11% {background: white;}
+        61%  {background: red;}
+	to {
+	    transform: rotateX(570deg);
+	}
+}
+@-o-keyframes r22 {
+        
+        11% {background: white;}
+        61%  {background: red;}
+	to {
+	    transform: rotateX(570deg);
+	}
+}
+@keyframes r22 {
+        
+        11% {background: white;}
+        61%  {background: red;}
+        to {
+	    transform: rotateX(570deg);
+	}
+}
+@-webkit-keyframes r23 {
+        
+        8% {background: white;}
+        58%  {background: red;}
+	to {
+	    transform: rotateX(580deg);
+	}
+}
+@-moz-keyframes r23 {
+        
+        8% {background: white;}
+        58%  {background: red;}
+	to {
+	    transform: rotateX(580deg);
+	}
+}
+@-o-keyframes r23 {
+        
+        8% {background: white;}
+        58%  {background: red;}
+	to {
+	    transform: rotateX(580deg);
+	}
+}
+@keyframes r23 {
+        
+        8% {background: white;}
+        58%  {background: red;}
+        to {
+	    transform: rotateX(580deg);
+	}
+}
+@-webkit-keyframes r24 {
+        
+        5% {background: white;}
+        55%  {background: red;}
+	to {
+	    transform: rotateX(590deg);
+	}
+}
+@-moz-keyframes r24 {
+        
+        5% {background: white;}
+        55%  {background: red;}
+	to {
+	    transform: rotateX(590deg);
+	}
+}
+@-o-keyframes r24 {
+        
+        5% {background: white;}
+        55%  {background: red;}
+	to {
+	    transform: rotateX(590deg);
+	}
+}
+@keyframes r24 {
+        
+        5% {background: white;}
+        55%  {background: red;}
+        to {
+	    transform: rotateX(590deg);
+	}
+}
+@-webkit-keyframes r25 {
+        
+        2% {background: white;}
+        52%  {background: red;}
+	to {
+	    transform: rotateX(600deg);
+	}
+}
+@-moz-keyframes r25 {
+        
+        2% {background: white;}
+        52%  {background: red;}
+	to {
+	    transform: rotateX(600deg);
+	}
+}
+@-o-keyframes r25 {
+        
+        2% {background: white;}
+        52%  {background: red;}
+	to {
+	    transform: rotateX(600deg);
+	}
+}
+@keyframes r25 {
+        
+        2% {background: white;}
+        52%  {background: red;}
+        to {
+	    transform: rotateX(600deg);
+	}
+}
+@-webkit-keyframes r26 {
+        49%  {background: red;}
+        99% {background: white;}
+	to {
+	    transform: rotateX(610deg);
+	}
+}
+@-moz-keyframes r26 {
+        49%  {background: red;}
+        99% {background: white;}
+	to {
+	    transform: rotateX(610deg);
+	}
+}
+@-o-keyframes r26 {
+        49%  {background: red;}
+        99% {background: white;}
+	to {
+	    transform: rotateX(610deg);
+	}
+}
+@keyframes r26 {
+        49%  {background: red;}
+        99% {background: white;}
+        to {
+	    transform: rotateX(610deg);
+	}
+}
+@-webkit-keyframes r27 {
+        46%  {background: red;}
+        96% {background: white;}
+	to {
+	    transform: rotateX(620deg);
+	}
+}
+@-moz-keyframes r27 {
+        46%  {background: red;}
+        96% {background: white;}
+	to {
+	    transform: rotateX(620deg);
+	}
+}
+@-o-keyframes r27 {
+        46%  {background: red;}
+        96% {background: white;}
+	to {
+	    transform: rotateX(620deg);
+	}
+}
+@keyframes r27 {
+        46%  {background: red;}
+        96% {background: white;}
+        to {
+	    transform: rotateX(620deg);
+	}
+}
+#s1 {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    -webkit-animation: r1 3s infinite linear;
+    -moz-animation: r1 3s infinite linear;
+    -o-animation: r1 3s infinite linear;
+    animation: r1 3s infinite linear;
+}
+#s2 {
+    position: absolute;
+    left: 80px;
+    top: 30px;
+    -webkit-animation: r2 3s infinite linear;
+    -moz-animation: r2 3s infinite linear;
+    -o-animation: r2 3s infinite linear;
+    animation: r2 3s infinite linear;
+}
+#s3 {
+    position: absolute;
+    left: 130px;
+    top: 30px;
+    -webkit-animation: r3 3s infinite linear;
+    -moz-animation: r3 3s infinite linear;
+    -o-animation: r3 3s infinite linear;
+    animation: r3 3s infinite linear;
+}
+#s4 {
+    position: absolute;
+    left: 180px;
+    top: 30px;
+    -webkit-animation: r4 3s infinite linear;
+    -moz-animation: r4 3s infinite linear;
+    -o-animation: r4 3s infinite linear;
+    animation: r4 3s infinite linear;
+}
+#s5 {
+    position: absolute;
+    left: 230px;
+    top: 30px;
+    -webkit-animation: r5 3s infinite linear;
+    -moz-animation: r5 3s infinite linear;
+    -o-animation: r5 3s infinite linear;
+    animation: r5 3s infinite linear;
+}
+#s6 {
+    position: absolute;
+    left: 280px;
+    top: 30px;
+    -webkit-animation: r6 3s infinite linear;
+    -moz-animation: r6 3s infinite linear;
+    -o-animation: r6 3s infinite linear;
+    animation: r6 3s infinite linear;
+}
+#s7 {
+    position: absolute;
+    left: 330px;
+    top: 30px;
+    -webkit-animation: r7 3s infinite linear;
+    -moz-animation: r7 3s infinite linear;
+    -o-animation: r7 3s infinite linear;
+    animation: r7 3s infinite linear;
+}
+#s8 {
+    position: absolute;
+    left: 380px;
+    top: 30px;
+    -webkit-animation: r8 3s infinite linear;
+    -moz-animation: r8 3s infinite linear;
+    -o-animation: r8 3s infinite linear;
+    animation: r8 3s infinite linear;
+}
+#s9 {
+    position: absolute;
+    left: 430px;
+    top: 30px;
+    -webkit-animation: r9 3s infinite linear;
+    -moz-animation: r9 3s infinite linear;
+    -o-animation: r9 3s infinite linear;
+    animation: r9 3s infinite linear;
+}
+#s10 {
+    position: absolute;
+    left: 480px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r10 3s infinite linear;
+    -moz-animation: r10 3s infinite linear;
+    -o-animation: r10 3s infinite linear;
+    animation: r10 3s infinite linear;
+}
+#s11 {
+    position: absolute;
+    left: 530px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r11 3s infinite linear;
+    -moz-animation: r11 3s infinite linear;
+    -o-animation: r11 3s infinite linear;
+    animation: r11 3s infinite linear;
+}
+#s12 {
+    position: absolute;
+    left: 580px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r12 3s infinite linear;
+    -moz-animation: r12 3s infinite linear;
+    -o-animation: r12 3s infinite linear;
+    animation: r12 3s infinite linear;
+}
+#s13 {
+    position: absolute;
+    left: 630px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r13 3s infinite linear;
+    -moz-animation: r13 3s infinite linear;
+    -o-animation: r13 3s infinite linear;
+    animation: r13 3s infinite linear;
+}
+#s14 {
+    position: absolute;
+    left: 680px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r14 3s infinite linear;
+    -moz-animation: r14 3s infinite linear;
+    -o-animation: r14 3s infinite linear;
+    animation: r14 3s infinite linear;
+}
+#s15 {
+    position: absolute;
+    left: 730px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r15 3s infinite linear;
+    -moz-animation: r15 3s infinite linear;
+    -o-animation: r15 3s infinite linear;
+    animation: r15 3s infinite linear;
+}
+#s16 {
+    position: absolute;
+    left: 780px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r16 3s infinite linear;
+    -moz-animation: r16 3s infinite linear;
+    -o-animation: r16 3s infinite linear;
+    animation: r16 3s infinite linear;
+}
+#s17 {
+    position: absolute;
+    left: 830px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r17 3s infinite linear;
+    -moz-animation: r17 3s infinite linear;
+    -o-animation: r17 3s infinite linear;
+    animation: r17 3s infinite linear;
+}
+#s18 {
+    position: absolute;
+    left: 880px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r18 3s infinite linear;
+    -moz-animation: r18 3s infinite linear;
+    -o-animation: r18 3s infinite linear;
+    animation: r18 3s infinite linear;
+}
+#s19 {
+    position: absolute;
+    left: 930px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r19 3s infinite linear;
+    -moz-animation: r19 3s infinite linear;
+    -o-animation: r19 3s infinite linear;
+    animation: r19 3s infinite linear;
+}
+#s20 {
+    position: absolute;
+    left: 980px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r20 3s infinite linear;
+    -moz-animation: r20 3s infinite linear;
+    -o-animation: r20 3s infinite linear;
+    animation: r20 3s infinite linear;
+}
+#s21 {
+    position: absolute;
+    left: 1030px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r21 3s infinite linear;
+    -moz-animation: r21 3s infinite linear;
+    -o-animation: r21 3s infinite linear;
+    animation: r21 3s infinite linear;
+}
+#s22 {
+    position: absolute;
+    left: 1080px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r22 3s infinite linear;
+    -moz-animation: r22 3s infinite linear;
+    -o-animation: r22 3s infinite linear;
+    animation: r22 3s infinite linear;
+}
+#s23 {
+    position: absolute;
+    left: 1130px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r23 3s infinite linear;
+    -moz-animation: r23 3s infinite linear;
+    -o-animation: r23 3s infinite linear;
+    animation: r23 3s infinite linear;
+}
+#s24 {
+    position: absolute;
+    left: 1180px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r24 3s infinite linear;
+    -moz-animation: r24 3s infinite linear;
+    -o-animation: r24 3s infinite linear;
+    animation: r24 3s infinite linear;
+}
+#s25 {
+    position: absolute;
+    left: 1230px;
+    top: 30px;
+    background: red;
+    opacity: 0.3;
+    -webkit-animation: r25 3s infinite linear;
+    -moz-animation: r25 3s infinite linear;
+    -o-animation: r25 3s infinite linear;
+    animation: r25 3s infinite linear;
+}
+#s26 {
+    position: absolute;
+    left: 1280px;
+    top: 30px;
+    -webkit-animation: r26 3s infinite linear;
+    -moz-animation: r26 3s infinite linear;
+    -o-animation: r26 3s infinite linear;
+    animation: r26 3s infinite linear;
+}
+#s27 {
+    position: absolute;
+    left: 1330px;
+    top: 30px;
+    -webkit-animation: r27 3s infinite linear;
+    -moz-animation: r27 3s infinite linear;
+    -o-animation: r27 3s infinite linear;
+    animation: r27 3s infinite linear;
+}
+#s28 {
+    position: absolute;
+    left: 1380px;
+    top: 30px;
+    -webkit-animation: r28 3s infinite linear;
+    -moz-animation: r28 3s infinite linear;
+    -o-animation: r28 3s infinite linear;
+    animation: r28 3s infinite linear;
+}
