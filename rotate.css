@@ -12,6 +12,8 @@ div {
     transform-style: preserve-3d;
 }
 @-webkit-keyframes r1 {
+        24%  {background: white;}
+        74% {background: red;}
         25%  {background: red;}
         75% {background: white;}
 	to {
@@ -19,6 +21,8 @@ div {
 	}
 }
 @-moz-keyframes r1 {
+        24%  {background: white;}
+        74% {background: red;}
         25%  {background: red;}
         75% {background: white;}
 	to {
@@ -26,6 +30,8 @@ div {
 	}
 }
 @-o-keyframes r1 {
+        24%  {background: white;}
+        74% {background: red;}
         25%  {background: red;}
         75% {background: white;}
 	to {
@@ -33,13 +39,17 @@ div {
 	}
 }
 @keyframes r1 {
-	25%  {background: red;}
+	24%  {background: white;}
+        74% {background: red;}
+        25%  {background: red;}
         75% {background: white;}
 	to {
 	    transform: rotateX(360deg);
 	}
 }
 @-webkit-keyframes r2 {
+        21%  {background: white;}
+        71% {background: red;}
         22%  {background: red;}
         72% {background: white;}
 	to {
@@ -47,6 +57,8 @@ div {
 	}
 }
 @-moz-keyframes r2 {
+        21%  {background: white;}
+        71% {background: red;}
         22%  {background: red;}
         72% {background: white;}
 	to {
@@ -54,6 +66,8 @@ div {
 	}
 }
 @-o-keyframes r2 {
+        21%  {background: white;}
+        71% {background: red;}
         22%  {background: red;}
         72% {background: white;}
 	to {
@@ -61,6 +75,8 @@ div {
 	}
 }
 @keyframes r2 {
+        21%  {background: white;}
+        71% {background: red;}
         22%  {background: red;}
         72% {background: white;}
         to {
@@ -68,6 +84,8 @@ div {
 	}
 }
 @-webkit-keyframes r3 {
+        68%  {background: red;}
+        18% {background: white;}
         19%  {background: red;}
         69% {background: white;}
 	to {
@@ -75,6 +93,8 @@ div {
 	}
 }
 @-moz-keyframes r3 {
+        68%  {background: red;}
+        18% {background: white;}
         19%  {background: red;}
         69% {background: white;}
 	to {
@@ -82,20 +102,26 @@ div {
 	}
 }
 @-o-keyframes r3 {
+        68%  {background: red;}
+        18% {background: white;}
         19%  {background: red;}
-        69% {background: white;}
+        69% {background: white;}}
 	to {
 	    transform: rotateX(380deg);
 	}
 }
 @keyframes r3 {
+        68%  {background: red;}
+        18% {background: white;}
         19%  {background: red;}
-        69% {background: white;}
+        69% {background: white;}}
         to {
 	    transform: rotateX(380deg);
 	}
 }
 @-webkit-keyframes r4 {
+        65%  {background: red;}
+        15% {background: white;}
         16%  {background: red;}
         66% {background: white;}
 	to {
@@ -103,6 +129,8 @@ div {
 	}
 }
 @-moz-keyframes r4 {
+        65%  {background: red;}
+        15% {background: white;}
         16%  {background: red;}
         66% {background: white;}
 	to {
@@ -110,6 +138,8 @@ div {
 	}
 }
 @-o-keyframes r4 {
+        65%  {background: red;}
+        15% {background: white;}
         16%  {background: red;}
         66% {background: white;}
 	to {
@@ -117,6 +147,8 @@ div {
 	}
 }
 @keyframes r4 {
+        65%  {background: red;}
+        15% {background: white;}
         16%  {background: red;}
         66% {background: white;}
         to {
@@ -124,6 +156,8 @@ div {
 	}
 }
 @-webkit-keyframes r5 {
+        62%  {background: red;}
+        12% {background: white;}
         13%  {background: red;}
         63% {background: white;}
 	to {
@@ -131,6 +165,8 @@ div {
 	}
 }
 @-moz-keyframes r5 {
+        62%  {background: red;}
+        12% {background: white;}
         13%  {background: red;}
         63% {background: white;}
 	to {
@@ -138,6 +174,8 @@ div {
 	}
 }
 @-o-keyframes r5 {
+        62%  {background: red;}
+        12% {background: white;}
         13%  {background: red;}
         63% {background: white;}
 	to {
@@ -145,6 +183,8 @@ div {
 	}
 }
 @keyframes r5 {
+        62%  {background: red;}
+        12% {background: white;}
         13%  {background: red;}
         63% {background: white;}
         to {
@@ -152,6 +192,8 @@ div {
 	}
 }
 @-webkit-keyframes r6 {
+        59%  {background: red;}
+        9% {background: white;}
         10%  {background: red;}
         60% {background: white;}
 	to {
@@ -159,6 +201,8 @@ div {
 	}
 }
 @-moz-keyframes r6 {
+        59%  {background: red;}
+        9% {background: white;}
         10%  {background: red;}
         60% {background: white;}
 	to {
@@ -166,6 +210,8 @@ div {
 	}
 }
 @-o-keyframes r6 {
+        59%  {background: red;}
+        9% {background: white;}
         10%  {background: red;}
         60% {background: white;}
 	to {
@@ -173,6 +219,8 @@ div {
 	}
 }
 @keyframes r6 {
+        59%  {background: red;}
+        9% {background: white;}
         10%  {background: red;}
         60% {background: white;}
         to {
@@ -180,6 +228,8 @@ div {
 	}
 }
 @-webkit-keyframes r7 {
+        56%  {background: red;}
+        6% {background: white;}
         7%  {background: red;}
         57% {background: white;}
 	to {
@@ -187,6 +237,8 @@ div {
 	}
 }
 @-moz-keyframes r7 {
+        56%  {background: red;}
+        6% {background: white;}
         7%  {background: red;}
         57% {background: white;}
 	to {
@@ -194,6 +246,8 @@ div {
 	}
 }
 @-o-keyframes r7 {
+        56%  {background: red;}
+        6% {background: white;}
         7%  {background: red;}
         57% {background: white;}
 	to {
@@ -201,6 +255,8 @@ div {
 	}
 }
 @keyframes r7 {
+        56%  {background: red;}
+        6% {background: white;}
         7%  {background: red;}
         57% {background: white;}
         to {
@@ -208,6 +264,8 @@ div {
 	}
 }
 @-webkit-keyframes r8 {
+        53%  {background: red;}
+        3% {background: white;}
         4%  {background: red;}
         54% {background: white;}
 	to {
@@ -215,6 +273,8 @@ div {
 	}
 }
 @-moz-keyframes r8 {
+        53%  {background: red;}
+        3% {background: white;}
         4%  {background: red;}
         54% {background: white;}
 	to {
@@ -222,6 +282,8 @@ div {
 	}
 }
 @-o-keyframes r8 {
+        53%  {background: red;}
+        3% {background: white;}
         4%  {background: red;}
         54% {background: white;}
 	to {
@@ -229,6 +291,8 @@ div {
 	}
 }
 @keyframes r8 {
+        53%  {background: red;}
+        3% {background: white;}
         4%  {background: red;}
         54% {background: white;}
         to {
@@ -236,6 +300,8 @@ div {
 	}
 }
 @-webkit-keyframes r9 {
+        50%  {background: red;}
+        0% {background: white;}
         1%  {background: red;}
         51% {background: white;}
 	to {
@@ -243,6 +309,8 @@ div {
 	}
 }
 @-moz-keyframes r9 {
+        50%  {background: red;}
+        0% {background: white;}
         1%  {background: red;}
         51% {background: white;}
 	to {
@@ -250,6 +318,8 @@ div {
 	}
 }
 @-o-keyframes r9 {
+        50%  {background: red;}
+        0% {background: white;}
         1%  {background: red;}
         51% {background: white;}
 	to {
@@ -257,6 +327,8 @@ div {
 	}
 }
 @keyframes r9 {
+        50%  {background: red;}
+        0% {background: white;}
         1%  {background: red;}
         51% {background: white;}
         to {
@@ -264,7 +336,8 @@ div {
 	}
 }
 @-webkit-keyframes r10 {
-        
+        97% {background: white;}
+        47%  {background: red;}
         48% {background: white;}
         98%  {background: red;}
 	to {
@@ -272,7 +345,8 @@ div {
 	}
 }
 @-moz-keyframes r10 {
-        
+        97% {background: white;}
+        47%  {background: red;}
         48% {background: white;}
         98%  {background: red;}
 	to {
@@ -280,7 +354,8 @@ div {
 	}
 }
 @-o-keyframes r10 {
-        
+        97% {background: white;}
+        47%  {background: red;}
         48% {background: white;}
         98%  {background: red;}
 	to {
@@ -288,7 +363,8 @@ div {
 	}
 }
 @keyframes r10 {
-        
+        97% {background: white;}
+        47%  {background: red;}
         48% {background: white;}
         98%  {background: red;}
         to {
@@ -296,7 +372,8 @@ div {
 	}
 }
 @-webkit-keyframes r11 {
-        
+        94% {background: white;}
+        44%  {background: red;}
         45% {background: white;}
         95%  {background: red;}
 	to {
@@ -304,7 +381,8 @@ div {
 	}
 }
 @-moz-keyframes r11 {
-        
+        94% {background: white;}
+        44%  {background: red;}
         45% {background: white;}
         95%  {background: red;}
 	to {
@@ -312,7 +390,8 @@ div {
 	}
 }
 @-o-keyframes r11 {
-        
+        94% {background: white;}
+        44%  {background: red;}
         45% {background: white;}
         95%  {background: red;}
 	to {
@@ -320,7 +399,8 @@ div {
 	}
 }
 @keyframes r11 {
-        
+        94% {background: white;}
+        44%  {background: red;}
         45% {background: white;}
         95%  {background: red;}
         to {
@@ -328,7 +408,8 @@ div {
 	}
 }
 @-webkit-keyframes r12 {
-        
+        91% {background: white;}
+        41%  {background: red;}
         42% {background: white;}
         92%  {background: red;}
 	to {
@@ -336,7 +417,8 @@ div {
 	}
 }
 @-moz-keyframes r12 {
-        
+        91% {background: white;}
+        41%  {background: red;}
         42% {background: white;}
         92%  {background: red;}
 	to {
@@ -344,7 +426,8 @@ div {
 	}
 }
 @-o-keyframes r12 {
-        
+        91% {background: white;}
+        41%  {background: red;}
         42% {background: white;}
         92%  {background: red;}
 	to {
@@ -352,7 +435,8 @@ div {
 	}
 }
 @keyframes r12 {
-        
+        91% {background: white;}
+        41%  {background: red;}
         42% {background: white;}
         92%  {background: red;}
         to {
@@ -360,7 +444,8 @@ div {
 	}
 }
 @-webkit-keyframes r13 {
-        
+        87% {background: white;}
+        37%  {background: red;}
         38% {background: white;}
         88%  {background: red;}
 	to {
@@ -368,7 +453,8 @@ div {
 	}
 }
 @-moz-keyframes r13 {
-        
+        87% {background: white;}
+        37%  {background: red;}
         38% {background: white;}
         88%  {background: red;}
 	to {
@@ -376,7 +462,8 @@ div {
 	}
 }
 @-o-keyframes r13 {
-        
+        87% {background: white;}
+        37%  {background: red;}
         38% {background: white;}
         88%  {background: red;}
 	to {
@@ -384,7 +471,8 @@ div {
 	}
 }
 @keyframes r13 {
-        
+        87% {background: white;}
+        37%  {background: red;}
         38% {background: white;}
         88%  {background: red;}
         to {
@@ -392,7 +480,8 @@ div {
 	}
 }
 @-webkit-keyframes r14 {
-        
+        84% {background: white;}
+        34%  {background: red;}
         35% {background: white;}
         85%  {background: red;}
 	to {
@@ -400,7 +489,8 @@ div {
 	}
 }
 @-moz-keyframes r14 {
-        
+        84% {background: white;}
+        34%  {background: red;}
         35% {background: white;}
         85%  {background: red;}
 	to {
@@ -408,7 +498,8 @@ div {
 	}
 }
 @-o-keyframes r14 {
-        
+        84% {background: white;}
+        34%  {background: red;}
         35% {background: white;}
         85%  {background: red;}
 	to {
@@ -416,7 +507,8 @@ div {
 	}
 }
 @keyframes r14 {
-        
+        84% {background: white;}
+        34%  {background: red;}
         35% {background: white;}
         85%  {background: red;}
         to {
@@ -424,7 +516,8 @@ div {
 	}
 }
 @-webkit-keyframes r15 {
-        
+        81% {background: white;}
+        31%  {background: red;}
         32% {background: white;}
         82%  {background: red;}
 	to {
@@ -432,7 +525,8 @@ div {
 	}
 }
 @-moz-keyframes r15 {
-        
+        81% {background: white;}
+        31%  {background: red;}
         32% {background: white;}
         82%  {background: red;}
 	to {
@@ -440,7 +534,8 @@ div {
 	}
 }
 @-o-keyframes r15 {
-        
+        81% {background: white;}
+        31%  {background: red;}
         32% {background: white;}
         82%  {background: red;}
 	to {
@@ -448,7 +543,8 @@ div {
 	}
 }
 @keyframes r15 {
-        
+        81% {background: white;}
+        31%  {background: red;}
         32% {background: white;}
         82%  {background: red;}
         to {
@@ -456,7 +552,8 @@ div {
 	}
 }
 @-webkit-keyframes r16 {
-        
+        78% {background: white;}
+        28%  {background: red;}
         29% {background: white;}
         79%  {background: red;}
 	to {
@@ -464,7 +561,8 @@ div {
 	}
 }
 @-moz-keyframes r16 {
-        
+        78% {background: white;}
+        28%  {background: red;}
         29% {background: white;}
         79%  {background: red;}
 	to {
@@ -472,7 +570,8 @@ div {
 	}
 }
 @-o-keyframes r16 {
-        
+        78% {background: white;}
+        28%  {background: red;}
         29% {background: white;}
         79%  {background: red;}
 	to {
@@ -480,7 +579,8 @@ div {
 	}
 }
 @keyframes r16 {
-        
+        78% {background: white;}
+        28%  {background: red;}
         29% {background: white;}
         79%  {background: red;}
         to {
@@ -488,7 +588,8 @@ div {
 	}
 }
 @-webkit-keyframes r17 {
-        
+        75% {background: white;}
+        25%  {background: red;}
         26% {background: white;}
         76%  {background: red;}
 	to {
@@ -496,7 +597,8 @@ div {
 	}
 }
 @-moz-keyframes r17 {
-        
+        75% {background: white;}
+        25%  {background: red;}
         26% {background: white;}
         76%  {background: red;}
 	to {
@@ -504,7 +606,8 @@ div {
 	}
 }
 @-o-keyframes r17 {
-        
+        75% {background: white;}
+        25%  {background: red;}
         26% {background: white;}
         76%  {background: red;}
 	to {
@@ -512,7 +615,8 @@ div {
 	}
 }
 @keyframes r17 {
-        
+        75% {background: white;}
+        25%  {background: red;}
         26% {background: white;}
         76%  {background: red;}
         to {
@@ -520,7 +624,8 @@ div {
 	}
 }
 @-webkit-keyframes r18 {
-        
+        72% {background: white;}
+        22%  {background: red;}
         23% {background: white;}
         73%  {background: red;}
 	to {
@@ -528,7 +633,8 @@ div {
 	}
 }
 @-moz-keyframes r18 {
-        
+        72% {background: white;}
+        22%  {background: red;}
         23% {background: white;}
         73%  {background: red;}
 	to {
@@ -536,7 +642,8 @@ div {
 	}
 }
 @-o-keyframes r18 {
-        
+        72% {background: white;}
+        22%  {background: red;}
         23% {background: white;}
         73%  {background: red;}
 	to {
@@ -544,7 +651,8 @@ div {
 	}
 }
 @keyframes r18 {
-        
+        72% {background: white;}
+        22%  {background: red;}
         23% {background: white;}
         73%  {background: red;}
         to {
@@ -552,7 +660,8 @@ div {
 	}
 }
 @-webkit-keyframes r19 {
-        
+        69% {background: white;}
+        19%  {background: red;}
         20% {background: white;}
         70%  {background: red;}
 	to {
@@ -560,7 +669,8 @@ div {
 	}
 }
 @-moz-keyframes r19 {
-        
+        69% {background: white;}
+        19%  {background: red;}
         20% {background: white;}
         70%  {background: red;}
 	to {
@@ -568,7 +678,8 @@ div {
 	}
 }
 @-o-keyframes r19 {
-        
+        69% {background: white;}
+        19%  {background: red;}
         20% {background: white;}
         70%  {background: red;}
 	to {
@@ -576,7 +687,8 @@ div {
 	}
 }
 @keyframes r19 {
-        
+        69% {background: white;}
+        19%  {background: red;}
         20% {background: white;}
         70%  {background: red;}
         to {
@@ -584,7 +696,8 @@ div {
 	}
 }
 @-webkit-keyframes r20 {
-        
+        66% {background: white;}
+        16%  {background: red;}
         17% {background: white;}
         67%  {background: red;}
 	to {
@@ -592,7 +705,8 @@ div {
 	}
 }
 @-moz-keyframes r20 {
-        
+        66% {background: white;}
+        16%  {background: red;}
         17% {background: white;}
         67%  {background: red;}
 	to {
@@ -600,7 +714,8 @@ div {
 	}
 }
 @-o-keyframes r20 {
-        
+        66% {background: white;}
+        16%  {background: red;}
         17% {background: white;}
         67%  {background: red;}
 	to {
@@ -608,7 +723,8 @@ div {
 	}
 }
 @keyframes r20 {
-        
+        66% {background: white;}
+        16%  {background: red;}
         17% {background: white;}
         67%  {background: red;}
         to {
@@ -616,7 +732,8 @@ div {
 	}
 }
 @-webkit-keyframes r21 {
-        
+        63% {background: white;}
+        13%  {background: red;}
         14% {background: white;}
         64%  {background: red;}
 	to {
@@ -624,7 +741,8 @@ div {
 	}
 }
 @-moz-keyframes r21 {
-        
+        63% {background: white;}
+        13%  {background: red;}
         14% {background: white;}
         64%  {background: red;}
 	to {
@@ -632,7 +750,8 @@ div {
 	}
 }
 @-o-keyframes r21 {
-        
+        63% {background: white;}
+        13%  {background: red;}
         14% {background: white;}
         64%  {background: red;}
 	to {
@@ -640,7 +759,8 @@ div {
 	}
 }
 @keyframes r21 {
-        
+        63% {background: white;}
+        13%  {background: red;}
         14% {background: white;}
         64%  {background: red;}
         to {
@@ -648,7 +768,8 @@ div {
 	}
 }
 @-webkit-keyframes r22 {
-        
+        60% {background: white;}
+        10%  {background: red;}
         11% {background: white;}
         61%  {background: red;}
 	to {
@@ -656,7 +777,10 @@ div {
 	}
 }
 @-moz-keyframes r22 {
-        
+        60% {background: white;}
+        10%  {background: red;}
+        11% {background: white;}
+        61%  {background: red;}
         11% {background: white;}
         61%  {background: red;}
 	to {
@@ -664,7 +788,10 @@ div {
 	}
 }
 @-o-keyframes r22 {
-        
+        60% {background: white;}
+        10%  {background: red;}
+        11% {background: white;}
+        61%  {background: red;}
         11% {background: white;}
         61%  {background: red;}
 	to {
@@ -672,7 +799,10 @@ div {
 	}
 }
 @keyframes r22 {
-        
+        60% {background: white;}
+        10%  {background: red;}
+        11% {background: white;}
+        61%  {background: red;}
         11% {background: white;}
         61%  {background: red;}
         to {
@@ -680,7 +810,8 @@ div {
 	}
 }
 @-webkit-keyframes r23 {
-        
+        57% {background: white;}
+        7%  {background: red;}
         8% {background: white;}
         58%  {background: red;}
 	to {
@@ -688,7 +819,10 @@ div {
 	}
 }
 @-moz-keyframes r23 {
-        
+        57% {background: white;}
+        7%  {background: red;}
+        8% {background: white;}
+        58%  {background: red;}
         8% {background: white;}
         58%  {background: red;}
 	to {
@@ -696,7 +830,10 @@ div {
 	}
 }
 @-o-keyframes r23 {
-        
+        57% {background: white;}
+        7%  {background: red;}
+        8% {background: white;}
+        58%  {background: red;}
         8% {background: white;}
         58%  {background: red;}
 	to {
@@ -704,7 +841,10 @@ div {
 	}
 }
 @keyframes r23 {
-        
+        57% {background: white;}
+        7%  {background: red;}
+        8% {background: white;}
+        58%  {background: red;}
         8% {background: white;}
         58%  {background: red;}
         to {
@@ -712,7 +852,8 @@ div {
 	}
 }
 @-webkit-keyframes r24 {
-        
+        54% {background: white;}
+        4%  {background: red;}
         5% {background: white;}
         55%  {background: red;}
 	to {
@@ -720,7 +861,8 @@ div {
 	}
 }
 @-moz-keyframes r24 {
-        
+        54% {background: white;}
+        4%  {background: red;}
         5% {background: white;}
         55%  {background: red;}
 	to {
@@ -728,7 +870,8 @@ div {
 	}
 }
 @-o-keyframes r24 {
-        
+        54% {background: white;}
+        4%  {background: red;}
         5% {background: white;}
         55%  {background: red;}
 	to {
@@ -736,7 +879,8 @@ div {
 	}
 }
 @keyframes r24 {
-        
+        54% {background: white;}
+        4%  {background: red;}
         5% {background: white;}
         55%  {background: red;}
         to {
@@ -744,7 +888,8 @@ div {
 	}
 }
 @-webkit-keyframes r25 {
-        
+        51% {background: white;}
+        1%  {background: red;}
         2% {background: white;}
         52%  {background: red;}
 	to {
@@ -752,7 +897,8 @@ div {
 	}
 }
 @-moz-keyframes r25 {
-        
+        51% {background: white;}
+        1%  {background: red;}
         2% {background: white;}
         52%  {background: red;}
 	to {
@@ -760,7 +906,8 @@ div {
 	}
 }
 @-o-keyframes r25 {
-        
+        51% {background: white;}
+        1%  {background: red;}
         2% {background: white;}
         52%  {background: red;}
 	to {
@@ -768,7 +915,8 @@ div {
 	}
 }
 @keyframes r25 {
-        
+        51% {background: white;}
+        1%  {background: red;}
         2% {background: white;}
         52%  {background: red;}
         to {
@@ -776,6 +924,8 @@ div {
 	}
 }
 @-webkit-keyframes r26 {
+        98%  {background: red;}
+        48% {background: white;}
         49%  {background: red;}
         99% {background: white;}
 	to {
@@ -783,6 +933,8 @@ div {
 	}
 }
 @-moz-keyframes r26 {
+        98%  {background: red;}
+        48% {background: white;}
         49%  {background: red;}
         99% {background: white;}
 	to {
@@ -790,6 +942,8 @@ div {
 	}
 }
 @-o-keyframes r26 {
+        98%  {background: red;}
+        48% {background: white;}
         49%  {background: red;}
         99% {background: white;}
 	to {
@@ -797,6 +951,8 @@ div {
 	}
 }
 @keyframes r26 {
+        98%  {background: red;}
+        48% {background: white;}
         49%  {background: red;}
         99% {background: white;}
         to {
@@ -804,6 +960,8 @@ div {
 	}
 }
 @-webkit-keyframes r27 {
+        95%  {background: red;}
+        45% {background: white;}
         46%  {background: red;}
         96% {background: white;}
 	to {
@@ -811,6 +969,8 @@ div {
 	}
 }
 @-moz-keyframes r27 {
+        95%  {background: red;}
+        45% {background: white;}
         46%  {background: red;}
         96% {background: white;}
 	to {
@@ -818,6 +978,8 @@ div {
 	}
 }
 @-o-keyframes r27 {
+        95%  {background: red;}
+        45% {background: white;}
         46%  {background: red;}
         96% {background: white;}
 	to {
@@ -825,6 +987,8 @@ div {
 	}
 }
 @keyframes r27 {
+        95%  {background: red;}
+        45% {background: white;}
         46%  {background: red;}
         96% {background: white;}
         to {
