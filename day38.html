@@ -15,7 +15,7 @@ canvas {
 
 var myGamePiece, squares = [], size = 120, gap = 15, lu_corner = 30, board, board_squares = [], dir = null, sp = 30, past_state = [];
 var colors = ["#cdc1b5","#eee4da", "#eddfce","#f2b179","#fc935d","#f07f61","#f2613c","#ead074","#ebcd61","#eccd61","#eccd61","#eccd61","#edc423"];
-var pastpressid = -1, pastpressid2 = -1, pressid = 0;
+var pastpressid = -1, pressid = 0, scale = 1.05;
 function startGame() {
     myGameArea.start();
     board = new component(4 * size + 5 * gap, 4 * size + 5 * gap, "#000", lu_corner - gap, lu_corner - gap, -1);
@@ -249,12 +249,16 @@ function updateGameArea() {
                          if (squares[j].x - squares[i].x == size + gap && squares[i].value == squares[j].value && !squares[i].added && !squares[j].added)
                          {
                              squares[i].value = 2 * squares[i].value;
+                             squares[i].width *= scale;
+                             squares[i].height *= scale;
                              squares[i].added = true;
                              squares.splice(j, 1);
                          }
                          else if (squares[i].x - squares[j].x == size + gap && squares[j].value == squares[i].value && !squares[i].added && !squares[j].added)
                          {
                              squares[j].value = 2 * squares[j].value;
+                             squares[j].width *= scale;
+                             squares[j].height *= scale;
                              squares[j].added = true;
                              squares.splice(i, 1);
                          }
@@ -290,12 +294,16 @@ function updateGameArea() {
                          {
                              squares[i].value = 2 * squares[i].value;
                              squares[i].added = true;
+                             squares[i].width *= scale;
+                             squares[i].height *= scale;
                              squares.splice(j, 1);
                          }
                          else if (squares[j].x - squares[i].x == size + gap && squares[j].value == squares[i].value && !squares[i].added && !squares[j].added)
                          {
                              squares[j].value = 2 * squares[j].value;
                              squares[j].added = true;
+                             squares[j].width *= scale;
+                             squares[j].height *= scale;
                              squares.splice(i, 1);
                          }
                     }
@@ -330,12 +338,16 @@ function updateGameArea() {
                          {
                              squares[i].value = 2 * squares[i].value;
                              squares[i].added = true;
+                             squares[i].width *= scale;
+                             squares[i].height *= scale;
                              squares.splice(j, 1);
                          }
                          else if (squares[i].y - squares[j].y == size + gap && squares[j].value == squares[i].value && !squares[i].added && !squares[j].added)
                          {
                              squares[j].value = 2 * squares[j].value;
                              squares[j].added = true;
+                             squares[j].width *= scale;
+                             squares[j].height *= scale;
                              squares.splice(i, 1);
                          }
                     }
@@ -370,12 +382,16 @@ function updateGameArea() {
                          {
                              squares[i].value = 2 * squares[i].value;
                              squares[i].added = true;
+                             squares[i].width *= scale;
+                             squares[i].height *= scale;
                              squares.splice(j, 1);
                          }
                          else if (squares[j].y - squares[i].y == size + gap && squares[j].value == squares[i].value && !squares[i].added && !squares[j].added)
                          {
                              squares[j].value = 2 * squares[j].value;
                              squares[j].added = true;
+                             squares[j].width *= scale;
+                             squares[j].height *= scale;
                              squares.splice(i, 1);
                          }
                     }
@@ -411,7 +427,11 @@ function updateGameArea() {
             let s = new component(size, size, "#cccc00", newx, newy, 2, false);
             squares.push(s);
             for (let k in squares)
+            {
                 squares[k].added = false;
+                squares[k].width = size;
+                squares[k].height = size;
+            }
             pastpressid = pressid;
             dir = null;
         }
