@@ -73,3 +73,5 @@ Day 35: Random Walk https://ynyeh0221.github.io/Collection-of-Website-Works/day3
 Day 36: Random Walk2 https://ynyeh0221.github.io/Collection-of-Website-Works/day36.html
 
 Day 37: Rotation https://ynyeh0221.github.io/Collection-of-Website-Works/day37.html
+
+Day 38: 2048 https://ynyeh0221.github.io/Collection-of-Website-Works/day38.html
