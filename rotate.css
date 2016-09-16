@@ -3,6 +3,12 @@ body {
     height: 550px;
     background: #000;
 }
+
+#container {
+   position: relative;
+   left: 100px;
+   transform: rotateZ(30deg);
+}
 .circle {
    position: relative;
    top: -10px;
@@ -25,7 +31,7 @@ body {
     width: 10px;
     height: 600px;
     background: #fff;
-    opacity: 0.5;
+    opacity: 0.3;
     border: 0x solid black;
     transform-style: preserve-3d;
 }
