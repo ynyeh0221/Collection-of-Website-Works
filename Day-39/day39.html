@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 39</title>
+<script type="text/javascript" src="./delaunay.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<script type="text/javascript" src="./mootools.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+
+<style>
+body {
+    height: 1250px;
+    background: #202020;
+    font-family: 'Raleway', sans-serif;
+}
+#l1 {
+    position: absolute;
+    top: 250px;
+    left: 20px;
+    color: #fff;
+}
+#s1 {
+    position: absolute;
+    top: 280px;
+    left: 20px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+#slideHandle1 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+#pos1 {
+    position: absolute;
+    top: 280px;
+    left: 250px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+#l2 {
+    position: absolute;
+    top: 320px;
+    left: 20px;
+    color: #fff;
+}
+#s2 {
+    position: absolute;
+    top: 350px;
+    left: 20px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+#slideHandle2 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+#pos2 {
+    position: absolute;
+    top: 350px;
+    left: 250px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+#l {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    color: #fff;
+    font-size: 25px;
+    font-family: 'Raleway', sans-serif;
+}
+#imageLoader {
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    color: #fff;
+    font-size: 18px;
+    font-family: 'Raleway', sans-serif;
+}
+#b {
+    position: absolute;
+    top: 300px;
+    left: 20px;
+    font-size: 18px;
+}
+#newCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    z-index: 20;
+}
+#myCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    z-index: 10;
+}
+#originalCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    background: #404040;
+}
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #808080;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  font-family: 'Raleway', sans-serif;
+}
+.button:hover {background-color: #606060}
+.button:active {
+  background-color: #404040;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+</head>
+<body>
+    <h1 style = "text-align: center; color:#fff; font-size: 50px">Sketch-styled Image Generator</h1>
+    <label id = "l">Upload Image File:</label><br/>
+    <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
+    <button id = "b" class = "button" onclick = "process()" class = "btn">Process</button><br>
+    <canvas id="newCanvas"></canvas>
+    <canvas id="myCanvas"></canvas>
+    <canvas id="originalCanvas"></canvas>
+<script type="text/javascript">
+    var imageLoader = document.getElementById('imageLoader');
+    var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), cw = 1000, ch = 1000;
+    var ori_canvas = document.getElementById("originalCanvas"), ori_ctx = ori_canvas.getContext("2d")
+    var new_canvas = document.getElementById("newCanvas"), new_ctx = ori_canvas.getContext("2d")
+    var vertices = [];
+    canvas.width = cw;
+    canvas.height = ch;
+    ori_canvas.width = cw;
+    ori_canvas.height = ch;
+    new_canvas.width = cw;
+    new_canvas.height = ch;
+    imageLoader.addEventListener('change', handleImage, false);
+    function handleImage(e)
+    {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        new_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var reader = new FileReader();
+        reader.onload = function(event)
+        {
+            let img = new Image();
+            img.onload = function()
+            {    ori_canvas.width = img.width*cw/img.width;
+                 ori_canvas.height = img.height*cw/img.width;  
+                 new_canvas.width = img.width*cw/img.width;
+                 new_canvas.height = img.height*cw/img.width; 
+                 canvas.width = img.width*cw/img.width;
+                 canvas.height = img.height*cw/img.width;                            
+                 ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
+                 img.width = ori_canvas.width;
+                 img.height = ori_canvas.height;
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]); 
+    }
+    function process()
+    {
+        Invert();
+        for (let i = 0; i < 10; i++)
+            Gaussian_blur();
+        Color_Dodge();
+        Motion_blur();
+    }
+
+    function Invert()
+    {
+        var imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+        var data = imageData.data;
+        var output = ctx.getImageData(0,0,canvas.width,canvas.height);
+        var dst = output.data;
+        for(i=0;i<data.length;i+=4)
+        {
+            let mean = ~~(data[i] + data[i+1] + data[i+2])/3;
+            data[i]=mean;
+            data[i+1]=mean;
+            data[i+2]=mean;
+            dst[i]=255-data[i];
+            dst[i+1]=255-data[i+1];
+            dst[i+2]=255-data[i+2];
+            dst[i+3] = 255;
+        }
+        ori_ctx.putImageData(imageData,0,0);
+        ctx.putImageData(output,0,0);
+    }
+    function Color_Dodge()
+    {
+        var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+        var data = imageData.data;
+        var ori_imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+        var ori_data = ori_imageData.data;
+        var adjustment = 100;
+        for(i=0;i<data.length;i+=4)
+        {
+            data[i] = ori_data[i] + (data[i] * ori_data[i]) / (255 - data[i]);
+            data[i+1] = ori_data[i+1] + (data[i+1] * ori_data[i+1]) / (255 - data[i+1]);
+            data[i+2] = ori_data[i+2] + (data[i+2] * ori_data[i+2]) / (255 - data[i+2]);
+            data[i] = data[i] <= 240 ? Math.max(0, data[i] - 200) : data[i];
+            data[i+1] = data[i+1] <= 240 ? Math.max(0, data[i+1] - 200) : data[i+1];
+            data[i+2] = data[i+2] <= 240 ? Math.max(0, data[i+2] - 200) : data[i+2];
+            if (data[i] < 240 && Math.random() < 0.2)
+            {
+                data[i] = 255;
+                data[i+1] = 255;
+                data[i+2] = 255;
+            }	
+        }
+        ctx.putImageData(imageData,0,0);
+    }
+    function Gaussian_blur()
+    {
+        var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+        var data = imageData.data;
+        var radius = 1;
+        var weighting = getQuan(radius);
+        var weightingSub = ArrSub(weighting);
+        weighting = jiaQuan(weighting,weightingSub);
+
+        var canvasDataCtrl = imageData ;
+        var width = canvas.width;
+        var height = canvas.height
+        for (var i=0;i<width ;i++ )
+        {
+            for (var j=0;j<height ;j++ )
+            {
+                var index= (width*4)*j+i*4;
+                canvasDataCtrl.data[index] = getValue(i,j,0,weighting); //r
+                canvasDataCtrl.data[index+1] = getValue(i,j,1,weighting); //g
+                canvasDataCtrl.data[index+2] = getValue(i,j,2,weighting); //b
+                canvasDataCtrl.data[index+3] = getValue(i,j,3,weighting); //a
+            }
+        }
+        ctx.putImageData(canvasDataCtrl,0,0);
+
+        function gaosi(x,y,a)
+        {
+            var e = Math.E;
+            var pi = Math.PI ;
+            return 1/(2*pi*a*a)*Math.pow(e,-((x*x+y*y)/(2*a*a)))
+        }
+
+        function getQuan(radius)
+        {
+            var weighting = []
+            for (var i=-radius;i<=radius ;i++ )
+            {
+                for (var j=radius;j>=-radius ;j-- )
+                    weighting.push(gaosi(i,j,20));
+            }
+            return weighting ;
+        }
+        function ArrSub(arr)
+        {
+            var sub = 0 ;
+            for (var i=0,len=weighting.length;i<len ;i++ )
+                sub += weighting[i];
+            return sub ;
+        }
+        function jiaQuan(arr,weightingSub)
+        {
+            for (var i=0,len=arr.length;i<len ;i++ )
+                arr[i] = arr[i]/weightingSub;
+            return arr;
+        }
+        function getValue(x,y,index,weighting)
+        {
+            var imgdata = getInfoArr(x,y,index)
+            var value = 0;
+            for (var i=0,len=imgdata.length;i<len ;i++ )
+                value += imgdata[i]*weighting[i];
+            return Math.round(value);
+        }
+
+        function getInfo(x,y,index)
+        {
+            if (x<0)
+                x=-x
+            else if (x>width-1)
+                x=2*(width-1)-x;
+            if (y<0)
+                y=-y;
+            else if (y>height-1)
+                y=2*(height-1)-y;
+            var i = (width*4)*y+x*4+index;
+            return imageData.data[i];
+        }
+        function getInfoArr(x,y,index)
+        {
+            var arr = [];
+            for (var i=x-radius;i<=x+radius ;i++ )
+            {
+                for (var j=y+radius;j>=y-radius ;j-- )
+                    arr.push(getInfo(i,j,index));
+            }
+            return arr;
+        }
+    }
+    function Motion_blur()
+    {
+        var weights =[0, 0, 0, 0, 1/5,
+                      0, 0, 0, 1/5, 0,
+                      0, 0, 1/5, 0, 0,
+                      0, 1/5, 0, 0, 0,
+                      1/5, 0, 0, 0, 0
+        ]
+        var op=1;
+        var imageData=ctx.getImageData(0,0,canvas.width,canvas.height);
+        var side=Math.round(Math.sqrt(weights.length));
+        var halfSide=Math.floor(side/2);
+        var src=imageData.data;
+        var sw=canvas.width;
+        var sh=canvas.height;
+        var w=sw;
+        var h=sh;
+        var output=ctx.createImageData(w,h);
+        var dst=output.data;
+        var alphaFac=op?1:0;
+        for(y=0;y<h;y++)
+        {
+            for(x=0;x<w;x++)
+            {
+                var sy=y;
+                var sx=x;
+                var dstOff=(y*w+x)*4;
+                var r=0, g=0, b=0, a=0;
+                for(cy=0;cy<side;cy++)
+                {
+                    for(cx=0;cx<side;cx++)
+                    {
+                        var scy=sy+cy-halfSide;
+                        var scx=sx+cx-halfSide;
+                        if(scy>=0 && scy<sh && scx>=0 && scx<sw)
+                        {
+                            var srcOff=(scy*sw+scx)*4;
+                            var wt=weights[cy*side+cx];
+                            r+=src[srcOff]*wt;
+                            g+=src[srcOff+1]*wt;
+                            b+=src[srcOff+2]*wt;
+                            a+=src[srcOff+3]*wt;
+                        }
+                    }
+                }
+                dst[dstOff]=r;
+                dst[dstOff+1]=g;
+                dst[dstOff+2]=b;
+                dst[dstOff+3]=a+alphaFac*(255-a);
+            }
+        }
+        ctx.putImageData(output,0,0);
+    }
+</script>
+</body>
+</html>
