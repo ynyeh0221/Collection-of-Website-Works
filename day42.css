@@ -1,0 +1,140 @@
+body {
+    height: 1250px;
+    background: #202020;
+    font-family: 'Raleway', sans-serif;
+}
+
+#slideHandle2 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#pos2 {
+    position: absolute;
+    top: 350px;
+    left: 250px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+#l {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    color: #fff;
+    font-size: 25px;
+    font-family: 'Raleway', sans-serif;
+}
+
+#imageLoader {
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    color: #fff;
+    font-size: 18px;
+    font-family: 'Raleway', sans-serif;
+}
+
+#l2 {
+    position: absolute;
+    top: 250px;
+    left: 20px;
+    color: #fff;
+    font-size: 25px;
+    font-family: 'Raleway', sans-serif;
+}
+
+#e1 {
+    position: absolute;
+    left: 20px;
+    top: 290px;
+    width: 100px;
+    hright : auto;
+    border: 3px solid #fff;
+}
+
+#e2 {
+    position: absolute;
+    left: 20px;
+    top: 380px;
+    width: 100px;
+    hright : auto;
+    border: 3px solid #fff;
+}
+
+#e3 {
+    position: absolute;
+    left: 20px;
+    top: 470px;
+    width: 100px;
+    hright : auto;
+    border: 3px solid #fff;
+}
+
+#e4 {
+    position: absolute;
+    left: 20px;
+    top: 570px;
+    width: 100px;
+    hright : auto;
+    border: 3px solid #fff;
+}
+
+#b {
+    position: absolute;
+    top: 660px;
+    left: 20px;
+    font-size: 18px;
+}
+
+#myCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    z-index: 10;
+}
+#originalCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    background: #404040;
+}
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #808080;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  font-family: 'Raleway', sans-serif;
+}
+
+.button:hover {background-color: #606060}
+
+.button:active {
+  background-color: #404040;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.image {
+  opacity: 0.5;
+}
+
+.image:hover {
+  opacity: 1;
+}
