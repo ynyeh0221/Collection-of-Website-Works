@@ -103,12 +103,6 @@ body {
     left: 20px;
     font-size: 18px;
 }
-#newCanvas {
-    position: absolute;
-    top: 160px;
-    left: 300px;
-    z-index: 20;
-}
 #myCanvas {
     position: absolute;
     top: 160px;
@@ -149,27 +143,22 @@ body {
     <label id = "l">Upload Image File:</label><br/>
     <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
     <button id = "b" class = "button" onclick = "process()" class = "btn">Process</button><br>
-    <canvas id="newCanvas"></canvas>
     <canvas id="myCanvas"></canvas>
     <canvas id="originalCanvas"></canvas>
 <script type="text/javascript">
     var imageLoader = document.getElementById('imageLoader');
     var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), cw = 1000, ch = 1000;
-    var ori_canvas = document.getElementById("originalCanvas"), ori_ctx = ori_canvas.getContext("2d")
-    var new_canvas = document.getElementById("newCanvas"), new_ctx = ori_canvas.getContext("2d")
+    var ori_canvas = document.getElementById("originalCanvas"), ori_ctx = ori_canvas.getContext("2d");
     var vertices = [];
     canvas.width = cw;
     canvas.height = ch;
     ori_canvas.width = cw;
     ori_canvas.height = ch;
-    new_canvas.width = cw;
-    new_canvas.height = ch;
     imageLoader.addEventListener('change', handleImage, false);
     function handleImage(e)
     {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
-        new_ctx.clearRect(0, 0, canvas.width, canvas.height);
         var reader = new FileReader();
         reader.onload = function(event)
         {
@@ -177,8 +166,6 @@ body {
             img.onload = function()
             {    ori_canvas.width = img.width*cw/img.width;
                  ori_canvas.height = img.height*cw/img.width;  
-                 new_canvas.width = img.width*cw/img.width;
-                 new_canvas.height = img.height*cw/img.width; 
                  canvas.width = img.width*cw/img.width;
                  canvas.height = img.height*cw/img.width;                            
                  ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
