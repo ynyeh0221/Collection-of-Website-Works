@@ -77,3 +77,5 @@ Day 37: Rotation https://ynyeh0221.github.io/Collection-of-Website-Works/day37.h
 Day 38: 2048 https://ynyeh0221.github.io/Collection-of-Website-Works/day38.html
 
 Day 39: Sketch-style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day39.html
+
+Day 40: Retro style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day40.html
