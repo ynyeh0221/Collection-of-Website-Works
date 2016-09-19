@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 29</title>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script type="text/javascript" src="./mootools.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+<link rel="stylesheet" type="text/css" href="day41.css">
+</head>
+<body>
+    <h1 style = "text-align: center; color:#fff; font-size: 50px">8bit-style Image Generator</h1>
+
+    <label id = 'l1'>Size: </label>
+    <div id="s1"><div id="slideHandle1"></div></div>
+    <div id="pos1"></div>
+
+    <label id = "l">Upload Image File:</label><br/>
+    <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
+
+    <button id = "b" class = "button" onclick = "process()" class = "btn">Process</button><br>
+
+    <canvas id="myCanvas"></canvas>
+    <canvas id="originalCanvas"></canvas>
+
+<script type="text/javascript">
+    window.addEvent('domready', function(){
+        var slider1 = new Slider('s1', 'slideHandle1',{onComplete: function(val){$('pos1').setHTML(val);}});
+        document.getElementById('pos1').innerHTML = '0';
+    });
+
+    //parameters
+    var gap = 2, radius = 2;
+    //
+    var imageLoader = document.getElementById('imageLoader');
+    var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), cw = 1000, ch = 1000;
+    var ori_canvas = document.getElementById("originalCanvas"), ori_ctx = ori_canvas.getContext("2d");
+    canvas.width = cw;
+    canvas.height = ch;
+    ori_canvas.width = cw;
+    ori_canvas.height = ch;
+    imageLoader.addEventListener('change', handleImage, false);
+
+    function handleImage(e)
+    {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var reader = new FileReader();
+        reader.onload = function(event)
+        {
+            let img = new Image();
+            img.onload = function()
+            {    ori_canvas.width = img.width*cw/img.width;
+                 ori_canvas.height = img.height*cw/img.width;  
+                 canvas.width = img.width*cw/img.width;
+                 canvas.height = img.height*cw/img.width;                            
+                 ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
+                 img.width = ori_canvas.width;
+                 img.height = ori_canvas.height;
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]); 
+    }
+
+    function process()
+    {
+        gap = parseInt(document.getElementById('pos1').innerHTML, 10)+1;
+        radius = gap;
+        var imgData = ori_ctx.getImageData(0, 0, canvas.width, canvas.height), data = imgData.data;
+        ctx.fillStyle="#fff";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        for (let i = 0; i < canvas.height; i += gap)
+        {
+            for (let j = 0; j < canvas.width; j += gap)
+            {
+                let ind = (i * canvas.width + j) * 4;
+                ctx.beginPath();
+                ctx.rect(j, i, radius, radius);
+                ctx.fillStyle = "rgb(" + Math.floor(data[ind]/51) * 51 + "," + Math.floor(data[ind+1]/51) * 51 + "," + Math.floor(data[ind+2]/51) * 51 + ")";
+                ctx.fill();
+            }
+        }
+    }
+</script>
+</body>
+</html>
