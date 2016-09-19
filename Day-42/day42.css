@@ -57,7 +57,7 @@ body {
     left: 20px;
     top: 290px;
     width: 100px;
-    hright : auto;
+    height : 70px;
     border: 3px solid #fff;
 }
 
@@ -66,7 +66,7 @@ body {
     left: 20px;
     top: 380px;
     width: 100px;
-    hright : auto;
+    height : 70px;
     border: 3px solid #fff;
 }
 
@@ -75,16 +75,52 @@ body {
     left: 20px;
     top: 470px;
     width: 100px;
-    hright : auto;
+    height : 70px;
     border: 3px solid #fff;
 }
 
 #e4 {
     position: absolute;
     left: 20px;
-    top: 570px;
+    top: 560px;
     width: 100px;
-    hright : auto;
+    height : 70px;
+    border: 3px solid #fff;
+}
+
+#e5 {
+    position: absolute;
+    left: 140px;
+    top: 290px;
+    width: 100px;
+    height : 70px;
+    border: 3px solid #fff;
+}
+
+#e6 {
+    position: absolute;
+    left: 140px;
+    top: 380px;
+    width: 100px;
+    height : 70px;
+    border: 3px solid #fff;
+}
+
+#e7 {
+    position: absolute;
+    left: 140px;
+    top: 470px;
+    width: 100px;
+    height : 70px;
+    border: 3px solid #fff;
+}
+
+#e8 {
+    position: absolute;
+    left: 140px;
+    top: 560px;
+    width: 100px;
+    height : 70px;
     border: 3px solid #fff;
 }
 
