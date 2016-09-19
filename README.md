@@ -2,6 +2,7 @@
 
 # Game:
 
+
 Day 9: Keep It Straight https://ynyeh0221.github.io/Collection-of-Website-Works/day9.html
 
 Day 10: Click Counter https://ynyeh0221.github.io/Collection-of-Website-Works/day10.html
@@ -38,10 +39,13 @@ Day 32: RGB Floyd-Steinberg dithering Image Generator https://ynyeh0221.github.i
 
 Day 39: Sketch-style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day39.html
 
-Day 40: Retro style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day40.html
+Day 40: Retro-style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day40.html
+
+Day 41: 8bit-style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day41.html
 
 
 # Tool:
+
 
 Day 6: Colorful Clock https://ynyeh0221.github.io/Collection-of-Website-Works/day6.html
 
