@@ -107,9 +107,9 @@
             data[i] = Math.min(255, ori_data[i] / 128 * (255 - (255 - data[i]) * (255 - ori_data[i]) / 128));
             data[i+1] = Math.min(255, ori_data[i+1] / 128 * (255 - (255 - data[i+1]) * (255 - ori_data[i+1]) / 128));
             data[i+2] = Math.min(255, ori_data[i+2] / 128 * (255 - (255 - data[i+2])* (255 - ori_data[i+2]) / 128));
-            data[ind] = Math.min(255, (rgb.r + light) * (newlarge - newsmall) / 255 + newsmall);
-            data[ind+1] = Math.min(255, (rgb.g + light) * (newlarge - newsmall) / 255 + newsmall);
-            data[ind+2] = Math.min(255, (rgb.b + light) * (newlarge - newsmall) / 255 + newsmall);
+            data[i] = Math.min(255, (rgb.r + light) * (newlarge - newsmall) / 255 + newsmall);
+            data[i+1] = Math.min(255, (rgb.g + light) * (newlarge - newsmall) / 255 + newsmall);
+            data[i+2] = Math.min(255, (rgb.b + light) * (newlarge - newsmall) / 255 + newsmall);
         }
         ctx.putImageData(imageData,0,0);
     }
