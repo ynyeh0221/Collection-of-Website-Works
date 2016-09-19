@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 42</title>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script type="text/javascript" src="./mootools.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+<link rel="stylesheet" type="text/css" href="day42.css">
+</head>
+<body>
+    <h1 style = "text-align: center; color:#fff; font-size: 50px">Japanese-style Image Generator</h1>
+    <label id = "l">Upload Image File:</label><br/>
+    <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
+    <label id = "l2">Example Images:</label><br/>
+    <img class = "image" src="example1.jpg" alt="Example 1" id = "e1" onclick = "use(this)">
+    <img class = "image" src="example2.jpg" alt="Example 2" id = "e2" onclick = "use(this)">    
+    <img class = "image" src="example3.jpg" alt="Example 3" id = "e3" onclick = "use(this)">
+    <img class = "image" src="example4.jpg" alt="Example 4" id = "e4" onclick = "use(this)">
+    <button id = "b" class = "button" onclick = "process()" class = "btn">Process</button><br>
+    <canvas id="myCanvas"></canvas>
+    <canvas id="originalCanvas"></canvas>
+
+<script type="text/javascript">
+    var imageLoader = document.getElementById('imageLoader');
+    var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), cw = 1000, ch = 1000;
+    var ori_canvas = document.getElementById("originalCanvas"), ori_ctx = ori_canvas.getContext("2d");
+    canvas.width = cw;
+    canvas.height = ch;
+    ori_canvas.width = cw;
+    ori_canvas.height = ch;
+    imageLoader.addEventListener('change', handleImage, false);
+
+    function handleImage(e)
+    {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var reader = new FileReader();
+        reader.onload = function(event)
+        {
+            let img = new Image();
+            img.onload = function()
+            {    ori_canvas.width = img.width*cw/img.width;
+                 ori_canvas.height = img.height*cw/img.width;  
+                 canvas.width = img.width*cw/img.width;
+                 canvas.height = img.height*cw/img.width;                            
+                 ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
+                 img.width = ori_canvas.width;
+                 img.height = ori_canvas.height;
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]); 
+    }
+    
+    function use(e)
+    {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let img = new Image();
+        img.src = e.src;
+        ori_canvas.width = img.width*cw/img.width;
+        ori_canvas.height = img.height*cw/img.width;  
+        canvas.width = img.width*cw/img.width;
+        canvas.height = img.height*cw/img.width;                            
+        ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
+        img.width = ori_canvas.width;
+        img.height = ori_canvas.height;
+    }
+
+    function process()
+    {
+        var light = 5/255, newsmall = 5, newlarge = 250;
+        var imgData = ori_ctx.getImageData(0, 0, canvas.width, canvas.height), data = imgData.data;
+        for (let i = 0; i < canvas.height; i ++)
+        {
+            for (let j = 0; j < canvas.width; j ++)
+            {
+                let ind = 4 *(i * canvas.width + j)
+                let hsv = RGBtoHSV(data[ind], data[ind+1], data[ind+2]);
+                hsv.s = Math.max(0, hsv.s - 0.14);
+                hsv.v = Math.min(1, hsv.v + 0.14);
+                let rgb = HSVtoRGB(hsv);
+                data[ind] = Math.min(255, (rgb.r + light) * (newlarge - newsmall) / 255 + newsmall);
+                data[ind+1] = Math.min(255, (rgb.g + light) * (newlarge - newsmall) / 255 + newsmall);
+                data[ind+2] = Math.min(255, (rgb.b + light) * (newlarge - newsmall) / 255 + newsmall);
+            }
+        }
+        ori_ctx.putImageData(imgData, 0, 0);
+        ctx.fillStyle = "rgba(255, 230, 0, 0.2)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        Overlay();
+    }
+    function Overlay()
+    {
+        var light = 8/255, newsmall = 10, newlarge = 245;
+        var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+        var data = imageData.data;
+        var ori_imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+        var ori_data = ori_imageData.data;
+        for(let i=0; i<data.length; i+=4)
+        {
+            data[i] = Math.min(255, ori_data[i] / 128 * (255 - (255 - data[i]) * (255 - ori_data[i]) / 128));
+            data[i+1] = Math.min(255, ori_data[i+1] / 128 * (255 - (255 - data[i+1]) * (255 - ori_data[i+1]) / 128));
+            data[i+2] = Math.min(255, ori_data[i+2] / 128 * (255 - (255 - data[i+2])* (255 - ori_data[i+2]) / 128));
+            data[ind] = Math.min(255, (rgb.r + light) * (newlarge - newsmall) / 255 + newsmall);
+            data[ind+1] = Math.min(255, (rgb.g + light) * (newlarge - newsmall) / 255 + newsmall);
+            data[ind+2] = Math.min(255, (rgb.b + light) * (newlarge - newsmall) / 255 + newsmall);
+        }
+        ctx.putImageData(imageData,0,0);
+    }
+    function RGBtoHSV(r, g, b) {
+    if (arguments.length === 1) {
+        g = r.g, b = r.b, r = r.r;
+    }
+    var max = Math.max(r, g, b), min = Math.min(r, g, b),
+        d = max - min,
+        h,
+        s = (max === 0 ? 0 : d / max),
+        v = max / 255;
+
+    switch (max) {
+        case min:
+            h = 0;
+            break;
+        case r:
+            h = (g - b) + d * (g < b ? 6: 0);
+            h /= 6 * d;
+            break;
+        case g:
+            h = (b - r) + d * 2;
+            h /= 6 * d;
+            break;
+        case b:
+            h = (r - g) + d * 4;
+            h /= 6 * d;
+            break;
+    }
+
+    return {
+        h: h,
+        s: s,
+        v: v
+    };
+    }
+    function HSVtoRGB(h, s, v) {
+    var r, g, b, i, f, p, q, t;
+    if (arguments.length === 1) {
+        s = h.s, v = h.v, h = h.h;
+    }
+    i = Math.floor(h * 6);
+    f = h * 6 - i;
+    p = v * (1 - s);
+    q = v * (1 - f * s);
+    t = v * (1 - (1 - f) * s);
+    switch (i % 6) {
+        case 0: r = v, g = t, b = p; break;
+        case 1: r = q, g = v, b = p; break;
+        case 2: r = p, g = v, b = t; break;
+        case 3: r = p, g = q, b = v; break;
+        case 4: r = t, g = p, b = v; break;
+        case 5: r = v, g = p, b = q; break;
+    }
+    return {
+        r: Math.round(r * 255),
+        g: Math.round(g * 255),
+        b: Math.round(b * 255)
+    };
+    }
+</script>
+</body>
+</html>
