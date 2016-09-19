@@ -43,6 +43,8 @@ Day 40: Retro-style Image Generator https://ynyeh0221.github.io/Collection-of-We
 
 Day 41: 8bit-style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day41.html
 
+Day 42: Japanese-style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day42.html
+
 
 # Tool:
 
