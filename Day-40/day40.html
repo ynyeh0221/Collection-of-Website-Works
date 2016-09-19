@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 40</title>
+<script type="text/javascript" src="./delaunay.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<script type="text/javascript" src="./mootools.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+
+<style>
+body {
+    height: 1250px;
+    background: #202020;
+    font-family: 'Raleway', sans-serif;
+}
+#l1 {
+    position: absolute;
+    top: 250px;
+    left: 20px;
+    color: #fff;
+}
+#s1 {
+    position: absolute;
+    top: 280px;
+    left: 20px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+#slideHandle1 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+#pos1 {
+    position: absolute;
+    top: 280px;
+    left: 250px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+#l2 {
+    position: absolute;
+    top: 320px;
+    left: 20px;
+    color: #fff;
+}
+#s2 {
+    position: absolute;
+    top: 350px;
+    left: 20px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+}
+#slideHandle2 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+}
+#pos2 {
+    position: absolute;
+    top: 350px;
+    left: 250px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+#l {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    color: #fff;
+    font-size: 25px;
+    font-family: 'Raleway', sans-serif;
+}
+#imageLoader {
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    color: #fff;
+    font-size: 18px;
+    font-family: 'Raleway', sans-serif;
+}
+#b {
+    position: absolute;
+    top: 400px;
+    left: 20px;
+    font-size: 18px;
+}
+#newCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    display: none;
+    z-index: 5;
+}
+#myCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    z-index: 10;
+}
+#originalCanvas {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    background: #404040;
+}
+#by {
+  color: #fff;
+  position: absolute;
+  top: 250px;
+  left: 20px;
+}
+#oy {
+  color: #fff;
+  position: absolute;
+  top: 280px;
+  left: 20px;
+}
+#pgo {
+  color: #fff;
+  position: absolute;
+  top: 310px;
+  left: 20px;
+}
+#bw {
+  color: #fff;
+  position: absolute;
+  top: 340px;
+  left: 20px;
+}
+#lby {
+  color: #fff;
+  position: absolute;
+  top: 250px;
+  left: 50px;
+}
+#loy {
+  color: #fff;
+  position: absolute;
+  top: 280px;
+  left: 50px;
+}
+#lpgo {
+  color: #fff;
+  position: absolute;
+  top: 310px;
+  left: 50px;
+}
+#lbw {
+  color: #fff;
+  position: absolute;
+  top: 340px;
+  left: 50px;
+}
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #808080;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  font-family: 'Raleway', sans-serif;
+}
+.button:hover {background-color: #606060}
+.button:active {
+  background-color: #404040;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+</head>
+<body>
+    <h1 style = "text-align: center; color:#fff; font-size: 50px">Retro style Image Generator</h1>
+    <label id = "l">Upload Image File:</label><br/>
+    <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
+    <button id = "b" class = "button" onclick = "process()" class = "btn">Process</button><br>
+    <canvas id="newCanvas"></canvas>
+    <canvas id="myCanvas"></canvas>
+    <canvas id="originalCanvas"></canvas>
+    <input type="radio" name="colors" id="by" checked><label id = "lby">Blue-Yellow</label><br>
+    <input type="radio" name="colors" id="oy"><label id = "loy">Orange-Yellow</label><br>
+    <input type="radio" name="colors" id="pgo"><label id = "lpgo">Purple-Green-Orange</label><br>
+    <input type="radio" name="colors" id="bw"><label id = "lbw">Black-White</label><br>
+
+<script type="text/javascript">
+    var imageLoader = document.getElementById('imageLoader');
+    var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), cw = 1000, ch = 1000;
+    var ori_canvas = document.getElementById("originalCanvas"), ori_ctx = ori_canvas.getContext("2d")
+    var new_canvas = document.getElementById("newCanvas"), new_ctx = ori_canvas.getContext("2d")
+    var vertices = [];
+    canvas.width = cw;
+    canvas.height = ch;
+    ori_canvas.width = cw;
+    ori_canvas.height = ch;
+    new_canvas.width = cw;
+    new_canvas.height = ch;
+    imageLoader.addEventListener('change', handleImage, false);
+    function handleImage(e)
+    {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        new_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var reader = new FileReader();
+        reader.onload = function(event)
+        {
+            let img = new Image();
+            img.onload = function()
+            {    ori_canvas.width = img.width*cw/img.width;
+                 ori_canvas.height = img.height*cw/img.width;  
+                 new_canvas.width = img.width*cw/img.width;
+                 new_canvas.height = img.height*cw/img.width; 
+                 canvas.width = img.width*cw/img.width;
+                 canvas.height = img.height*cw/img.width;                            
+                 new_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
+                 img.width = ori_canvas.width;
+                 img.height = ori_canvas.height;
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]); 
+    }
+    function process()
+    {
+        var img = new_ctx.getImageData(0,0,canvas.width,canvas.height);
+        ori_ctx.putImageData(img,0,0);
+        var grd;
+        if (document.getElementById("by").checked)
+        {
+            let rs = 0, gs = 0, bs = 102, re = 255, ge = 255, be = 0;
+            var imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+            var data = imageData.data;
+            var ori_imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+            var ori_data = ori_imageData.data;
+            for(let i=0; i<data.length; i+=4)
+            {
+                let gray = ~~(data[i] + data[i+1] + data[i+2])/3;
+                data[i] = ~~(gray * (re - rs) / 255 + rs);
+                data[i+1] = ~~(gray * (ge - gs) / 255 + gs);
+                data[i+2] = ~~(gray * (be - bs) / 255 + bs);
+            }
+            ctx.putImageData(imageData,0,0);
+            ctx.globalAlpha = 0.2;
+        }
+        else if (document.getElementById("oy").checked)
+        {
+            let rs = 255, gs = 128, bs = 0, re = 255, ge = 255, be = 0;
+            var imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+            var data = imageData.data;
+            var ori_imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+            var ori_data = ori_imageData.data;
+            for(let i=0; i<data.length; i+=4)
+            {
+                let gray = ~~(data[i] + data[i+1] + data[i+2])/3;
+                data[i] = ~~(gray * (re - rs) / 255 + rs);
+                data[i+1] = ~~(gray * (ge - gs) / 255 + gs);
+                data[i+2] = ~~(gray * (be - bs) / 255 + bs);
+            }
+            ctx.putImageData(imageData,0,0);
+            ctx.globalAlpha = 0.2;
+        }
+        else if (document.getElementById("pgo").checked)
+        {
+            let rs = 102, gs = 0, bs = 102, re = 255, ge = 128, be = 0, rm = 0, gm = 102, bm = 0;
+            var imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+            var data = imageData.data;
+            var ori_imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+            var ori_data = ori_imageData.data;
+            for(let i=0; i<data.length; i+=4)
+            {
+                let gray = ~~(data[i] + data[i+1] + data[i+2])/3;
+                if (gray < 50)
+                {
+                    data[i] = ~~(gray * (rm - rs) / 255 + rs);
+                    data[i+1] = ~~(gray * (gm - gs) / 255 + gs);
+                    data[i+2] = ~~(gray * (bm - bs) / 255 + bs);
+                }
+                else
+                {
+                    data[i] = ~~(gray * (re - rm) / 255 + rm);
+                    data[i+1] = ~~(gray * (ge - gm) / 255 + gm);
+                    data[i+2] = ~~(gray * (be - bm) / 255 + bm);
+                }
+            }
+            ctx.putImageData(imageData,0,0);
+            ctx.globalAlpha = 0.2;
+        }
+        else if (document.getElementById("bw").checked)
+        {
+            let rs = 0, gs = 0, bs = 0, re = 255, ge = 255, be = 255;
+            var imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+            var data = imageData.data;
+            var ori_imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+            var ori_data = ori_imageData.data;
+            for(let i=0; i<data.length; i+=4)
+            {
+                let gray = ~~(data[i] + data[i+1] + data[i+2])/3;
+                data[i] = ~~(gray * (re - rs) / 255 + rs);
+                data[i+1] = ~~(gray * (ge - gs) / 255 + gs);
+                data[i+2] = ~~(gray * (be - bs) / 255 + bs);
+            }
+            ctx.putImageData(imageData,0,0);
+            ctx.globalAlpha = 1;
+        }
+        if (!document.getElementById("bw").checked)
+            Overlay();
+
+    }
+
+    function Overlay()
+    {
+        var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+        var data = imageData.data;
+        var ori_imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
+        var ori_data = ori_imageData.data;
+        for(let i=0; i<data.length; i+=4)
+        {
+            data[i] = Math.min(255, ori_data[i] / 128 * (255 - (255 - data[i]) * (255 - ori_data[i]) / 128));
+            data[i+1] = Math.min(255, ori_data[i+1] / 128 * (255 - (255 - data[i+1]) * (255 - ori_data[i+1]) / 128));
+            data[i+2] = Math.min(255, ori_data[i+2] / 128 * (255 - (255 - data[i+2])* (255 - ori_data[i+2]) / 128));
+        }
+        ctx.putImageData(imageData,0,0);
+    }
+</script>
+</body>
+</html>
