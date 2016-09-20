@@ -47,7 +47,7 @@ Day 42: Japanese-style Image Generator https://ynyeh0221.github.io/Collection-of
 
 Day 43: Epic films-style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day43.html
 
-Day 44: LOMO films-style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day44.html
+Day 44: LOMO style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day44.html
 
 
 # Tool:
