@@ -211,7 +211,7 @@
        			.style("fill", "none")
        			.style("stroke-width", border);
 
-          d3.json("world-110m2.json", function(error, topology) {
+          d3.json("./world-110m2.json", function(error, topology) {
               g.selectAll("path")
                 .data(topojson.object(topology, topology.objects.countries)
                 .geometries)
