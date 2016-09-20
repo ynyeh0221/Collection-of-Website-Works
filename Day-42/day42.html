@@ -82,8 +82,8 @@
             {
                 let ind = 4 *(i * canvas.width + j)
                 let hsv = RGBtoHSV(data[ind], data[ind+1], data[ind+2]);
-                hsv.s = Math.max(0, hsv.s - 0.14);
-                hsv.v = Math.min(1, hsv.v + 0.14);
+                hsv.s = Math.max(0, hsv.s - 15/255);
+                hsv.v = Math.min(1, hsv.v + 15/255);
                 let rgb = HSVtoRGB(hsv);
                 data[ind] = Math.min(255, (rgb.r + light) * (newlarge - newsmall) / 255 + newsmall);
                 data[ind+1] = Math.min(255, (rgb.g + light) * (newlarge - newsmall) / 255 + newsmall);
