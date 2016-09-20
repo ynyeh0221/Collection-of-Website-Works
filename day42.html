@@ -34,7 +34,6 @@
     ori_canvas.width = cw;
     ori_canvas.height = ch;
     imageLoader.addEventListener('change', handleImage, false);
-
     function handleImage(e)
     {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -71,10 +70,9 @@
         img.width = ori_canvas.width;
         img.height = ori_canvas.height;
     }
-
     function process()
     {
-        var light = 5/255, newsmall = 5, newlarge = 250;
+        var light = 5;
         var imgData = ori_ctx.getImageData(0, 0, canvas.width, canvas.height), data = imgData.data;
         for (let i = 0; i < canvas.height; i ++)
         {
@@ -85,9 +83,9 @@
                 hsv.s = Math.max(0, hsv.s - 15/255);
                 hsv.v = Math.min(1, hsv.v + 15/255);
                 let rgb = HSVtoRGB(hsv);
-                data[ind] = Math.min(255, (rgb.r + light) * (newlarge - newsmall) / 255 + newsmall);
-                data[ind+1] = Math.min(255, (rgb.g + light) * (newlarge - newsmall) / 255 + newsmall);
-                data[ind+2] = Math.min(255, (rgb.b + light) * (newlarge - newsmall) / 255 + newsmall);
+                data[ind] = Math.min(255, light + (((( rgb.r / 255.0) - 0.5) * (0.8)) + 0.5) * 255.0);
+                data[ind+1] = Math.min(255, light + (((( rgb.g / 255.0) - 0.5) * (0.8)) + 0.5) * 255.0);
+                data[ind+2] = Math.min(255, light + (((( rgb.b / 255.0) - 0.5) * (0.8)) + 0.5) * 255.0);
             }
         }
         ori_ctx.putImageData(imgData, 0, 0);
@@ -97,7 +95,7 @@
     }
     function Overlay()
     {
-        var light = 10/255, newsmall = 10, newlarge = 245;
+        var light = 10;
         var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
         var data = imageData.data;
         var ori_imageData = ori_ctx.getImageData(0,0,canvas.width,canvas.height);
@@ -107,9 +105,9 @@
             data[i] = Math.min(255, ori_data[i] / 128 * (255 - (255 - data[i]) * (255 - ori_data[i]) / 128));
             data[i+1] = Math.min(255, ori_data[i+1] / 128 * (255 - (255 - data[i+1]) * (255 - ori_data[i+1]) / 128));
             data[i+2] = Math.min(255, ori_data[i+2] / 128 * (255 - (255 - data[i+2])* (255 - ori_data[i+2]) / 128));
-            data[i] = Math.min(255, (rgb.r + light) * (newlarge - newsmall) / 255 + newsmall);
-            data[i+1] = Math.min(255, (rgb.g + light) * (newlarge - newsmall) / 255 + newsmall);
-            data[i+2] = Math.min(255, (rgb.b + light) * (newlarge - newsmall) / 255 + newsmall);
+            data[i] = Math.min(255, light + (((( data[i] / 255.0) - 0.5) * (0.6)) + 0.5) * 255.0);
+            data[i+1] = Math.min(255, light + (((( data[i+1] / 255.0) - 0.5) * (0.6)) + 0.5) * 255.0);
+            data[i+2] = Math.min(255, light + (((( data[i+2] / 255.0) - 0.5) * (0.6)) + 0.5) * 255.0);
         }
         ctx.putImageData(imageData,0,0);
     }
@@ -122,7 +120,6 @@
         h,
         s = (max === 0 ? 0 : d / max),
         v = max / 255;
-
     switch (max) {
         case min:
             h = 0;
@@ -140,7 +137,6 @@
             h /= 6 * d;
             break;
     }
-
     return {
         h: h,
         s: s,
