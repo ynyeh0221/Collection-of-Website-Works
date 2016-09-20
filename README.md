@@ -73,6 +73,8 @@ Day 27: Digital Clock with Balls https://ynyeh0221.github.io/Collection-of-Websi
 
 Day 33: Shortest Path Maze-Image Solver https://ynyeh0221.github.io/Collection-of-Website-Works/day33.html
 
+Day 45: World Distance Calculator https://ynyeh0221.github.io/Collection-of-Website-Works/day45.html
+
 
 # JS/ CSS effect
 
