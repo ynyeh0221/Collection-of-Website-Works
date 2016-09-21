@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 48</title>
+<style>
+  body {
+      background: Ivory;
+  }
+</style>
+</head>
+<body onload = "start()">
+
+<canvas id = "myCanvas"></canvas>
+
+<script>
+var balls = [], maxnumber = 100;
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+canvas.width = 1350;
+canvas.height = 600;
+function start()
+{
+    for (let i = 0; i < maxnumber; i++)
+    {
+        let color = "rgb(" + Math.floor(Math.random() * 185 + 70) + "," + Math.floor(Math.random() * 185 + 70) + "," + Math.floor(Math.random() * 185 + 70) +")"
+        let b = new ball(Math.random() * canvas.width, Math.random() * canvas.height, 0.5, color, Math.random() * 2.5 - 2, Math.random() * 5 - 2.5);
+        balls.push(b);
+    }   
+    setInterval(updatearea, 20);
+}
+
+function ball(x, y, radius, color, speedX, speedY)
+{
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.color = color;
+    this.speedX = speedX;
+    this.speedY = speedY;
+    this.update = function()
+    {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0,2*Math.PI);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }     
+    this.getPos = function()
+    {
+        this.x += this.speedX;
+        this.y += this.speedY;
+    }
+}
+
+function updatearea()
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < maxnumber; i++)
+    {
+        balls[i].getPos();
+        if (balls[i].x < 0 || balls[i].x >= canvas.width)
+            balls[i].speedX *= -1;
+        if (balls[i].y < 0 || balls[i].y >= canvas.height)
+            balls[i].speedY *= -1;
+        balls[i].update();
+    }
+    for (let i = 0; i < maxnumber; i++)
+    {
+        for (let j = i+1; j < maxnumber; j++)
+        {
+            let dist = distance(balls[i], balls[j]);
+            if (dist >= 20 && dist <= 100)
+            {
+                ctx.beginPath();
+                ctx.moveTo(balls[i].x, balls[i].y);
+                ctx.lineTo(balls[j].x, balls[j].y);
+                ctx.strokeStyle="#888888";
+                ctx.lineWidth = 0.3;
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+function distance(a, b)
+{
+    return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+}
+
+</script>
+
+</body>
+</html>
