@@ -107,4 +107,4 @@ Day 36: Random Walk2 https://ynyeh0221.github.io/Collection-of-Website-Works/day
 
 Day 37: Rotation https://ynyeh0221.github.io/Collection-of-Website-Works/day37.html
 
-Day 47: Color balls https://ynyeh0221.github.io/Collection-of-Website-Works/day47.html
+Day 47: Colorful balls https://ynyeh0221.github.io/Collection-of-Website-Works/day47.html
