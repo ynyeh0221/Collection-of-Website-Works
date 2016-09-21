@@ -76,9 +76,12 @@
     function process()
     {
         var imgData = ori_ctx.getImageData(0, 0, canvas.width, canvas.height), data = imgData.data;
+        var used = {};
         var gap = 10, radius = 5;
         ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        for (let c = 0; c < 3; c++)
+        {
         for (let i = 0; i < canvas.height; i += gap)
         {
             for (let j = 0; j < canvas.width; j += gap)
@@ -87,20 +90,23 @@
                 data[ind] = (((( data[ind] / 255.0) - 0.5) * 3) + 0.5) * 255.0;
                 data[ind+1] = (((( data[ind+1] / 255.0) - 0.5) * 3) + 0.5) * 255.0;
                 data[ind+2] = (((( data[ind+2] / 255.0) - 0.5) * 3) + 0.5) * 255.0;
+                
                 let gray = Math.floor((data[ind] + data[ind+1] + data[ind+2])/3);  
-                let k = radius + 2;
+                let k = radius + 4;
 
                 let offset = Math.floor(Math.random() * k) - k / 2;              
                 
-                    ctx.beginPath();
-                    var color1 = "rgb(" + 
+                ctx.beginPath();
+                var color1 = "rgb(" + 
                         Math.max(0, Math.min(255, Math.floor(r - (128 - gray) * 0.8)+50)) + "," + 
                         Math.max(0, Math.min(255, Math.floor(g - (128 - gray) * 0.8)+50)) + "," + 
                         Math.max(0, Math.min(255, Math.floor(b - (128 - gray) * 0.8)+50)) + ")";
-                    var color2 = "rgb(" + 
+                var color2 = "rgb(" + 
                         Math.max(0, Math.min(255, Math.floor(r - (128 - gray) * 0.8))) + "," + 
                         Math.max(0, Math.min(255, Math.floor(g - (128 - gray) * 0.8))) + "," + 
                         Math.max(0, Math.min(255, Math.floor(b - (128 - gray) * 0.8))) + ")";
+                if ((Math.floor(r - (128 - gray) * 0.8) + Math.floor(g - (128 - gray) * 0.8) + Math.floor(b - (128 - gray) * 0.8)) / 3 <= 100 * (i+1) && !(ind in used))
+                {
                     var radiusBg = ctx.createRadialGradient(j-radius/2, i-radius/2, 0, j-radius/2, i-radius/2, radius);
 			 radiusBg.addColorStop(0, color1);
 			 radiusBg.addColorStop(1, color2);
@@ -112,8 +118,11 @@
                     ctx.shadowOffsetY = 8; 
                     ctx.shadowBlur = 20;
                     ctx.shadowColor = "#000";
-                ctx.fill();
+                    ctx.fill();
+                    used[ind] = 1;
+                }
             }
+        }
         }
         ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
