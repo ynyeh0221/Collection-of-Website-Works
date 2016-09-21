@@ -87,7 +87,7 @@ function butterfly(x, y, width, height)
         but_ctx = but_canvas.getContext("2d");
         fly_ctx = fly_canvas.getContext("2d");
         but_ctx.save();
-        but_ctx.rotate(Math.random() * 0.2 - 0.1); 
+        but_ctx.rotate(Math.random() * 0.1 - 0.2); 
         but_ctx.drawImage(bb, this.x, this.y, this.width, this.height);
         but_ctx.restore();
         let imageData = ctx.getImageData(0,0,canvas.width,canvas.height), data = imageData.data;
