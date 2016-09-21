@@ -135,12 +135,12 @@ function butterfly(x, y, width, height)
     }
     this.getPos = function()
     {
-        if (this.y > cur_y)
+        if (this.y > cur_y && this.width >= 80)
         {
             this.width *= 0.96;
             this.height *= 0.96;
         }
-        else if (this.y < cur_y && this.width <= 220)
+        else if (this.y < cur_y && this.width <= 200)
         {
             this.width /= 0.96;
             this.height /= 0.96;
