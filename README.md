@@ -49,7 +49,7 @@ Day 43: Epic films-style Image Generator https://ynyeh0221.github.io/Collection-
 
 Day 44: LOMO style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day44.html
 
-Day 464: Pin Art style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day46.html
+Day 46: Pin Art style Image Generator https://ynyeh0221.github.io/Collection-of-Website-Works/day46.html
 
 
 # Tool:
