@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 49</title>
+<style>
+  body {
+      background: black;
+  }
+  #but {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+      display: none;
+  }
+  #fly {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 5;
+  }
+  #butterfly {
+      width: 100px;
+      height: auto;
+  }
+</style>
+</head>
+<body onload = "start()">
+
+<canvas id = "buttom"></canvas>
+<canvas id = "fly" ></canvas>
+<canvas id = "but"></canvas>
+<img id = "img1" src = "flower1.jpg" style = "display: none"></img>
+<img id = "img2" src = "flower2.jpg" style = "display: none"></img>
+<img id = "img4" src = "flower3.jpg" style = "display: none"></img>
+<img id = "img3" src = "flower4.jpg" style = "display: none"></img>
+<img id = "butterfly" src = "Picture1.gif" style = "display: none"></img>
+
+<script>
+var canvas = document.getElementById("buttom"), ctx = canvas.getContext("2d");
+var but_canvas = document.getElementById("but"), but_ctx = but_canvas.getContext("2d");
+var fly_canvas = document.getElementById("fly"), fly_ctx = fly_canvas.getContext("2d");
+canvas.width = 1350;
+canvas.height = 650;
+but_canvas.width = 1350;
+but_canvas.height = 650;
+fly_canvas.width = 1350;
+fly_canvas.height = 650;
+var cur_x, cur_y, b, bwidth = 200, bheight = 150;
+var img1 = document.getElementById("img1"), img2 = document.getElementById("img2"), img3 = document.getElementById("img3"), img4 = document.getElementById("img4");
+
+function start()
+{
+    canvas = document.getElementById("buttom"), ctx = canvas.getContext("2d");
+    ctx.drawImage(img1, 100, 0, canvas.width/4, canvas.height, 0, 0, canvas.width/4, canvas.height);  
+    ctx.drawImage(img2, 0, 100, canvas.width/4, canvas.height, canvas.width/4-1,0,canvas.width/4, canvas.height);
+    ctx.drawImage(img3, 50, 100, canvas.width/4, canvas.height, 2 * canvas.width/4-1,0,canvas.width/4, canvas.height);
+    ctx.drawImage(img4, 50, 550, canvas.width/4, canvas.height, 3 * canvas.width/4-1,0,canvas.width/4, canvas.height);
+    canvas.style.cursor = "none";
+    fly_canvas.style.cursor = "none";
+    but_canvas.style.cursor = "none";
+    ctx.fillStyle = "rgba(0, 0, 0, 0.9)";
+    window.addEventListener('mousemove', function (e) {
+            cur_x = e.pageX;
+            cur_y = e.pageY;
+        })
+    b = new butterfly(cur_x, cur_y, bwidth, bheight);
+    for (let i = 0; i < 4; i++)
+    {
+        if (i !== Math.floor((cur_x + b.width/2) / (canvas.width/4)))
+            ctx.fillRect(i * canvas.width/4-1,0,canvas.width/4+1, canvas.height);
+    }
+    setInterval(updatearea, 15);
+}
+
+function butterfly(x, y, width, height)
+{
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    
+    this.update = function()
+    {
+        let bb = document.getElementById("butterfly");
+        ctx = canvas.getContext("2d");
+        but_ctx = but_canvas.getContext("2d");
+        fly_ctx = fly_canvas.getContext("2d");
+        but_ctx.save();
+        but_ctx.rotate(Math.random() * 0.1 - 0.05); 
+        but_ctx.drawImage(bb, this.x, this.y, this.width, this.height);
+        but_ctx.restore();
+        let imageData = ctx.getImageData(0,0,canvas.width,canvas.height), data = imageData.data;
+        let but_imageData = but_ctx.getImageData(0,0,canvas.width,canvas.height), but_data = but_imageData.data;
+        let fly_imageData = fly_ctx.getImageData(0,0,canvas.width,canvas.height), fly_data = fly_imageData.data;
+        let prob = Math.random() * 0.4 + 0.2;
+        for (let i = 0; i < canvas.height; i++)
+        {
+            for (let j = 0; j < canvas.width; j++)
+            {
+                let ind = 4 * (i * canvas.width + j);
+                if (but_data[ind+3] === 0)
+                    continue;
+                if (j < canvas.width/ 4)
+                {
+                    fly_data[ind] = Math.random() > prob ? but_data[ind] : data[ind];
+                    fly_data[ind+1] = Math.random() > prob ? but_data[ind+1] : data[ind+1];
+                    fly_data[ind+2] = Math.random() > prob ? but_data[ind+2] : data[ind+2];
+                    fly_data[ind+3] = Math.random() > prob ? but_data[ind+3] : data[ind+3];
+                }
+                else if (j < 2 * canvas.width/ 4)
+                {
+                    fly_data[ind] = ~~(255 - (255 - but_data[ind]) * (255 - data[ind]) / 128);
+                    fly_data[ind+1] = ~~(255 - (255 - but_data[ind+1]) * (255 - data[ind+1]) / 128);
+                    fly_data[ind+2] = ~~(255 - (255 - but_data[ind+2]) * (255 - data[ind+2]) / 128);
+                    fly_data[ind+3] = ~~(255 - (255 - but_data[ind+3]) * (255 - data[ind+3]) / 128);
+                }
+                else if (j < 3 * canvas.width/ 4)
+                {
+                    fly_data[ind] = ~~(255 - (255 - but_data[ind]) * (255 - data[ind]) / 128);
+                    fly_data[ind+1] = ~~(255 - (255 - but_data[ind+1]) * (255 - data[ind+1]) / 128);
+                    fly_data[ind+2] = ~~(255 - (255 - but_data[ind+2]) * (255 - data[ind+2]) / 128);
+                    fly_data[ind+3] = ~~(255 - (255 - but_data[ind+3]) * (255 - data[ind+3]) / 128);
+                }
+                else
+                {
+                    fly_data[ind] = ~~Math.min(255, 2 * but_data[ind] + data[ind] -255);
+                    fly_data[ind+1] = ~~Math.min(255, 2 * but_data[ind+1] + data[ind+1] -255);
+                    fly_data[ind+2] = ~~Math.min(255, 2 * but_data[ind+2] + data[ind+2] -255);
+                    fly_data[ind+3] = ~~Math.min(255, 2 * but_data[ind+3] + data[ind+3] -255);
+                }
+            }
+        }
+        fly_ctx.putImageData(fly_imageData, 0, 0);
+    }
+    this.getPos = function()
+    {
+        if (this.y > cur_y)
+        {
+            this.width *= 0.96;
+            this.height *= 0.96;
+        }
+        else if (this.y < cur_y && this.width <= 220)
+        {
+            this.width /= 0.96;
+            this.height /= 0.96;
+        }
+        this.x = cur_x;
+        this.y = cur_y;
+    }
+}
+
+function updatearea()
+{
+    canvas = document.getElementById("buttom"), ctx = canvas.getContext("2d");
+    fly_canvas = document.getElementById("fly"), fly_ctx = fly_canvas.getContext("2d");
+    but_canvas = document.getElementById("fly"), but_ctx = but_canvas.getContext("2d");
+    fly_ctx.clearRect(0, 0, canvas.width, canvas.height);
+    but_ctx.clearRect(0, 0, canvas.width, canvas.height);
+    b.getPos();
+    b.update();
+    ctx.drawImage(img1, 100, 0, canvas.width/4, canvas.height, 0, 0, canvas.width/4, canvas.height);  
+    ctx.drawImage(img2, 0, 100, canvas.width/4, canvas.height, canvas.width/4-1,0,canvas.width/4, canvas.height);
+    ctx.drawImage(img3, 50, 100, canvas.width/4, canvas.height, 2 * canvas.width/4-1,0,canvas.width/4, canvas.height);
+    ctx.drawImage(img4, 50, 550, canvas.width/4, canvas.height, 3 * canvas.width/4-1,0,canvas.width/4, canvas.height);
+    ctx.fillStyle = "rgba(0, 0, 0, 0.9)";
+    for (let i = 0; i < 4; i++)
+    {
+        if (i !== Math.floor((cur_x + b.width/2) / (canvas.width/4)))
+            ctx.fillRect(i * canvas.width/4-1, 0, canvas.width/4+1, canvas.height);
+    }
+}
+
+</script>
+
+</body>
+</html>
