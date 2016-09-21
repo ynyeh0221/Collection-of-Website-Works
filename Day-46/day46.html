@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 46</title>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script type="text/javascript" src="./mootools.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+<link rel="stylesheet" type="text/css" href="day42.css">
+</head>
+<body>
+    <h1 style = "text-align: center; color:#fff; font-size: 50px">Pinart-style Image Generator</h1>
+    <label id = "l">Upload Image File:</label><br/>
+    <input type="file" id="imageLoader" name="imageLoader" class = "btn"/><br>
+    <label id = "l2">Example Images:</label><br/>
+    <img class = "image" src="example1.jpg" alt="Example 1" id = "e1" onclick = "use(this)">
+    <img class = "image" src="example2.jpg" alt="Example 2" id = "e2" onclick = "use(this)">    
+    <img class = "image" src="example3.jpg" alt="Example 3" id = "e3" onclick = "use(this)">
+    <img class = "image" src="example4.jpg" alt="Example 4" id = "e4" onclick = "use(this)">
+    <img class = "image" src="example5.jpg" alt="Example 5" id = "e5" onclick = "use(this)">
+    <img class = "image" src="example6.jpg" alt="Example 6" id = "e6" onclick = "use(this)">    
+    <img class = "image" src="example7.jpg" alt="Example 7" id = "e7" onclick = "use(this)">
+    <img class = "image" src="example8.jpg" alt="Example 8" id = "e8" onclick = "use(this)">
+    <button id = "b" class = "button" onclick = "process()" class = "btn">Process</button><br>
+    <canvas id="myCanvas"></canvas>
+    <canvas id="originalCanvas"></canvas>
+
+<script type="text/javascript">
+    var imageLoader = document.getElementById('imageLoader');
+    var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d"), cw = 1000, ch = 1000;
+    var ori_canvas = document.getElementById("originalCanvas"), ori_ctx = ori_canvas.getContext("2d");
+    var r = 138, g = 255, b = 87;
+    canvas.width = cw;
+    canvas.height = ch;
+    ori_canvas.width = cw;
+    ori_canvas.height = ch;
+    imageLoader.addEventListener('change', handleImage, false);
+
+    function handleImage(e)
+    {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var reader = new FileReader();
+        reader.onload = function(event)
+        {
+            let img = new Image();
+            img.onload = function()
+            {    ori_canvas.width = img.width*cw/img.width;
+                 ori_canvas.height = img.height*cw/img.width;  
+                 canvas.width = img.width*cw/img.width;
+                 canvas.height = img.height*cw/img.width;                            
+                 ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
+                 img.width = ori_canvas.width;
+                 img.height = ori_canvas.height;
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]); 
+    }
+    
+    function use(e)
+    {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let img = new Image();
+        img.src = e.src;
+        ori_canvas.width = img.width*cw/img.width;
+        ori_canvas.height = img.height*cw/img.width;  
+        canvas.width = img.width*cw/img.width;
+        canvas.height = img.height*cw/img.width;                            
+        ori_ctx.drawImage(img,0,0,img.width*cw/img.width,img.height*cw/img.width);
+        img.width = ori_canvas.width;
+        img.height = ori_canvas.height;
+    }
+
+    function process()
+    {
+        var imgData = ori_ctx.getImageData(0, 0, canvas.width, canvas.height), data = imgData.data;
+        var gap = 10, radius = 5;
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < canvas.height; i += gap)
+        {
+            for (let j = 0; j < canvas.width; j += gap)
+            {
+                let ind = (i * canvas.width + j) * 4;
+                data[ind] = (((( data[ind] / 255.0) - 0.5) * 3) + 0.5) * 255.0;
+                data[ind+1] = (((( data[ind+1] / 255.0) - 0.5) * 3) + 0.5) * 255.0;
+                data[ind+2] = (((( data[ind+2] / 255.0) - 0.5) * 3) + 0.5) * 255.0;
+                let gray = Math.floor((data[ind] + data[ind+1] + data[ind+2])/3);  
+                let k = radius + 3;
+                let offset = Math.floor(Math.random() * k) - k / 2;              
+                
+                    ctx.beginPath();
+                    ctx.fillStyle = "rgb(" + 
+                        Math.max(0, Math.min(255, Math.floor(r - (128 - gray) * 0.6))) + "," + 
+                        Math.max(0, Math.min(255, Math.floor(g - (128 - gray) * 0.6))) + "," + 
+                        Math.max(0, Math.min(255, Math.floor(b - (128 - gray) * 0.6))) + ")";
+                    ctx.arc(j + offset, i + offset, radius, 0, 2 * Math.PI, false);                    
+
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 0; 
+                    ctx.shadowBlur = 35;
+                    ctx.shadowColor = "#000";
+                ctx.fill();
+            }
+        }
+        ori_ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+</script>
+</body>
+</html>
