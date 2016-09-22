@@ -112,3 +112,8 @@ Day 47: Colorful balls https://ynyeh0221.github.io/Collection-of-Website-Works/d
 Day 48: Lines https://ynyeh0221.github.io/Collection-of-Website-Works/day48.html
 
 Day 49: Butterfly https://ynyeh0221.github.io/Collection-of-Website-Works/day49.html
+
+
+# React.js
+
+Day 50: Rapid Typing https://ynyeh0221.github.io/Collection-of-Website-Works/day50.html
