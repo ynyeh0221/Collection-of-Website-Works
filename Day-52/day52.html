@@ -41,16 +41,28 @@
         }
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
-        /* display: none; <- Crashes Chrome on hover */
-        -webkit-appearance: none;
-        margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+            -webkit-appearance: none;
+            margin: 0;
         }
     </style>
     <meta charset="UTF-8" />
     <title>Website Practice day 52</title>
   </head>
   <body onload = "start()">
-  Year: <input type = "number" id = "year" name = "year" min="1" max="9999" onchange = "update()"/> &nbsp; Month: <input type = "number" id = "month" name = "month" min="1" max="12" onchange = "update()"/>
+  Year: <input type = "number" id = "year" name = "year" min="1" max="9999" onchange = "update()"/> &nbsp; Month: <select id = "month" onchange = "update()">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+  <option value="9">9</option>
+  <option value="10">10</option>
+  <option value="11">11</option>
+  <option value="12">12</option>
+</select>
   <div id = "calender">
       <div id = "name"></div>
       <div id = "weekname">
@@ -127,7 +139,8 @@
           year = d.getFullYear();
           month = d.getMonth() + 1;
           document.getElementById("year").value = year;
-          document.getElementById("month").value = month;
+          document.getElementById("month").selectedIndex = month-1;
+          console.log(document.getElementById("month").selectedIndex)
           draw();
       }
       function update()
