@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 20px;
+            padding-left: 100px;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+        #calender {
+            width: 600px;
+            height: 550px;
+            padding-top: 10px;
+            padding-left: 12px;
+            border: 1px solid #404040;
+        }
+        #name {
+            margin-top: 40px;
+            text-align: center;
+            color: #404040;
+            font-size: 25px;
+            font-weight: bolder;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+        .day {
+            display: inline-block;
+            color: #404040;
+            width: 50px;
+            margin-left: 30px;
+            margin-top: 40px; 
+            font-family: 'Josefin Sans', sans-serif;
+        }
+        .holiday {
+            color: red;
+        }
+        input {
+            width: 50px;
+            text-align: center;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <title>Website Practice day 52</title>
+  </head>
+  <body onload = "start()">
+  Year: <input type = "number" id = "year" name = "year" min="1" max="9999" onchange = "update()"/> &nbsp; Month: <input type = "number" id = "month" name = "month" min="1" max="12" onchange = "update()"/>
+  <div id = "calender">
+      <div id = "name"></div>
+      <div id = "weekname">
+          <div class = "day holiday">Su</div>
+          <div class = "day">Mo</div>
+          <div class = "day">Tu</div>
+          <div class = "day">We</div>
+          <div class = "day">Th</div>
+          <div class = "day">Fr</div>
+          <div class = "day holiday">Sa</div>
+      </div>
+      <div id = "week1">
+          <div class = "day holiday" id = "1"></div>
+          <div class = "day" id = "2"></div>
+          <div class = "day" id = "3"></div>
+          <div class = "day" id = "4"></div>
+          <div class = "day" id = "5"></div>
+          <div class = "day" id = "6"></div>
+          <div class = "day holiday" id = "7"></div>
+      </div>
+      <div id = "week2">
+          <div class = "day holiday" id = "8"></div>
+          <div class = "day" id = "9"></div>
+          <div class = "day" id = "10"></div>
+          <div class = "day" id = "11"></div>
+          <div class = "day" id = "12"></div>
+          <div class = "day" id = "13"></div>
+          <div class = "day holiday" id = "14"></div>
+      </div>
+      <div id = "week3">
+          <div class = "day holiday" id = "15"></div>
+          <div class = "day" id = "16"></div>
+          <div class = "day" id = "17"></div>
+          <div class = "day" id = "18"></div>
+          <div class = "day" id = "19"></div>
+          <div class = "day" id = "20"></div>
+          <div class = "day holiday" id = "21"></div>
+      </div>
+      <div id = "week4">
+          <div class = "day holiday" id = "22"></div>
+          <div class = "day" id = "23"></div>
+          <div class = "day" id = "24"></div>
+          <div class = "day" id = "25"></div>
+          <div class = "day" id = "26"></div>
+          <div class = "day" id = "27"></div>
+          <div class = "day holiday" id = "28"></div>
+      </div>
+      <div id = "week5">
+          <div class = "day holiday" id = "29"></div>
+          <div class = "day" id = "30"></div>
+          <div class = "day" id = "31"></div>
+          <div class = "day" id = "32"></div>
+          <div class = "day" id = "33"></div>
+          <div class = "day" id = "34"></div>
+          <div class = "day holiday" id = "35"></div>
+      </div>
+      <div id = "week6">
+          <div class = "day holiday" id = "36"></div>
+          <div class = "day" id = "37"></div>
+          <div class = "day" id = "38"></div>
+          <div class = "day" id = "39"></div>
+          <div class = "day" id = "40"></div>
+          <div class = "day" id = "41"></div>
+          <div class = "day holiday" id = "42"></div>
+      </div>
+  </div>
+  <script>
+      var monthdays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      var monthnames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var year, month, day, d;
+      function start()
+      {
+          d = new Date();
+          year = d.getFullYear();
+          month = d.getMonth() + 1;
+          document.getElementById("year").value = year;
+          document.getElementById("month").value = month;
+          draw();
+      }
+      function update()
+      {
+          year = document.getElementById("year").value;
+          month = document.getElementById("month").value;
+          draw();
+      }
+      function draw()
+      {
+          document.getElementById("name").innerHTML = monthnames[month-1];
+          let special = false;
+          let textdate = year + '/' + month + '/1';
+          d = new Date(textdate);
+          if (month == 2 && year % 4 === 0 && year % 100 !== 0)
+              special = true;
+          let n = d.getDay(), num_of_days = special ? monthdays[month-1] + 1 : monthdays[month-1];
+          for (let i = 1; i <= 42; i++)
+              document.getElementById(i.toString()).innerHTML = '';
+          for (let i = 0; i < num_of_days; i++)
+              document.getElementById((1 + n + i).toString()).innerHTML = 1 + i;
+      }
+  </script>
+  </body>
+</html>
