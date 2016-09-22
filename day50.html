@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <style>
+      body {
+         background: DarkRed;
+         font-family: 'Open Sans', sans-serif;
+      }
+      h1 {
+         font-family: 'Lobster', cursive;
+         color: white;
+      }
+      p {
+         font-weight: bolder;
+         font-size: 25px;
+         color: white;
+      }
+      textarea {
+         font-family: 'Open Sans', sans-serif;
+         font-size: 16px;
+         border: 0px inset #404040;
+      }
+      .correct {
+         color: black;
+         
+      }
+      .wrong {
+         color: red;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <title>Website Practice day 50</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  </head>
+  <h1 style = "text-align: center">Rapid Typing</h1>
+  <body oncontextmenu="return false;">
+  <div id="container"></div>
+  <div id="container2"></div>
+
+  <script type="text/babel">
+
+var style = {
+  display: 'inline-block',
+  margin: 10,
+  width: 550,
+  height: 500
+};
+var style2 = {
+  display: 'inline-block',
+  margin: 10,
+  width: 550,
+  height: 500
+};
+var style3 = {
+  position: 'absolute',
+  top: 120,
+  display: 'inline-block',
+  margin: 10,
+  width: 150,
+  height: 60
+};
+  var Text = React.createClass({
+  getInitialState: function() {
+    return {count: false, time: 0, class: 'correct', inputValue: '', article: 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: \"We hold these truths to be self-evident, that all men are created equal.\"\nI have a dream that one day on the red hills of Georgia, the sons of former slaves and the sons of former slave owners will be able to sit down together at the table of brotherhood.\nI have a dream that one day even the state of Mississippi, a state sweltering with the heat of injustice, sweltering with the heat of oppression, will be transformed into an oasis of freedom and justice.\nI have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character.\nI have a dream today!\nI have a dream that one day, down in Alabama, with its vicious racists, with its governor having his lips dripping with the words of \"interposition\" and \"nullification\" -- one day right there in Alabama little black boys and black girls will be able to join hands with little white boys and white girls as sisters and brothers.\nI have a dream today!\nI have a dream that one day every valley shall be exalted, and every hill and mountain shall be made low, the rough places will be made plain, and the crooked places will be made straight; \"and the glory of the Lord shall be revealed and all flesh shall see it together.\"'};
+  },
+  counter: function () {
+      this.setState({time: this.state.time + 1});
+  }, 
+  updateInputValue: function(e) {
+    if (!this.state.count)
+    {
+        this.interval = setInterval(this.counter, 1000);
+        this.state.count = true;
+    }
+    this.setState({inputValue: e.target.value});
+    if (this.state.inputValue !== this.state.article.substr(0, this.state.inputValue.length))
+        this.setState({class:'wrong'});
+    else
+    {
+        this.setState({class: 'correct'});
+        if (this.state.inputValue.length === this.state.article.length)
+        {
+            alert("You Win!!!");
+            clearInterval(this.interval);
+        }
+    }
+  },
+  render: function() {
+    return (
+      <div>
+      <textarea disabled readonly = "readonly" style = {style} value={this.state.article} />
+      <textarea className = {this.state.class} style = {style2} value={this.state.inputValue} onChange={this.updateInputValue} />
+      <p id = "time" style = {style3}>Used time: {this.state.time}</p>
+      </div>
+    );
+  }
+  });
+  ReactDOM.render(<Text />, document.getElementById("container"));
+  </script>
+  </body>
+</html>
