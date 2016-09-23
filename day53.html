@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Website Practice Day 53</title>
+<style>
+body {
+  background: url("./day53.jpg");
+}
+#instruction {
+      position: absolute;
+      z-index: 10;
+      color: #fff;
+      left: 550px;
+      top: 270px;
+      font-family: 'Josefin Sans', sans-serif;
+  }
+</style>
+</head>
+<body onload = "init()">
+<h1 id = "instruction">Drag the balloon</h1>
+<div>
+<canvas id="canvas" width="400" height="300"></canvas>
+</div>
+<img id="balloon" width = "200" height = "auto" src="balloon.gif" style = "display: none">
+<script type="text/javascript">
+
+var canvas;
+var ctx;
+var x = 550;
+var y = 380;
+var WIDTH = 1350;
+var HEIGHT = 600;
+var dragok = false;
+var b, w = 220, h = 200;
+
+function rect(xx,yy,ww,hh) {
+    this.x = xx;
+    this.y = yy;
+    this.up = -0.01;
+    this.speedY = 0;
+    this.width = ww;
+    this.height = hh;
+    this.update = function()
+    { 
+        var img = document.getElementById("balloon");
+        ctx = canvas.getContext("2d");
+        ctx.drawImage(img, x, y, this.width, this.height);
+    }
+    this.getPos = function()
+    {
+        if (!dragok)
+        {
+            this.speedY += this.up;
+            if (this.y <= 0 || this.y > canvas.height - this.height)
+                this.speedY = - this.speedY * 0.95;
+            this.y += this.speedY;
+            x = this.x;
+            y = this.y;
+        }
+        else
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
+}
+
+function clear() {
+ ctx.clearRect(0, 0, WIDTH, HEIGHT);
+}
+
+function init() {
+ canvas = document.getElementById("canvas");
+ ctx = canvas.getContext("2d");
+ canvas.width = WIDTH;
+ canvas.height = HEIGHT;
+ b = new rect(x, y, w, h);
+ setInterval(draw, 20);
+ window.addEventListener('mousedown', function (e) {
+    document.getElementById("instruction").style.display = "none";
+    if (e.pageX < x + w && e.pageX > x && e.pageY < y + h &&  e.pageY > y)
+    {
+        x = e.pageX;
+        y = e.pageY;
+        dragok = true;
+        canvas.onmousemove = myMove;
+    }
+});
+ window.addEventListener('mouseup', function (e) {
+       dragok = false;
+       canvas.onmousemove = null;
+});
+}
+
+function myMove(e) {
+ if (dragok) {
+  x = e.pageX
+  y = e.pageY;
+ }
+}
+
+function draw() {
+ clear();
+ b.getPos();
+ b.update();
+}
+
+</script>
+
+</body>
+</html>
