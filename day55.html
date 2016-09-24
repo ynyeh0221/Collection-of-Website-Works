@@ -85,11 +85,6 @@
  </audio>
 
 <script>
-window.addEvent('domready', function(){
-        var slider1 = new Slider('s1', 'slideHandle1',{onComplete: function(val){$('pos1').setHTML(val);}});
-        document.getElementById('pos1').innerHTML = '0';
-    });
-
 var audioElementCount = 1, audioElementIndex = 1;
 function boing() {
     let audioElementName = "audio" + audioElementIndex;
@@ -118,6 +113,8 @@ function start()
         balls.push(b);
     }
     setInterval(updatearea, 15);
+    var slider1 = new Slider('s1', 'slideHandle1',{onComplete: function(val){$('pos1').setHTML(val);}});
+    document.getElementById('pos1').innerHTML = '0';
 }
 
 function ball(x, y, radius, color, speedX, speedY)
