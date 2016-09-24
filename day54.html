@@ -21,32 +21,17 @@
 <h1 id = "instruction">Collisions</h1>
 <canvas id = "myCanvas"></canvas>
 <audio id="audio1">
-   <source src="pianoC.mp3" type="audio/mp3">
+   <source src="small_drum1.mp3" type="audio/mp3">
  </audio>
  <audio id="audio2">
-   <source src="pianoD.mp3" type="audio/mp3">
+   <source src="small_drum1.mp3" type="audio/mp3">
  </audio>
  <audio id="audio3">
-   <source src="pianoE.mp3" type="audio/mp3">
- </audio>
-<audio id="audio4">
-   <source src="pianoF.mp3" type="audio/mp3">
- </audio>
- <audio id="audio5">
-   <source src="pianoG.mp3" type="audio/mp3">
- </audio>
- <audio id="audio6">
-   <source src="pianoA.mp3" type="audio/mp3">
- </audio>
- <audio id="audio7">
-   <source src="pianoB.mp3" type="audio/mp3">
- </audio>
- <audio id="audio8">
-   <source src="pianoC2.mp3" type="audio/mp3">
+   <source src="small_drum1.mp3" type="audio/mp3">
  </audio>
 
 <script>
-var audioElementCount = 8, audioElementIndex = 1;
+var audioElementCount = 1, audioElementIndex = 1;
 function boing() {
     let audioElementName = "audio" + audioElementIndex;
     let audio = document.getElementById(audioElementName);
@@ -60,7 +45,7 @@ function boing() {
     }
 }
 
-var balls = [], maxnumber = 35;
+var balls = [], sound = 0, maxnumber = 35;
 var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
 canvas.width = 1350;
 canvas.height = 600;
@@ -118,11 +103,15 @@ function updatearea()
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < maxnumber; i++)
     {
+        sound = sound + 1 < 5 ? sound + 1 : 0;
         for (let j = i+1; j < maxnumber; j++)
         {
             if (balls[i].crash(balls[j]))
             { 
-                boing();
+                if (sound === 0)
+                {
+                    boing(); 
+                }
                 let tempX = balls[i].speedX, tempY = balls[i].speedY;
                 balls[i].speedX = (balls[i].speedX * (balls[i].mass - balls[j].mass) + (2 * balls[j].mass * balls[j].speedX)) / (balls[i].mass + balls[j].mass);
                 balls[i].speedY = (balls[i].speedY * (balls[i].mass - balls[j].mass) + (2 * balls[j].mass * balls[j].speedY)) / (balls[i].mass + balls[j].mass);
