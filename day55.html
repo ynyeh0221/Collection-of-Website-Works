@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 55</title>
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+<script type="text/javascript" src="./mootools.js"></script>
+<script type="text/javascript" src="./slider.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+<style>
+  body {
+      background: black;
+  }
+  #instruction {
+      position: absolute;
+      z-index: 10;
+      color: white;
+      left: 570px;
+      top: 270px;
+      font-family: 'Josefin Sans', sans-serif;
+  }
+  #l1 {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    color: #fff;
+    font-family: 'Play', sans-serif;
+    z-index: 20;
+}
+
+#myCanvas {
+    position: absolute;
+    top: 10px;
+    left: 240px;
+    border: 1px solid #fff;
+}
+
+#s1 {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 200px;
+    z-index: 20;
+}
+
+#slideHandle1 {
+    position: absolute;
+    left: 20px;
+    background-color: #cccc00;
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 20;
+}
+
+#pos1 {
+    position: absolute;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 35px;
+    inline-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    display: none;
+}
+</style>
+</head>
+<body onload = "start()">
+<div id = "container">
+    <label id = 'l1'>Opacity: </label>
+    <div id="s1"><div id="slideHandle1"></div></div>
+    <div id="pos1"></div>
+<div>
+<canvas id = "myCanvas"></canvas>
+<audio id="audio1">
+   <source src="small_drum1.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio2">
+   <source src="small_drum1.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio3">
+   <source src="small_drum1.mp3" type="audio/mp3">
+ </audio>
+
+<script>
+window.addEvent('domready', function(){
+        var slider1 = new Slider('s1', 'slideHandle1',{onComplete: function(val){$('pos1').setHTML(val);}});
+        document.getElementById('pos1').innerHTML = '0';
+    });
+
+var audioElementCount = 1, audioElementIndex = 1;
+function boing() {
+    let audioElementName = "audio" + audioElementIndex;
+    let audio = document.getElementById(audioElementName);
+    audio.currentTime = 0;
+    audio.play();
+    if (audioElementIndex == audioElementCount) {
+        audioElementIndex = 1;
+    }
+    else {
+        audioElementIndex += 1;
+    }
+}
+
+var balls = [], sound = 0, maxnumber = 35;
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+canvas.width = 1100;
+canvas.height = 600;
+function start()
+{
+    for (let i = 0; i < maxnumber; i++)
+    {
+        let color = "rgb(" + Math.floor(Math.random() * 185 + 70) + "," + Math.floor(Math.random() * 185 + 70) + "," + Math.floor(Math.random() * 185 + 70) +")"
+        let radius = ~~(Math.random() * 10);
+        let b = new ball(Math.random() * canvas.width, Math.random() * canvas.height, radius, color, (Math.round(Math.random() * 2) - 1) * radius, (Math.round(Math.random() * 2) - 1) * radius);
+        balls.push(b);
+    }
+    setInterval(updatearea, 15);
+}
+
+function ball(x, y, radius, color, speedX, speedY)
+{
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.mass = Math.pow(this.radius, 3);
+    this.color = color;
+    this.speedX = speedX;
+    this.speedY = speedY;
+    this.update = function()
+    {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0,2*Math.PI);
+        var radiusBg = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+	radiusBg.addColorStop(0, 'rgba(255,255,255,0.8)');
+        radiusBg.addColorStop(1, this.color);
+
+        ctx.fillStyle = radiusBg;
+        ctx.fill();
+    }     
+    this.getPos = function()
+    {
+        if (this.x <= 0 || this.x >= canvas.width)
+            this.speedX *= -1;
+        if (this.y <= 0 || this.y >= canvas.height)
+            this.speedY *= -1;
+        this.x += this.speedX;
+        this.y += this.speedY;
+    }
+    this.crash = function(obj)
+    {
+        if (distance(this, obj) <= 2 * this.radius)
+            return true;
+        return false;
+    }
+}
+
+function updatearea()
+{
+    let op = Math.min(1, parseInt(document.getElementById('pos1').innerHTML, 10) / 1000);
+    ctx.fillStyle = "rgba(0, 0, 0," + op + ")";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < maxnumber; i++)
+    {
+        sound = sound + 1 < 5 ? sound + 1 : 0;
+        for (let j = i+1; j < maxnumber; j++)
+        {
+            if (balls[i].crash(balls[j]))
+            { 
+                if (sound === 0)
+                {
+                    //boing(); 
+                }
+                let tempX = balls[i].speedX, tempY = balls[i].speedY;
+                balls[i].speedX = (balls[i].speedX * (balls[i].mass - balls[j].mass) + (2 * balls[j].mass * balls[j].speedX)) / (balls[i].mass + balls[j].mass);
+                balls[i].speedY = (balls[i].speedY * (balls[i].mass - balls[j].mass) + (2 * balls[j].mass * balls[j].speedY)) / (balls[i].mass + balls[j].mass);
+                balls[j].speedX = (balls[j].speedX * (balls[j].mass - balls[i].mass) + (2 * balls[i].mass * tempX)) / (balls[i].mass + balls[j].mass);
+                balls[j].speedY = (balls[j].speedY * (balls[j].mass - balls[i].mass) + (2 * balls[i].mass * tempY)) / (balls[i].mass + balls[j].mass);
+            }
+        }
+    }
+    for (let i = 0; i < maxnumber; i++)
+    {
+        balls[i].getPos();
+        balls[i].update();
+    }
+}
+
+function distance(a, b)
+{
+    return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+}
+</script>
+
+</body>
+</html>
