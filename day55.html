@@ -148,7 +148,7 @@ function ball(x, y, radius, color, speedX, speedY)
     }
     this.crash = function(obj)
     {
-        if (distance(this, obj) <= 2 * this.radius)
+        if (distance(this, obj) <= this.radius + obj.radius)
             return true;
         return false;
     }
