@@ -123,6 +123,8 @@ Day 54: Collision https://ynyeh0221.github.io/Collection-of-Website-Works/day54.
 
 Day 55: Collision 2 https://ynyeh0221.github.io/Collection-of-Website-Works/day55.html
 
+Day 56: How Many Times Have you Visited? https://ynyeh0221.github.io/Collection-of-Website-Works/day56.html
+
 
 # React.js
 
