@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Website Practice Day 51</title>
+<title>Website Practice Day 54</title>
 <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
 <style>
   body {
@@ -20,8 +20,46 @@
 <body onload = "start()">
 <h1 id = "instruction">Collisions</h1>
 <canvas id = "myCanvas"></canvas>
+<audio id="audio1">
+   <source src="pianoC.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio2">
+   <source src="pianoD.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio3">
+   <source src="pianoE.mp3" type="audio/mp3">
+ </audio>
+<audio id="audio4">
+   <source src="pianoF.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio5">
+   <source src="pianoG.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio6">
+   <source src="pianoA.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio7">
+   <source src="pianoB.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio8">
+   <source src="pianoC2.mp3" type="audio/mp3">
+ </audio>
 
 <script>
+var audioElementCount = 8, audioElementIndex = 1;
+function boing() {
+    let audioElementName = "audio" + audioElementIndex;
+    let audio = document.getElementById(audioElementName);
+    audio.currentTime = 0;
+    audio.play();
+    if (audioElementIndex == audioElementCount) {
+        audioElementIndex = 1;
+    }
+    else {
+        audioElementIndex += 1;
+    }
+}
+
 var balls = [], maxnumber = 35;
 var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
 canvas.width = 1350;
@@ -84,6 +122,7 @@ function updatearea()
         {
             if (balls[i].crash(balls[j]))
             { 
+                boing();
                 let tempX = balls[i].speedX, tempY = balls[i].speedY;
                 balls[i].speedX = (balls[i].speedX * (balls[i].mass - balls[j].mass) + (2 * balls[j].mass * balls[j].speedX)) / (balls[i].mass + balls[j].mass);
                 balls[i].speedY = (balls[i].speedY * (balls[i].mass - balls[j].mass) + (2 * balls[j].mass * balls[j].speedY)) / (balls[i].mass + balls[j].mass);
