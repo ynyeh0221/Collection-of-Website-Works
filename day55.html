@@ -159,7 +159,7 @@ function ball(x, y, radius, color, speedX, speedY)
 
 function updatearea()
 {
-    let op = Math.min(1, parseInt(document.getElementById('pos1').innerHTML, 10) / 1000);
+    let op = Math.min(1, (parseInt(document.getElementById('pos1').innerHTML, 10) * 10) / 1000);
     ctx.fillStyle = "rgba(0, 0, 0," + op + ")";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < maxnumber; i++)
