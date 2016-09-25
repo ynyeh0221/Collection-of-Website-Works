@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 57</title>
+<style>
+#myCanvas {
+  background: #808080;
+}
+</style>
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+</head>
+<body onload = "init()">
+<canvas id = "myCanvas"></canvas>
+<script>
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+canvas.width = 1350;
+canvas.height = 750;
+var grid = [];
+var n = 3, 
+    count = 0, 
+    radius = 20, 
+    lux = 400, 
+    luy = 150, 
+    gap = 50, 
+    t, 
+    win = false;
+
+function init()
+{
+    for (let i = 0; i < n; i++)
+    {
+        grid.push([]);
+        for (let j = 0; j < n; j++)
+        {
+            let c = new circle(lux + i * gap, luy + j * gap, radius, "#202020");
+            grid[i].push(c);
+        }
+    }
+    canvas.addEventListener('click', function(event) {
+        let x = event.pageX - canvas.offsetLeft, y = event.pageY - canvas.offsetTop;
+        if (!win)
+        {
+            for (let i = 0; i < n; i++)
+            {
+                for (let j = 0; j < n; j++)
+                {
+                    if (distance([x, y], grid[i][j]) <= radius)
+                    {
+                        grid[i][j].lighten();
+                        if (i-1 >= 0)
+                            grid[i-1][j].lighten();
+                        if (i+1 < n)
+                            grid[i+1][j].lighten();
+                        if (j-1 >= 0)
+                            grid[i][j-1].lighten();
+                        if (j+1 < n)
+                            grid[i][j+1].lighten();
+                        count ++;
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            n ++;
+            win = false;
+            grid = [];
+            count = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < n; i++)
+            {
+                grid.push([]);
+                for (let j = 0; j < n; j++)
+                {
+                    let c = new circle(lux + i * gap, luy + j * gap, radius, "#202020");
+                    grid[i].push(c);
+                }
+            }
+            t = setInterval(updatearea, 20);
+        }
+    }, false);
+    t = setInterval(updatearea, 20);
+}
+
+function circle(x, y, radius, color)
+{
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.color = color;
+    this.light = "rgba(0, 255, 255, 1)";
+    this.update = function()
+    {
+        ctx.beginPath();
+        ctx.shadowColor = this.color === this.light? "#fff" : 'rgba(0, 0, 0, 0)';
+        ctx.shadowBlur = 15;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+    this.lighten = function()
+    {
+        this.color = this.color === this.light ? "#202020" : this.light;
+    }
+}
+
+function updatearea()
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.shadowColor = 'rgba(0, 0, 0, 0)';
+    ctx.fillStyle = "#fff";
+    ctx.font="20px Josefin Sans";
+    ctx.fillText("Move: " + count, 400 - radius, 100);
+    let light = 0;
+    for (let i = 0; i < n; i++)
+    {
+        for (let j = 0; j < n; j++)
+        {
+            grid[i][j].update();
+            if (grid[i][j].color == grid[i][j].light)
+                light ++;
+        }
+    }
+    if (light == n * n)
+    {
+        ctx.fillStyle = "#fff";
+        ctx.shadowBlur = 0;
+        ctx.fillRect(200, 50, 1000, 550);
+        ctx.font="20px Josefin Sans";
+        ctx.fillStyle = "#000";
+        if (n === 10)
+            ctx.fillText("You passed all levels! Good Job!!!", 600, 320);
+        else
+        {
+            ctx.fillText("You passed level " + n +" in " + count + " moves!", 580, 320);
+            ctx.fillText("Next level: " + (n+1), 650, 360);
+            win = true;
+        }
+    }
+}
+
+function distance(a, b)
+{
+    return Math.sqrt(Math.pow(a[0] - b.x, 2) + Math.pow(a[1] - b.y, 2));
+}
+</script>
+</body>
+</html>
