@@ -23,6 +23,8 @@ Day 23: Clear the Bubbles! https://ynyeh0221.github.io/Collection-of-Website-Wor
 
 Day 38: 2048 https://ynyeh0221.github.io/Collection-of-Website-Works/day38.html
 
+Day 39: Light All Bulbs https://ynyeh0221.github.io/Collection-of-Website-Works/day57.html
+
 
 # Image-processing:
 
