@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 58</title>
+<link href="https://fonts.googleapis.com/css?family=Lobster|PT+Sans" rel="stylesheet">
+<style>
+body {
+  background: white;
+  font-family: 'PT Sans', sans-serif;
+}
+#myCanvas {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+
+}
+#shadow {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+#c1 {
+  position: absolute;
+  top: 350px;
+  left: 460px;
+  z-index: 20;
+}
+#c2 {
+  position: absolute;
+  top: 380px;
+  left: 460px;
+  z-index: 20;
+}
+</style>
+</head>
+<body onload = "init()">
+<canvas id = "myCanvas"></canvas>
+<canvas id = "shadow"></canvas>
+<div id = "c1"><label>Distance from the point light to text layer = </label><input id = "in1" type = "number" style = "width: 60px" onchange = "update()"></input></div><br>
+<div id = "c2"><label>Distance from text layer to shadow layer = </label><input id = "in2" type = "number" style = "width: 60px" onchange = "update()"></input></div><br>
+<script>
+var t = document.getElementById("myCanvas");
+t.width = 1350;
+t.height = 650;
+var ctxt = t.getContext("2d");
+var g = document.getElementById("shadow");
+g.width = 1350;
+g.height = 650;
+var ctxg = g.getContext("2d");
+var lightx = 100, lighty = 250, lightz = 2000, t2g = 200;
+
+function update()
+{
+    lightz = document.getElementById("in1").value;
+    t2g = document.getElementById("in2").value;
+}
+
+function init()
+{
+    ctxt.fillStyle = "rgba(0, 0, 0, 255)";
+    ctxt.font = "50px Lobster";
+    ctxt.fillText("Hello World",530,300);
+    for (let i = 0; i < 10; i++)
+    {
+        let size = ~~(Math.random() * 20);
+        ctxt.fillRect(~~(Math.random() * t.width), ~~(Math.random() * t.height), size, size);
+    }
+    for (let i = 0; i < 10; i++)
+    {
+        let size = ~~(Math.random() * 20);
+        ctxt.beginPath();
+        ctxt.arc(~~(Math.random() * t.width), ~~(Math.random() * t.height), size, 0, Math.PI * 2, true);
+        ctxt.closePath();
+        ctxt.fill();
+    }
+    document.getElementById("in1").value = lightz;
+    document.getElementById("in2").value = t2g;
+    window.addEventListener('mousemove', function (e) {
+            lightx = e.pageX;
+            lighty = e.pageY;
+        })
+    setInterval(updatearea, 20);
+}
+
+function updatearea()
+{
+    ctxg.clearRect(0, 0, g.width, g.height);
+    var imageData = ctxt.getImageData(0,0,t.width,t.height), data = imageData.data;
+    var shadow = ctxg.getImageData(0,0,t.width,t.height), sh = shadow.data;
+    for (let i = 0; i < g.height; i++)
+    {
+        for (let j = 0; j < g.width; j++)
+        {
+            let m = t2g / lightz;
+            let line = [~~(i + (lighty - i) * m), ~~(j + (lightx - j) * m)];
+            let ind = 4 * (line[0] * t.width + line[1]);
+            let sind = 4 * (i * t.width + j);
+            if (line[0] >= 0 && line[1] >= 0 && line[0] < t.height && line[1] < t.width && data[ind+3] > 0)
+            {
+                sh[sind] = 255;
+                sh[sind + 1] = 0;
+                sh[sind + 2] = 0;
+                sh[sind + 3] = ~~(data[ind+3] / 255 * 128);
+            }
+        }
+    }
+    ctxg.putImageData(shadow,0,0);
+}
+</script>
+</body>
+</html>
