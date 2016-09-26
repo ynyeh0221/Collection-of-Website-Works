@@ -1,0 +1,35 @@
+body {
+  background: white;
+  font-family: 'PT Sans', sans-serif;
+}
+#myCanvas {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+
+}
+#shadow {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+#c {
+  position: absolute;
+  top: 320px;
+  left: 460px;
+  z-index: 20;
+}
+#c1 {
+  position: absolute;
+  top: 350px;
+  left: 460px;
+  z-index: 20;
+}
+#c2 {
+  position: absolute;
+  top: 380px;
+  left: 460px;
+  z-index: 20;
+}
