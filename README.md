@@ -133,6 +133,8 @@ Day 59: Shadow of Point Light 2 (Height of element is considered) https://ynyeh0
 
 Day 60: Color Words with Marker Pen https://ynyeh0221.github.io/Collection-of-Website-Works/day60.html
 
+Day 61: Write Words on Photo with Marker Pen https://ynyeh0221.github.io/Collection-of-Website-Works/day61.html
+
 
 # React.js
 
