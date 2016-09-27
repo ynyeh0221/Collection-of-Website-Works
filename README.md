@@ -129,6 +129,8 @@ Day 56: How Many Times Have you Visited? https://ynyeh0221.github.io/Collection-
 
 Day 58: Shadow of Point Light https://ynyeh0221.github.io/Collection-of-Website-Works/day58.html
 
+Day 59: Shadow of Point Light 2 (Height of element is considered) https://ynyeh0221.github.io/Collection-of-Website-Works/day59.html
+
 
 # React.js
 
