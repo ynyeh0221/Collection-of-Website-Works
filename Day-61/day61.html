@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 60</title>
+<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+<style>
+#text {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+
+}
+#myCanvas {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+#bg {
+  display: none;
+}
+</style>
+</head>
+<body onload = "init()">
+<div style="font-family: 'Luckiest Guy', cursive; color: rgba(0, 0, 0, 0);">.</div>
+<canvas id = "text"></canvas>
+<canvas id = "myCanvas"></canvas>
+<img src = "60.jpg" id = "bg"/>
+<script>
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+var text = document.getElementById("text"), ctxt = text.getContext("2d");
+
+//text parameters
+var textgap = 140, fontsize = 200;
+
+//marker pen parameters
+var starty = 230, startx = 330, ind = 0, gap = 15, h = 15, w = 0, speed = 10;
+
+//setInterval parameter
+var t;
+
+canvas.width = 1350;
+canvas.height = 600;
+text.width = 1350;
+text.height = 600;
+
+//Background image
+var img = document.getElementById("bg"), ratio = text.width/img.width;
+
+function init()
+{
+    ctxt.drawImage(img, 0, 0, img.width * ratio, img.height * ratio);
+    ctx.drawImage(img, 0, 0, img.width * ratio, img.height * ratio);
+    ctxt.fillStyle = "rgba(255,0,0,1)";
+    ctxt.font = fontsize + "px Luckiest Guy";
+    ctxt.fillText("H",startx + 5,380);
+    ctxt.fillText("e",startx + 5 + textgap,380);
+    ctxt.fillText("l",startx + 5 + 2 * textgap,380);
+    ctxt.fillText("l",startx + 5 + 3 * textgap,380);
+    ctxt.fillText("o",startx + 5 + 4 * textgap,380);
+    var imageData = ctxt.getImageData(0, 0, text.width, text.height), data = imageData.data;
+    var bgData = ctx.getImageData(0, 0, text.width, text.height), bgdata = bgData.data;
+    for (let i = 0; i < data.length; i += 4)
+    {
+        if (data[i] !== bgdata[i])
+            data[i+3] = 0;
+    }
+    ctxt.putImageData(imageData,0,0);
+    t = setInterval(updatearea, 20);
+}
+
+function updatearea()
+{
+    ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+    if (w < textgap)
+    {
+        w += speed;
+        ctx.drawImage(img, startx / ratio, (starty + ind * gap) / ratio, w / ratio, h / ratio, startx, starty + ind * gap, w, h);
+        ctx.fillRect(startx, starty + ind * gap, w, h);
+    }
+    else if (ind * gap < fontsize && w < canvas.width)
+    {
+        w = 0;
+        ind ++;
+        ctx.fillRect(startx, ind * gap, w, h);
+    }
+    else if (ind * gap >= fontsize && w < canvas.width)
+    {
+        startx += textgap;
+        w = 0;
+        ind = 0;
+        ctx.fillRect(startx, ind * gap, w, h);
+    }
+    else
+    {
+        clearInterval(t);
+    }
+
+}
+</script>
+</body>
+</html>
