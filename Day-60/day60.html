@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 60</title>
+<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+<style>
+#text {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+}
+#myCanvas {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #fff;
+}
+</style>
+</head>
+<body onload = "init()">
+<div style="font-family: 'Luckiest Guy', cursive; color: rgba(0, 0, 0, 0);">.</div>
+<canvas id = "text"></canvas>
+<canvas id = "myCanvas"></canvas>
+<script>
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+var text = document.getElementById("text"), ctxt = text.getContext("2d");
+var start = 230, ind = 0, gap = 20, h = 23, w = 0, speed = 5, fontsize = 200, t;
+var rainbow = ["rgba(255, 0, 0, 0.5)", "rgba(255, 128, 0, 0.5)", "rgba(255, 255, 0, 0.5)", "rgba(0, 255, 0, 0.5)", "rgba(0, 0, 255, 0.5)", "rgba(128, 0, 255, 0.5)", "rgba(255, 0, 255, 0.5)"]
+canvas.width = 1350;
+canvas.height = 600;
+text.width = 1350;
+text.height = 600;
+function init()
+{
+    ctxt.fillStyle = "rgba(200,0,0,255)";
+    ctxt.font = fontsize + "px Luckiest Guy";
+    ctxt.fillText("Hello World!",35,380);
+    var imageData = ctxt.getImageData(0, 0, text.width, text.height), data = imageData.data;
+    for (let i = 0; i < data.length; i += 4)
+    {
+        if (data[i] >= 200 - 10 && data[i] <= 200 + 10)
+            data[i+3] = 0;
+        else
+        {
+            data[i] = 0;
+            data[i+1] = 0;
+            data[i+2] = 0;
+            data[i+3] = 255;
+        } 
+    }
+    ctxt.putImageData(imageData,0,0);
+    t = setInterval(updatearea, 20);
+}
+
+function updatearea()
+{
+    ctx.fillStyle = rainbow[ind % rainbow.length];
+    if (w < canvas.width)
+    {
+        w += speed;
+        ctx.clearRect(0, start + ind * gap + h - gap, w, h);
+        ctx.fillRect(0, start + ind * gap, w, h);
+    }
+    else
+    {
+        if (ind * gap >= fontsize)
+            clearInterval(t);
+        w = 0;
+        ind ++;
+        ctx.fillRect(0, ind * gap, w, h);
+    }
+}
+</script>
+</body>
+</html>
