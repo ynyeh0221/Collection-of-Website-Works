@@ -59,6 +59,11 @@ function init()
 function updatearea()
 {
     ctxg.clearRect(0, 0, g.width, g.height);
+    var grd = ctxg.createRadialGradient(lightx,lighty,1,lightx,lighty,1400);
+    grd.addColorStop(0,"#fff");
+    grd.addColorStop(1,"rgba(255, 0, 0, 0.5)");
+    ctxg.fillStyle = grd;
+    ctxg.fillRect(0,0,g.width,g.height);
     var imageData = ctxt.getImageData(0,0,t.width,t.height), data = imageData.data;
     var shadow = ctxg.getImageData(0,0,t.width,t.height), sh = shadow.data;
     for (let i = 0; i < g.height; i++)
@@ -74,7 +79,7 @@ function updatearea()
                 sh[sind] = 255;
                 sh[sind + 1] = 0;
                 sh[sind + 2] = 0;
-                sh[sind + 3] = ~~(data[ind+3] / 255 * 128);
+                sh[sind + 3] = 150;
             }
         }
     }
