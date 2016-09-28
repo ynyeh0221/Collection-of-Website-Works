@@ -71,11 +71,11 @@ function init()
 
 function updatearea()
 {
-    ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+    ctx.fillStyle = "rgba(255, 255, 255, 1)";
     if (w < textgap)
     {
         w += speed;
-        ctx.drawImage(img, startx / ratio, (starty + ind * gap) / ratio, w / ratio, h / ratio, startx, starty + ind * gap, w, h);
+        //ctx.drawImage(img, startx / ratio, (starty + ind * gap) / ratio, w / ratio, h / ratio, startx, starty + ind * gap, w, h);
         ctx.fillRect(startx, starty + ind * gap, w, h);
     }
     else if (ind * gap < fontsize && w < canvas.width)
