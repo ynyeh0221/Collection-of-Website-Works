@@ -61,6 +61,7 @@ function element(x,y)
     this.y = y;
     this.size = 1;
     this.speedY = 5;
+    this.gravity = 0.01;
     this.color = "#fff";
     this.update = function()
     {
@@ -69,6 +70,7 @@ function element(x,y)
     }
     this.getPos = function()
     {
+        this.y += this.gravity;
         this.y += this.speedY;
     }
 }
@@ -152,6 +154,7 @@ function updatearea()
             if (elements[i].y >= canvas.height)
             {
                 elements[i].speedY = 0;
+                elements[i].gravity = 0;
                 check ++;
             }
         }        
