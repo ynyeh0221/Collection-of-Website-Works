@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 62</title>
+<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+<style>
+#text {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  display: none;
+}
+#temp {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+  display: none;
+}
+#myCanvas {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #000;
+}
+</style>
+</head>
+<body onload = "init()">
+<div style="font-family: 'Luckiest Guy', cursive; color: rgba(0, 0, 0, 0);">.</div>
+<canvas id = "text"></canvas>
+<canvas id = "temp"></canvas>
+<canvas id = "myCanvas"></canvas>
+<script>
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+var text = document.getElementById("text"), ctxt = text.getContext("2d");
+var temp = document.getElementById("temp"), ctxtemp = temp.getContext("2d");
+var t, fontsize = 200;
+var emergethreshold = 0.01, step = 0.001, emerging = true, particle_ratio = 0.2;
+var elements = [];
+canvas.width = 1350;
+canvas.height = 600;
+text.width = 1350;
+text.height = 600;
+temp.width = 1350;
+temp.height = 600;
+function init()
+{
+    ctxt.fillStyle = "rgba(0,0,0,255)";
+    ctxt.font = fontsize + "px Luckiest Guy";
+    ctxt.fillText("Hello World!",35,380);
+    ctxtemp.fillStyle = "rgba(0,0,0,255)";
+    ctxtemp.font = fontsize + "px Luckiest Guy";
+    ctxtemp.fillText("Hello World!",35,380);
+    t = setInterval(updatearea, 20);
+}
+
+function element(x,y)
+{
+    this.x = x;
+    this.y = y;
+    this.size = 1;
+    this.speedY = 5;
+    this.color = "#fff";
+    this.update = function()
+    {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.size, this.size);
+    }
+    this.getPos = function()
+    {
+        this.y += this.speedY;
+    }
+}
+
+function updatearea()
+{
+    var imageData = ctxt.getImageData(0, 0, text.width, text.height), data = imageData.data;
+    var bgData = ctx.getImageData(0, 0, text.width, text.height), bgdata = bgData.data;
+    var tempData = ctxtemp.getImageData(0, 0, text.width, text.height), tempdata = tempData.data;
+    emergethreshold += step;
+    if (emerging)
+    {
+        let check = 0;
+        for (let i = 0; i < data.length; i += 4)
+        {
+            if (data[i+3] > 0)
+            {
+                if (bgdata[i] !== 255 && bgdata[i+1] !== 255 && bgdata[i+2] !== 255)
+                {
+                    check ++;
+                    if (Math.random() < emergethreshold)
+                    {
+                        bgdata[i] = 255;
+                        bgdata[i+1] = 255;
+                        bgdata[i+2] = 255;
+                        bgdata[i+3] = 255;
+                        tempdata[i] = 255;
+                        tempdata[i+1] = 255;
+                        tempdata[i+2] = 255;
+                        tempdata[i+3] = 255;
+                    }
+                }
+            }
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.putImageData(bgData,0,0);
+        ctxtemp.clearRect(0, 0, canvas.width, canvas.height);
+        ctxtemp.putImageData(tempData,0,0);
+        if (check === 0)
+        {
+            emerging = false;
+            threshold = 0.01;
+        }
+    }
+    else
+    {
+        for (let i = 0; i < canvas.width; i ++)
+        {
+            for (let j = 0; j < canvas.height; j ++)
+            {
+                let ind = 4 * (j * canvas.width + i);
+                if (data[ind+3] > 0)
+                {
+                    if (tempdata[ind] !== 0 && tempdata[ind+1] !== 0 && tempdata[ind+2] !== 0)
+                    {
+                        if (Math.random() < emergethreshold)
+                        {
+                            tempdata[ind] = 0;
+                            tempdata[ind+1] = 0;
+                            tempdata[ind+2] = 0;
+                            tempdata[ind+3] = 255;
+                            if (Math.random() < particle_ratio)
+                            {
+                                let e = new element(i, j);
+                                elements.push(e);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctxtemp.clearRect(0, 0, canvas.width, canvas.height);
+        ctxtemp.putImageData(tempData,0,0);
+        ctx.putImageData(tempData,0,0);
+        let check = 0;
+        for (let i = 0; i < elements.length; i++)
+        {
+            elements[i].getPos();
+            elements[i].update();
+            if (elements[i].y >= canvas.height)
+            {
+                elements[i].speedY = 0;
+                check ++;
+            }
+        }        
+        if (elements.length === check)
+        {
+            clearInterval(t);
+        }
+    }
+}
+</script>
+</body>
+</html>
