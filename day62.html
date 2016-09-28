@@ -3,6 +3,7 @@
 <head>
 <title>Website Practice Day 62</title>
 <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <style>
 #text {
   position: absolute;
@@ -24,35 +25,75 @@
   left: 10px;
   background: #000;
 }
+#again {
+  position: absolute;
+  top: 300px;
+  left: 560px;
+  z-index: 30;
+  color: #fff;
+  font-size: 50px;
+  font-family: 'PT Sans', sans-serif;
+  display: none;
+}
+#again:hover {
+  color: #ffff00;
+}
+#words {
+  position: absolute;
+  top: 150px;
+  left: 520px;
+  display: none;
+  color: #fff;
+  font-family: 'PT Sans', sans-serif;
+  z-index: 30;
+}
 </style>
 </head>
 <body onload = "init()">
 <div style="font-family: 'Luckiest Guy', cursive; color: rgba(0, 0, 0, 0);">.</div>
+<div id = "words">Enter Your Words: <input id = "w" type="text" name="words" maxlength="12" onchange = "update()" value = ''></div>
 <canvas id = "text"></canvas>
 <canvas id = "temp"></canvas>
 <canvas id = "myCanvas"></canvas>
+<div id = "again" onclick = "init()">Play Again?</div>
 <script>
 var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
 var text = document.getElementById("text"), ctxt = text.getContext("2d");
 var temp = document.getElementById("temp"), ctxtemp = temp.getContext("2d");
 var t, fontsize = 200;
-var emergethreshold = 0.01, step = 0.001, emerging = true, particle_ratio = 0.15;
-var elements = [];
+var emergethreshold = 0.01, step = 0.001, emerging = true, particle_ratio = 0.15
+var elements = [], words = "Hello World!";
+
 canvas.width = 1350;
 canvas.height = 600;
 text.width = 1350;
 text.height = 600;
 temp.width = 1350;
 temp.height = 600;
+
 function init()
 {
+    elements = [];
+    emerging = true;
+    emergethreshold = 0.01
+    ctxt.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctxtemp.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById("again").style.display = "none";
+    document.getElementById("words").style.display = "none";
+
     ctxt.fillStyle = "rgba(0,0,0,255)";
     ctxt.font = fontsize + "px Luckiest Guy";
-    ctxt.fillText("Hello World!",35,380);
+    ctxt.fillText(words,35,380);
     ctxtemp.fillStyle = "rgba(0,0,0,255)";
     ctxtemp.font = fontsize + "px Luckiest Guy";
-    ctxtemp.fillText("Hello World!",35,380);
+    ctxtemp.fillText(words,35,380);
     t = setInterval(updatearea, 20);
+}
+
+function update()
+{
+    words = document.getElementById("w").value;
 }
 
 function element(x,y)
@@ -60,8 +101,8 @@ function element(x,y)
     this.x = x;
     this.y = y;
     this.size = 1;
-    this.speedY = 5;
-    this.gravity = 0.1;
+    this.speedY = 3;
+    this.gravity = 1;
     this.color = "#fff";
     this.update = function()
     {
@@ -153,14 +194,17 @@ function updatearea()
             elements[i].update();
             if (elements[i].y >= canvas.height)
             {
-                elements[i].speedY = 0;
                 elements[i].gravity = 0;
+                elements[i].speedY = 0;
                 check ++;
             }
-        }        
+        }
+        
         if (elements.length === check)
         {
             clearInterval(t);
+            document.getElementById("again").style.display = "block";
+            document.getElementById("words").style.display = "block";
         }
     }
 }
