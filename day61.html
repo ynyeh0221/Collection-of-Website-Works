@@ -9,7 +9,6 @@
   top: 10px;
   left: 10px;
   z-index: 10;
-
 }
 #myCanvas {
   position: absolute;
@@ -21,12 +20,13 @@
 }
 </style>
 </head>
-<body onload = "init()">
+<body>
 <div style="font-family: 'Luckiest Guy', cursive; color: rgba(0, 0, 0, 0);">.</div>
 <canvas id = "text"></canvas>
 <canvas id = "myCanvas"></canvas>
-<img src = "60.jpg" id = "bg"/>
+
 <script>
+window.onload = function(){
 var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
 var text = document.getElementById("text"), ctxt = text.getContext("2d");
 
@@ -45,7 +45,9 @@ text.width = 1350;
 text.height = 600;
 
 //Background image
-var img = document.getElementById("bg"), ratio = text.width/img.width;
+var img = new Image();
+img.src = "60.jpg";
+var ratio = text.width/img.width;
 
 function init()
 {
@@ -67,6 +69,10 @@ function init()
     }
     ctxt.putImageData(imageData,0,0);
     t = setInterval(updatearea, 20);
+}
+
+img.onload = function() {
+  init();
 }
 
 function updatearea()
@@ -92,10 +98,9 @@ function updatearea()
         ctx.fillRect(startx, ind * gap, w, h);
     }
     else
-    {
         clearInterval(t);
-    }
 
+}
 }
 </script>
 </body>
