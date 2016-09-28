@@ -36,7 +36,7 @@ var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
 var text = document.getElementById("text"), ctxt = text.getContext("2d");
 var temp = document.getElementById("temp"), ctxtemp = temp.getContext("2d");
 var t, fontsize = 200;
-var emergethreshold = 0.01, step = 0.001, emerging = true, particle_ratio = 0.2;
+var emergethreshold = 0.01, step = 0.001, emerging = true, particle_ratio = 0.15;
 var elements = [];
 canvas.width = 1350;
 canvas.height = 600;
@@ -61,7 +61,7 @@ function element(x,y)
     this.y = y;
     this.size = 1;
     this.speedY = 5;
-    this.gravity = 0.01;
+    this.gravity = 0.05;
     this.color = "#fff";
     this.update = function()
     {
