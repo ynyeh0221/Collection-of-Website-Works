@@ -10,21 +10,18 @@
   left: 10px;
   z-index: 10;
 }
-
 #things {
   position: absolute;
   top: 10px;
   left: 10px;
   z-index: 0;
 }
-
 #add {
   position: absolute;
   top: 10px;
   left: 1150px;
   z-index: 20;
 }
-
 .button {
   display: inline-block;
   padding: 15px 25px;
@@ -40,9 +37,7 @@
   border-radius: 15px;
   box-shadow: 0 9px #999;
 }
-
 .button:hover {background-color: #0080ff}
-
 .button:active {
   background-color: #0080ff;
   box-shadow: 0 5px #666;
@@ -78,7 +73,6 @@ function boing() {
         audioElementIndex += 1;
     }
 }
-
 var waterplane = 300;
 var water = document.getElementById("water"), wctx = water.getContext("2d");
 var things = document.getElementById("things"), tctx = things.getContext("2d");
@@ -86,12 +80,10 @@ water.width = 1350;
 water.height = 600;
 things.width = 1350;
 things.height = 600;
-
 var elems = [], maxelems = 13, size = 80;
 var waterdensity = 1;
-var resistance = 0.2;
+var resistance = 0.15;
 var addwater = false;
-
 function init()
 {
     wctx.fillStyle = "rgba(0,0,255,0.3)";
@@ -103,12 +95,12 @@ function init()
     }
     setInterval(updatearea, 20);
 }
-
 function add()
 {
     addwater = true;
+    document.getElementById("add").style.opacity = "0.6";
+    document.getElementById("add").style.cursor = "not-allowed";
 }
-
 function component(x, y, color, w, h, type, density)
 {
     this.x = x;
@@ -140,7 +132,6 @@ function component(x, y, color, w, h, type, density)
             this.y = water.height - this.h;
     }
 }
-
 function updatearea()
 {
     if (addwater && waterplane >= size)
