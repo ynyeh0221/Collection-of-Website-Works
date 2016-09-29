@@ -55,8 +55,30 @@
 <canvas id = "water"></canvas>
 <canvas id = "things"></canvas>
 <div style="font-family: 'PT Sans', cursive; color: rgba(0, 0, 0, 0);">.</div>
-
+<audio id="audio1">
+   <source src="diving1.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio2">
+   <source src="diving1.mp3" type="audio/mp3">
+ </audio>
+ <audio id="audio3">
+   <source src="diving1.mp3" type="audio/mp3">
+ </audio>
 <script>
+var audioElementCount = 3, audioElementIndex = 1;
+function boing() {
+    let audioElementName = "audio" + audioElementIndex;
+    let audio = document.getElementById(audioElementName);
+    audio.currentTime = 0;
+    audio.play();
+    if (audioElementIndex == audioElementCount) {
+        audioElementIndex = 1;
+    }
+    else {
+        audioElementIndex += 1;
+    }
+}
+
 var waterplane = 300;
 var water = document.getElementById("water"), wctx = water.getContext("2d");
 var things = document.getElementById("things"), tctx = things.getContext("2d");
@@ -85,8 +107,6 @@ function init()
 function add()
 {
     addwater = true;
-    document.getElementById("add").style.opacity = "0.6";
-    document.getElementById("add").style.cursor = "not-allowed";
 }
 
 function component(x, y, color, w, h, type, density)
@@ -102,7 +122,8 @@ function component(x, y, color, w, h, type, density)
     this.mass = (Math.pow(this.w,2) * this.h * this.density);
     this.gravity = 1;
     this.force = this.gravity * this.mass;
-    this.speedchange = 0; 
+    this.speedchange = 0;
+    this.sounded = false;
     this.update = function()
     {
         tctx.fillStyle = this.color;
@@ -133,6 +154,11 @@ function updatearea()
     {
         if (elems[i].y + elems[i].h > waterplane)
         {
+            if (!elems[i].sounded)
+            {
+                boing();
+                elems[i].sounded = true;
+            }
             elems[i].force = elems[i].gravity * elems[i].mass - elems[i].gravity * Math.min(elems[i].h, elems[i].y + elems[i].h - waterplane) * Math.pow(elems[i].w,2) * waterdensity;
             elems[i].speedchange = elems[i].force/elems[i].mass - resistance * elems[i].speedY;
         }
