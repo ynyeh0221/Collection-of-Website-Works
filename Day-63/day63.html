@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 63</title>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<style>
+#water {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+}
+
+#things {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 0;
+}
+
+#add {
+  position: absolute;
+  top: 10px;
+  left: 1150px;
+  z-index: 20;
+}
+
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  font-family: 'PT Sans;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #66b2ff;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #0080ff}
+
+.button:active {
+  background-color: #0080ff;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+</head>
+<body onload = "init()">
+<button id = "add" class = "button" onclick = "add()">Add Water</button>
+<canvas id = "water"></canvas>
+<canvas id = "things"></canvas>
+<div style="font-family: 'PT Sans', cursive; color: rgba(0, 0, 0, 0);">.</div>
+
+<script>
+var waterplane = 300;
+var water = document.getElementById("water"), wctx = water.getContext("2d");
+var things = document.getElementById("things"), tctx = things.getContext("2d");
+water.width = 1350;
+water.height = 600;
+things.width = 1350;
+things.height = 600;
+
+var elems = [], maxelems = 13, size = 80;
+var waterdensity = 1;
+var resistance = 0.2;
+var addwater = false;
+
+function init()
+{
+    wctx.fillStyle = "rgba(0,0,255,0.3)";
+    wctx.fillRect(0,waterplane,water.width,water.height-waterplane);
+    for (let i = 0; i < maxelems; i++)
+    {
+        let e = new component(30 + 100 * i, 0, "#000", size, size, "rect", 0.1 * (i + 1));
+        elems.push(e);
+    }
+    setInterval(updatearea, 20);
+}
+
+function add()
+{
+    addwater = true;
+}
+
+function component(x, y, color, w, h, type, density)
+{
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.w = w;
+    this.h = h;
+    this.type = type;
+    this.speedY = 0;
+    this.density = density;
+    this.mass = (Math.pow(this.w,2) * this.h * this.density);
+    this.gravity = 1;
+    this.force = this.gravity * this.mass;
+    this.speedchange = 0; 
+    this.update = function()
+    {
+        tctx.fillStyle = this.color;
+        tctx.fillRect(this.x, this.y, this.w, this.h);
+        tctx.fillStyle = "#fff";
+        tctx.font="20px PT Sans";
+        tctx.fillText(Math.round(this.density * 10) / 10, this.x + this.w/3, this.y + this.h/2);
+    }
+    this.getPos = function()
+    {
+        this.speedY += this.speedchange;
+        this.y += this.speedY;
+        if (this.y + this.h >= water.height)
+            this.y = water.height - this.h;
+    }
+}
+
+function updatearea()
+{
+    if (addwater && waterplane >= size)
+    {
+        waterplane -= 1;
+        wctx.clearRect(0, 0, water.width,water.height);
+        wctx.fillRect(0,waterplane,water.width,water.height-waterplane);
+    }
+    tctx.clearRect(0, 0, things.width, things.height);
+    for (let i = 0; i < elems.length; i++)
+    {
+        if (elems[i].y + elems[i].h > waterplane)
+        {
+            elems[i].force = elems[i].gravity * elems[i].mass - elems[i].gravity * Math.min(elems[i].h, elems[i].y + elems[i].h - waterplane) * Math.pow(elems[i].w,2) * waterdensity;
+            elems[i].speedchange = elems[i].force/elems[i].mass - resistance * elems[i].speedY;
+        }
+        else
+        {
+            elems[i].force = elems[i].gravity * elems[i].mass;
+            elems[i].speedchange = elems[i].force/elems[i].mass;
+        }
+        elems[i].getPos();
+        elems[i].update();
+    }
+}
+</script>
+</body>
+</html>
