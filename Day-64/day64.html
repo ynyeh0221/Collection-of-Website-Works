@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 64</title>
+<style>
+#myCanvas {
+  background: PeachPuff;
+}
+</style>
+</head>
+<body onload = "init()">
+
+<canvas id = "myCanvas"></canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+canvas.width = 1350;
+canvas.height = 600;
+var maxnum = 10, radius = 50, originalx = 220, originaly = 400, balls = [], angle = 60;
+var dragposx = originalx - originaly * Math.sin(angle * Math.PI / 180);
+var dragposy = originaly * Math.cos(angle * Math.PI / 180);
+var distub = 0.0000001;
+
+function init()
+{
+    let b = new ball(dragposx, dragposy, radius, 0, originalx, originaly);
+    balls.push(b);
+    for (let i = 1; i < maxnum; i++)
+    {
+        let b = new ball(originalx + 2 * radius * i, originaly, radius, i, originalx + 2 * radius * i, originaly);
+        balls.push(b);
+    }
+    setInterval(updatearea, 20);
+}
+
+function ball(xx, yy, radius, id, orix, oriy)
+{
+    this.orix = orix;
+    this.oriy = oriy;
+    this.x = xx;
+    this.y = yy;
+    this.radius = radius;
+    this.speed = 0;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.gravity = 1;
+    this.id = id;
+    this.update = function()
+    {
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(originalx + 2 * this.radius * id, 0);
+        ctx.lineTo(this.x, this.y);
+        ctx.closePath();
+        ctx.stroke();
+        let grd = ctx.createRadialGradient(this.x-10, this.y-10, 0, this.x-10, this.y-10, this.radius);
+        grd.addColorStop(0,"#fff");
+        grd.addColorStop(1,"#202020");
+        ctx.fillStyle = grd;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, radius, 0, 2*Math.PI);
+        ctx.fill();
+    }
+    this.getPos = function()
+    {
+        if (this.id === 0)
+        {
+            if (this.y < this.oriy)
+            {
+                if (this.speedX >= 0)
+                {
+                    if (this.speed === 0)
+                        this.speed = Math.sqrt((this.y - dragposy + distub) * this.gravity);
+                    else
+                        this.speed = Math.sqrt((this.y - dragposy) * this.gravity);
+                    let theta = Math.acos(this.y / originaly);
+                    this.speedX = this.speed * Math.cos(theta);
+                    this.speedY = this.speed * Math.sin(theta);
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                }
+                else
+                {
+                    let temp = Math.pow(this.speed, 2) - 2 * this.gravity * (this.oriy - this.y);
+                    if (temp >= 0)
+                        this.speed = Math.sqrt(temp);
+                    else
+                        this.speed = 0;
+                    let theta = Math.acos(this.y / originaly);
+                    this.speedX = -this.speed * Math.cos(theta);
+                    this.speedY = -this.speed * Math.sin(theta);
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                }
+            }
+            else if (this.y >= this.oriy)
+            {
+                this.speed = Math.abs(this.speedX);
+                this.speedY = 0;
+                this.x += this.speedX;
+                if (this.orix - this.x > distub && this.speedX < 0)
+                    this.y -= distub;
+                else
+                    this.y = this.oriy;
+            }
+        }
+        else if (this.id > 0 && this.id < maxnum-1)
+        {
+            this.x += this.speedX;
+            this.y += this.speedY;
+        }
+        else
+        {
+            if (this.y < this.oriy)
+            {
+                if (this.speedX <= 0)
+                {
+                    if (this.speed === 0)
+                        this.speed = Math.sqrt((this.y - dragposy + distub) * this.gravity);
+                    else
+                        this.speed = Math.sqrt((this.y - dragposy) * this.gravity);
+                    let theta = Math.acos(this.y / originaly);
+                    this.speedX = -this.speed * Math.cos(theta);
+                    this.speedY = this.speed * Math.sin(theta);
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                }
+                else
+                {
+                    let temp = Math.pow(this.speed, 2) - 2 * this.gravity * (this.oriy - this.y);
+                    if (temp >= 0)
+                        this.speed = Math.sqrt(temp);
+                    else
+                        this.speed = 0;
+                    let theta = Math.acos(this.y / originaly);
+                    this.speedX = this.speed * Math.cos(theta);
+                    this.speedY = -this.speed * Math.sin(theta);
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                }
+            }
+            else if (this.y >= this.oriy)
+            {
+                this.speed = Math.abs(this.speedX);
+                this.speedY = 0;
+                this.x += this.speedX;
+                if (this.x - this.orix > distub && this.speedX > 0)
+                    this.y -= distub;
+                else
+                    this.y = this.oriy;
+            }
+        }
+    }
+    this.crashWith = function(obj)
+    {
+        if (Math.sqrt(Math.pow(this.x - obj.x, 2) + Math.pow(this.y - obj.y, 2)) < this.radius + obj.radius)
+            return true;
+        return false;
+    }
+}
+
+function updatearea()
+{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for (let i = 0; i < maxnum; i++)
+    {
+        for (let j = i+1; j < maxnum; j++)
+        {
+            if (balls[i].crashWith(balls[j]))
+            {
+                let temp = balls[i].speedX;
+                balls[i].speedX = balls[j].speedX;
+                balls[j].speedX = temp;
+                if (balls[i].speedX === 0)
+                    balls[i].x = balls[i].orix;
+                if (balls[j].speedX === 0)
+                    balls[j].x = balls[j].orix;
+            }
+        }
+        balls[i].getPos();
+        balls[i].update();
+    }
+}
+</script>
+
+</body>
+</html>
