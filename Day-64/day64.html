@@ -4,7 +4,7 @@
 <title>Website Practice Day 64</title>
 <style>
 #myCanvas {
-  background: PeachPuff;
+  background: #ffcdb2;
 }
 </style>
 </head>
@@ -47,6 +47,7 @@ function ball(xx, yy, radius, id, orix, oriy)
     this.id = id;
     this.update = function()
     {
+        ctx.strokeStyle = "#6d6875";
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.moveTo(originalx + 2 * this.radius * id, 0);
@@ -54,8 +55,10 @@ function ball(xx, yy, radius, id, orix, oriy)
         ctx.closePath();
         ctx.stroke();
         let grd = ctx.createRadialGradient(this.x-10, this.y-10, 0, this.x-10, this.y-10, this.radius);
-        grd.addColorStop(0,"#fff");
-        grd.addColorStop(1,"#202020");
+        grd.addColorStop(0,"#ffb4a2");
+        grd.addColorStop(0.33,"#e5989b");
+        grd.addColorStop(0.66,"#b5838d");
+        grd.addColorStop(1,"#6d6875");
         ctx.fillStyle = grd;
         ctx.beginPath();
         ctx.arc(this.x, this.y, radius, 0, 2*Math.PI);
