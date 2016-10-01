@@ -104,9 +104,9 @@ function ball(x, y, z, radius)
 function updatearea()
 {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    document.getElementById("p").innerHTML = "Perspective value = " + perspective;
     if (key && key == 38) {if (perspective < 3000) perspective += 1; }
     if (key && key == 40) {if (perspective > 0) perspective -= 1; }
+    document.getElementById("p").innerHTML = "Perspective value = " + perspective;
     for (let i in balls)
     {
         balls[i].getPos();
