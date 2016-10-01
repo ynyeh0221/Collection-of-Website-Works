@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 65</title>
+<style>
+#myCanvas {
+  background: #000;
+}
+</style>
+</head>
+<body onload = "init()">
+<canvas id = "myCanvas"></canvas>
+<script>
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+canvas.width = 1350;
+canvas.height = 600;
+var perspective = 20;
+var maxz= 600;
+var balls = [], maxnum = 100, radius = 50;
+var t;
+
+function init()
+{
+    for (let i = 0; i < maxnum; i++)
+    {
+        let b = new ball(~~(canvas.width * Math.random()), ~~(canvas.height * Math.random()), ~~(maxz * Math.random()), radius, 60, perspective);
+        balls.push(b);
+    }
+    t = setInterval(updatearea, 20);
+}
+
+function ball(x, y, z, radius, theta, perspective)
+{
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.color = "rgba(" + ~~(Math.random() * 255) + ","+ ~~(Math.random() * 255) + ","+ ~~(Math.random() * 255) + ", 1)";
+    this.radius = radius;
+    this.theta = theta;
+    this.perspective = perspective;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.speedZ = -2 * Math.random()-1; 
+    this.gravity = 0.3;
+
+    this.update = function()
+    {
+        let scale = 1/(1 + this.z/this.perspective);
+        let drawx = this.x * scale;
+        let drawy = this.y * scale;
+        let drawradius = this.radius * scale;
+        let grd = ctx.createRadialGradient(drawx, drawy, 0, drawx, drawy, this.radius);
+        grd.addColorStop(0, "rgba(255, 255, 255, 1)");
+        grd.addColorStop(0.6, this.color);
+        ctx.fillStyle = grd;
+        ctx.beginPath();
+        ctx.arc(drawx, drawy, drawradius, 0, 2*Math.PI);
+        ctx.fill();
+    }
+
+    this.getPos = function()
+    {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.z += this.speedZ;
+        if (this.x <= 0 || this.x >= canvas.width || this.y <= 0 || this.y >= canvas.height || this.z <= 0)
+        {
+            this.x = ~~(canvas.width * Math.random());
+            this.y = ~~(canvas.height * Math.random());
+            this.z = maxz;
+            this.speedX = 0;
+            this.speedY = 0;
+            this.speedZ = -2 * Math.random()-1;
+        }
+        if (this.z <= 0)
+        {
+            this.z = 0;
+        }
+    }
+}
+
+function updatearea()
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i in balls)
+    {
+        balls[i].getPos();
+        balls[i].update();
+    }
+}
+
+</script>
+</body>
+</html>
