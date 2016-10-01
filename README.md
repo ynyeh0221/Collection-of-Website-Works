@@ -25,6 +25,8 @@ Day 38: 2048 https://ynyeh0221.github.io/Collection-of-Website-Works/day38.html
 
 Day 57: Light All Bulbs https://ynyeh0221.github.io/Collection-of-Website-Works/day57.html
 
+Day 67: 3D Plinky Game https://ynyeh0221.github.io/Collection-of-Website-Works/day67.html
+
 
 # Image-processing:
 
