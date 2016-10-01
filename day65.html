@@ -6,9 +6,22 @@
 #myCanvas {
   background: #000;
 }
+#instruction {
+  position: absolute;
+  top: 270px;
+  left: 700px;
+  color: #fff;
+  font-family: 'PT Sans', sans-serif;
+}
 </style>
 </head>
 <body onload = "init()">
+<div id = "instruction">
+<div>Use UP/DOWN array key to control the perspective value.</div>
+<br/>
+<div id = "p">Perspective value = </div>
+</div>
+</div>
 <canvas id = "myCanvas"></canvas>
 <script>
 var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
@@ -18,26 +31,31 @@ var perspective = 20;
 var maxz= 600;
 var balls = [], maxnum = 100, radius = 50;
 var t;
+var key;
 
 function init()
 {
     for (let i = 0; i < maxnum; i++)
     {
-        let b = new ball(~~(canvas.width * Math.random()), ~~(canvas.height * Math.random()), ~~(maxz * Math.random()), radius, 60, perspective);
+        let b = new ball(~~(canvas.width * Math.random()), ~~(canvas.height * Math.random()), ~~(maxz * Math.random()), radius);
         balls.push(b);
     }
     t = setInterval(updatearea, 20);
+    window.addEventListener('keydown', function (e) {
+            key = e.keyCode;
+        })
+        window.addEventListener('keyup', function (e) {
+            key = false;
+        })
 }
 
-function ball(x, y, z, radius, theta, perspective)
+function ball(x, y, z, radius)
 {
     this.x = x;
     this.y = y;
     this.z = z;
     this.color = "rgba(" + ~~(Math.random() * 255) + ","+ ~~(Math.random() * 255) + ","+ ~~(Math.random() * 255) + ", 1)";
     this.radius = radius;
-    this.theta = theta;
-    this.perspective = perspective;
     this.speedX = 0;
     this.speedY = 0;
     this.speedZ = -2 * Math.random()-1; 
@@ -45,7 +63,7 @@ function ball(x, y, z, radius, theta, perspective)
 
     this.update = function()
     {
-        let scale = 1/(1 + this.z/this.perspective);
+        let scale = 1/(1 + this.z/perspective);
         let drawx = this.x * scale;
         let drawy = this.y * scale;
         let drawradius = this.radius * scale;
@@ -82,6 +100,9 @@ function ball(x, y, z, radius, theta, perspective)
 function updatearea()
 {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (key && key == 38) {if (perspective < 3000) perspective += 1; }
+    if (key && key == 40) {if (perspective > 0) perspective -= 1; }
+    document.getElementById("p").innerHTML = "Perspective value = " + perspective;
     for (let i in balls)
     {
         balls[i].getPos();
