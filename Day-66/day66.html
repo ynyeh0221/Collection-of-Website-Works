@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 65</title>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<style>
+#myCanvas {
+  background: #000;
+}
+#instruction {
+  position: absolute;
+  top: 270px;
+  left: 700px;
+  color: #fff;
+  font-family: 'PT Sans', sans-serif;
+}
+</style>
+</head>
+<body onload = "init()">
+<div id = "instruction">
+<div>Use UP/DOWN array key to control the perspective value.</div>
+<br/>
+<div id = "p">Perspective value = </div>
+</div>
+</div>
+<canvas id = "myCanvas"></canvas>
+<script>
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+canvas.width = 1350;
+canvas.height = 600;
+var perspective = 20;
+var maxz= 800;
+var balls = [], maxnum = 100, radius = 50;
+var t;
+var key;
+
+function init()
+{
+    for (let i = 0; i < maxnum; i++)
+    {
+        let b = new ball(~~(canvas.width * Math.random()), ~~(canvas.height * Math.random()), maxz, radius);
+        balls.push(b);
+    }
+    t = setInterval(updatearea, 20);
+    window.addEventListener('keydown', function (e) {
+            key = e.keyCode;
+        })
+        window.addEventListener('keyup', function (e) {
+            key = false;
+        })
+}
+
+function ball(x, y, z, radius)
+{
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.color = "rgba(" + ~~(Math.random() * 255) + ","+ ~~(Math.random() * 255) + ","+ ~~(Math.random() * 255) + ", 1)";
+    this.radius = radius;
+    this.theta = 30 + Math.random() * 50;
+    this.speed = 5 + 5 * Math.random();
+    this.speedX = 0;
+    this.speedY = -this.speed * Math.sin(this.theta * Math.PI/180);
+    this.speedZ = -this.speed * Math.cos(this.theta * Math.PI/180); 
+    this.gravity = 1;
+
+    this.update = function()
+    {
+        let scale = 1/(1 + this.z/perspective);
+        let drawx = this.x * scale;
+        let drawy = this.y * scale;
+        let drawradius = this.radius * scale;
+        let grd = ctx.createRadialGradient(drawx, drawy, 0, drawx, drawy, this.radius);
+        grd.addColorStop(0, "rgba(255, 255, 255, 1)");
+        grd.addColorStop(0.6, this.color);
+        ctx.fillStyle = grd;
+        ctx.beginPath();
+        ctx.arc(drawx, drawy, drawradius, 0, 2*Math.PI);
+        ctx.fill();
+    }
+
+    this.getPos = function()
+    {
+        this.speedY += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.z += this.speedZ;
+        if (this.x <= 0 || this.y <= 0 || this.z <= 0)
+        {
+            this.x = ~~(canvas.width * Math.random());
+            this.y = ~~(canvas.height * Math.random());
+            this.z = maxz;
+            this.speed = 5 + 10 * Math.random();
+            this.theta = 30 + Math.random() * 50;
+            this.speedX = 0;
+            this.speedY = -this.speed * Math.sin(this.theta * Math.PI/180);
+            this.speedZ = -this.speed * Math.cos(this.theta * Math.PI/180); 
+        }
+        if (this.y >= canvas.height)
+            this.speedY *= -1;
+    }
+}
+
+function updatearea()
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById("p").innerHTML = "Perspective value = " + perspective;
+    if (key && key == 38) {if (perspective < 3000) perspective += 1; }
+    if (key && key == 40) {if (perspective > 0) perspective -= 1; }
+    for (let i in balls)
+    {
+        balls[i].getPos();
+        balls[i].update();
+    }
+}
+
+</script>
+</body>
+</html>
