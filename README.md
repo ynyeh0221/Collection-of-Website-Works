@@ -143,6 +143,8 @@ Day 64: Newton's Cradle https://ynyeh0221.github.io/Collection-of-Website-Works/
 
 Day 65: 3D-1 https://ynyeh0221.github.io/Collection-of-Website-Works/day65.html
 
+Day 66: 3D-2 https://ynyeh0221.github.io/Collection-of-Website-Works/day66.html
+
 
 # React.js
 
