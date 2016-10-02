@@ -115,7 +115,7 @@ function ball(x,y,z,color,radius)
                      if (i*i + j*j <= drawradius*drawradius)
                      {
                          let ind = ~~(4 * ((i+drawy) * bcanvas.width + j+drawx));
-                         data[ind+3] = Math.max(0, data[ind+3] - (drawradius - Math.sqrt(i*i + j*j)));
+                         data[ind+3] = Math.max(0, data[ind+3] - (1+this.speedZ/6) * (drawradius - Math.sqrt(i*i + j*j)));
                      }
                 }
             }
