@@ -103,6 +103,9 @@ function updatearea()
     if (key && key == 38) {if (perspective < 3000) perspective += 1; }
     if (key && key == 40) {if (perspective > 0) perspective -= 1; }
     document.getElementById("p").innerHTML = "Perspective value = " + perspective;
+    balls = balls.sort(function(a,b) {
+        return a.z > b.z ? -1 : a.z < b.z ? 1 : 0;
+    });
     for (let i in balls)
     {
         balls[i].getPos();
