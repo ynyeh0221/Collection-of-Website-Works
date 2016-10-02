@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 68</title>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<style>
+#myCanvas {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #000;
+}
+#instruction {
+  position: absolute;
+  top: 300px;
+  left: 400px;
+  padding: 15px;
+  color: rgba(255,255,255,1);
+  font-family: 'PT Sans', sans-serif;
+  font-weight: bolder;
+  font-size: 25px;
+  z-index: 10;
+  background: rgba(0,0,0,0.8);
+}
+</style>
+</head>
+<body onload = "init()">
+<div id = "instruction">Use UP/DOWN.LEFT/RIGHT arrow key to do rotation.</div>
+<canvas id = "myCanvas"></canvas>
+<script>
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+canvas.width = 1350;
+canvas.height = 600;
+var perspective = 100;
+var balls = [], maxnum = 100;
+var maxz = 1000, radius = 50;
+var angleX = 5, angleY = 5, angleZ = 5;
+var key;
+
+function init()
+{
+    for (let i = 0; i < maxnum; i++)
+    {
+        let b = new ball(~~(Math.random() * canvas.width), ~~(Math.random() * canvas.height), ~~(Math.random() * maxz), "rgb(255,255,240)", radius);
+        balls.push(b);
+    }
+    setInterval(updatearea, 20);
+    window.addEventListener('keydown', function (e) {
+            document.getElementById("instruction").style.display = "none";
+            key = e.keyCode;
+        })
+        window.addEventListener('keyup', function (e) {
+            key = false;
+        })
+}
+
+function ball(x,y,z,color,radius)
+{
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.speedX = Math.random() * 14 - 7;
+    this.speedY = Math.random() * 6 - 3;
+    this.speedZ = Math.random() * 10 - 5;
+    this.color = color;
+    this.radius = radius;
+    this.update = function()
+    {
+        let scale = 1/(1 + this.z/perspective);
+        let drawx = canvas.width/2 + (this.x - canvas.width/2) * scale;
+        let drawy = canvas.height/2 + (this.y - canvas.height/2) * scale;
+        let drawradius = this.radius * scale;
+        ctx.beginPath();
+        ctx.arc(drawx, drawy, drawradius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = "rgba(200,200,200,0.75)";
+        ctx.shadowBlur = 50;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.fill();
+    }
+    this.getPos =function()
+    {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.z += this.speedZ;
+        if (this.x <= 0 || this.x >= canvas.width)
+            this.speedX *= -1;
+        if (this.y <= 0 || this.y >= canvas.height)
+            this.speedY *= -1;
+        if (this.z <= 0 || this.z >= maxz)
+            this.speedZ *= -1;
+        if (this.z < 0)
+            this.z = 0;
+    }
+}
+
+function updatearea()
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (key && key == 37)
+    {
+        for (let i = 0; i < maxnum; i++)
+        {
+            var x1 = balls[i].x - canvas.width/2;
+            var z1 = balls[i].z - maxz/2;
+            var newX = x1*Math.cos(angleY * Math.PI / 180) - z1*Math.sin(angleY * Math.PI / 180);
+            var newZ = z1*Math.cos(angleY * Math.PI / 180) + x1*Math.sin(angleY * Math.PI / 180);
+            balls[i].x = canvas.width/2 + newX;
+            balls[i].z = maxz/2 + newZ;
+        }
+    }
+    if (key && key == 39)
+    {
+        for (let i = 0; i < maxnum; i++)
+        {
+            var x1 = balls[i].x - canvas.width/2;
+            var z1 = balls[i].z - maxz/2;
+            var newX = x1*Math.cos(-angleY * Math.PI / 180) - z1*Math.sin(-angleY * Math.PI / 180);
+            var newZ = z1*Math.cos(-angleY * Math.PI / 180) + x1*Math.sin(-angleY * Math.PI / 180);
+            balls[i].x = canvas.width/2 + newX;
+            balls[i].z = maxz/2 + newZ;
+        }
+    }
+    if (key && key == 38)
+    {
+        for (let i = 0; i < maxnum; i++)
+        {
+            var z1 = balls[i].z - maxz/2;
+            var y1 = balls[i].y - canvas.height/2;
+            var newZ = z1*Math.cos(angleX * Math.PI / 180) - y1*Math.sin(angleX * Math.PI / 180);
+            var newY = y1*Math.cos(angleX * Math.PI / 180) + z1*Math.sin(angleX * Math.PI / 180);
+            balls[i].z = maxz/2 + newZ;
+            balls[i].y = canvas.height/2 + newY;
+        }
+    }
+    if (key && key == 40)
+    {
+        for (let i = 0; i < maxnum; i++)
+        {
+            var z1 = balls[i].z - maxz/2;
+            var y1 = balls[i].y - canvas.height/2;
+            var newZ = z1*Math.cos(-angleX * Math.PI / 180) - y1*Math.sin(-angleX * Math.PI / 180);
+            var newY = y1*Math.cos(-angleX * Math.PI / 180) + z1*Math.sin(-angleX * Math.PI / 180);
+            balls[i].z = maxz/2 + newZ;
+            balls[i].y = canvas.height/2 + newY;
+        }
+    }
+    balls = balls.sort(function(a,b) {
+        return a.z > b.z ? -1 : a.z < b.z ? 1 : 0;
+    });
+    for (let i = 0; i < maxnum; i++)
+    {
+        for (let j = i+1; j < maxnum; j++)
+        {
+            if (Math.sqrt(Math.pow(balls[i].x - balls[j].x, 2) + Math.pow(balls[i].y - balls[j].y, 2) + Math.pow(balls[i].z - balls[j].z, 2)) < 200)
+            {
+                ctx.strokeStyle = "rgba(255,255,255,0.2)";
+                let scale = 1/(1 + balls[i].z/perspective);
+                let idrawx = canvas.width/2 + (balls[i].x - canvas.width/2) * scale;
+                let idrawy = canvas.height/2 + (balls[i].y - canvas.height/2) * scale;
+                scale = 1/(1 + balls[j].z/perspective);
+                let jdrawx = canvas.width/2 + (balls[j].x - canvas.width/2) * scale;
+                let jdrawy = canvas.height/2 + (balls[j].y - canvas.height/2) * scale;
+                ctx.moveTo(idrawx, idrawy);
+                ctx.lineTo(jdrawx, jdrawy);
+                ctx.stroke();
+            }
+        }
+        balls[i].getPos()
+        balls[i].update();
+    }
+}
+</script>
+</body>
+</html>
