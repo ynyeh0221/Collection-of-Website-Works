@@ -155,6 +155,8 @@ Day 70: 3D-5 https://ynyeh0221.github.io/Collection-of-Website-Works/day70.html
 
 Day 71: Water Words https://ynyeh0221.github.io/Collection-of-Website-Works/day71.html
 
+Day 72: Colorful Graph https://ynyeh0221.github.io/Collection-of-Website-Works/day72.html
+
 
 # React.js
 
