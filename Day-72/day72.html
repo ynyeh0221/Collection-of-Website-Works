@@ -17,9 +17,7 @@ canvas.width = 600;
 canvas.height = 600;
 var speed = 3;
 var maxradius = 25;
-
 var circles = [], maxnum = 140, count = 0;
-
 function init()
 {
     for (let i = 0; i < maxnum; i++)
@@ -39,7 +37,6 @@ function init()
     }
     setInterval(updatearea, 20);
 }
-
 function component(x,y,radius, color)
 {
     this.x = x;
@@ -87,11 +84,12 @@ function component(x,y,radius, color)
         }
     }
 }
-
 function updatearea()
 {
     count ++;
     ctx.clearRect(0,0,canvas.width,canvas.height);
+    for (let i = 0; i < circles.length; i++)
+        circles[i].getPos();
     for (let i = 0; i < maxnum; i++)
     {
         for (let j = i+1; j < maxnum; j++)
@@ -132,12 +130,8 @@ function updatearea()
         }
     }
     for (let i = 0; i < circles.length; i++)
-    {
-        circles[i].getPos();
         circles[i].update();
-    }
 }
-
 </script>
 
 </body>
