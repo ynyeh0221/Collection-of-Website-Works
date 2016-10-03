@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 72</title>
+<style>
+#myCanvas {
+  background: rgb(0,0,51);
+}
+</style>
+</head>
+<body onload = "init()">
+
+<canvas id = "myCanvas"></canvas>
+<script>
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+canvas.width = 600;
+canvas.height = 600;
+var speed = 3;
+var maxradius = 25;
+
+var circles = [], maxnum = 140, count = 0;
+
+function init()
+{
+    for (let i = 0; i < maxnum; i++)
+    {
+        let c = new component(~~(Math.random() * canvas.width), ~~(Math.random() * canvas.height), ~~(Math.random() * maxradius), "rgba(0,255,255,0.6)");
+        circles.push(c);
+    }
+    for (let i = 0; i < maxnum; i++)
+    {
+        let c = new component(~~(Math.random() * canvas.width), ~~(Math.random() * canvas.height), ~~(Math.random() * maxradius), "rgba(255,51,51,0.6)");
+        circles.push(c);
+    }
+    for (let i = 0; i < maxnum; i++)
+    {
+        let c = new component(~~(Math.random() * canvas.width), ~~(Math.random() * canvas.height), ~~(Math.random() * maxradius), "rgba(255,255,102,0.6)");
+        circles.push(c);
+    }
+    setInterval(updatearea, 20);
+}
+
+function component(x,y,radius, color)
+{
+    this.x = x;
+    this.y = y;
+    this.radius = radius+2;
+    this.color = color;
+    this.speedX = ~~(Math.random() * 2 * speed - speed);
+    this.speedY = ~~(Math.random() * 2 * speed - speed);
+    this.increasing = Math.random() > 0.5 ? true : false;
+    this.update = function()
+    {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3 * this.radius, 0, 2 * Math.PI, false);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = this.color;
+        ctx.stroke();
+    }
+    this.getPos = function()
+    {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x >= canvas.width || this.y < 0 || this.y >= canvas.height)
+        {
+            this.x = ~~(Math.random() * canvas.width);
+            this.y = ~~(Math.random() * canvas.height);
+        }
+        if (count % 10 === 0)
+        {
+            this.radius += this.increasing ? 2 : -2;
+            if (this.radius < 2)
+            {
+                this.radius = 2;
+                this.increasing = true;
+            }
+            if (this.radius > maxradius)
+            {
+                this.radius = maxradius;
+                this.increasing = false;
+            }
+        }
+    }
+}
+
+function updatearea()
+{
+    count ++;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for (let i = 0; i < maxnum; i++)
+    {
+        for (let j = i+1; j < maxnum; j++)
+        {
+            if (Math.pow(circles[i].x - circles[j].x,2) + Math.pow(circles[i].y - circles[j].y,2) >= 900 )
+                continue;
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "rgba(0,255,255,0.6)";
+            ctx.moveTo(circles[i].x, circles[i].y);
+            ctx.lineTo(circles[j].x, circles[j].y);
+            ctx.stroke();
+        }
+    }
+    for (let i = maxnum; i < 2 * maxnum; i++)
+    {
+        for (let j = i+1; j < 2 * maxnum; j++)
+        {
+            if (Math.pow(circles[i].x - circles[j].x,2) + Math.pow(circles[i].y - circles[j].y,2) >= 900 )
+                continue;
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "rgba(255,51,51,0.6)";
+            ctx.moveTo(circles[i].x, circles[i].y);
+            ctx.lineTo(circles[j].x, circles[j].y);
+            ctx.stroke();
+        }
+    }
+    for (let i = 2 * maxnum; i < 3 * maxnum; i++)
+    {
+        for (let j = i+1; j < 3 * maxnum; j++)
+        {
+            if (Math.pow(circles[i].x - circles[j].x,2) + Math.pow(circles[i].y - circles[j].y,2) >= 900 )
+                continue;
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "rgba(255,255,102,0.6)";
+            ctx.moveTo(circles[i].x, circles[i].y);
+            ctx.lineTo(circles[j].x, circles[j].y);
+            ctx.stroke();
+        }
+    }
+    for (let i = 0; i < circles.length; i++)
+    {
+        circles[i].getPos();
+        circles[i].update();
+    }
+}
+
+</script>
+
+</body>
+</html>
