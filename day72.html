@@ -17,6 +17,7 @@ canvas.width = 600;
 canvas.height = 600;
 var speed = 3;
 var maxradius = 25;
+var dist_threshold = 30;
 
 var circles = [], maxnum = 140, count = 0;
 
@@ -98,7 +99,7 @@ function updatearea()
     {
         for (let j = i+1; j < maxnum; j++)
         {
-            if (Math.pow(circles[i].x - circles[j].x,2) + Math.pow(circles[i].y - circles[j].y,2) >= 900 )
+            if (Math.pow(circles[i].x - circles[j].x,2) + Math.pow(circles[i].y - circles[j].y,2) >= dist_threshold * dist_threshold )
                 continue;
             ctx.lineWidth = 1;
             ctx.strokeStyle = "rgba(0,255,255,0.6)";
@@ -111,7 +112,7 @@ function updatearea()
     {
         for (let j = i+1; j < 2 * maxnum; j++)
         {
-            if (Math.pow(circles[i].x - circles[j].x,2) + Math.pow(circles[i].y - circles[j].y,2) >= 900 )
+            if (Math.pow(circles[i].x - circles[j].x,2) + Math.pow(circles[i].y - circles[j].y,2) >= dist_threshold * dist_threshold)
                 continue;
             ctx.lineWidth = 1;
             ctx.strokeStyle = "rgba(255,51,51,0.6)";
@@ -124,7 +125,7 @@ function updatearea()
     {
         for (let j = i+1; j < 3 * maxnum; j++)
         {
-            if (Math.pow(circles[i].x - circles[j].x,2) + Math.pow(circles[i].y - circles[j].y,2) >= 900 )
+            if (Math.pow(circles[i].x - circles[j].x,2) + Math.pow(circles[i].y - circles[j].y,2) >= dist_threshold * dist_threshold )
                 continue;
             ctx.lineWidth = 1;
             ctx.strokeStyle = "rgba(255,255,102,0.6)";
