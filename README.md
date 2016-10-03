@@ -153,6 +153,8 @@ Day 69: 3D-4 https://ynyeh0221.github.io/Collection-of-Website-Works/day69.html
 
 Day 70: 3D-5 https://ynyeh0221.github.io/Collection-of-Website-Works/day70.html
 
+Day 71: Water Words https://ynyeh0221.github.io/Collection-of-Website-Works/day71.html
+
 
 # React.js
 
