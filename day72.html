@@ -121,9 +121,9 @@ function updatearea()
             ctx.stroke();
         }
     }
-    for (let i = 2 * maxnum; i < 3 * maxnum; i++)
+    for (let i = 2 * maxnum; i < circles.length; i++)
     {
-        for (let j = i+1; j < 3 * maxnum; j++)
+        for (let j = i+1; j < circles.length; j++)
         {
             if (Math.pow(circles[i].x - circles[j].x,2) + Math.pow(circles[i].y - circles[j].y,2) >= dist_threshold * dist_threshold )
                 continue;
