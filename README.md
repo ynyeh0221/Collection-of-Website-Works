@@ -157,6 +157,8 @@ Day 71: Water Words https://ynyeh0221.github.io/Collection-of-Website-Works/day7
 
 Day 72: Colorful Graph https://ynyeh0221.github.io/Collection-of-Website-Works/day72.html
 
+Day 73: Gravity https://ynyeh0221.github.io/Collection-of-Website-Works/day73.html
+
 
 # React.js
 
