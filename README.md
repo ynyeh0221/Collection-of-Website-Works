@@ -159,6 +159,8 @@ Day 72: Colorful Graph https://ynyeh0221.github.io/Collection-of-Website-Works/d
 
 Day 73: Gravity https://ynyeh0221.github.io/Collection-of-Website-Works/day73.html
 
+Day 74: 3D-6 https://ynyeh0221.github.io/Collection-of-Website-Works/day74.html
+
 
 # React.js
 
