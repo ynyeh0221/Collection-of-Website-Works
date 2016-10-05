@@ -99,9 +99,9 @@ function ball(x,y,z,color,radius)
             this.speedY *= -1;
         if (this.z <= 0 || this.z >= maxz)
             this.speedZ *= -1;
-        if (this.z <= 0)
+        if (this.z <= -perspective)
         {
-            this.z = 0;
+            this.z = -perspective+1;
             let scale = 1/(1 + this.z/perspective);
             let drawx = canvas.width/2 + (this.x - canvas.width/2) * scale;
             let drawy = canvas.height/2 + (this.y - canvas.height/2) * scale;
