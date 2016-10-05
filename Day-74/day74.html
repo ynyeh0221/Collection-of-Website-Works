@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Website Practice Day 74</title>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<style>
+#myCanvas {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #000;
+}
+#instruction {
+  position: absolute;
+  top: 300px;
+  left: 400px;
+  padding: 15px;
+  color: rgba(255,255,255,1);
+  font-family: 'PT Sans', sans-serif;
+  font-weight: bolder;
+  font-size: 25px;
+  z-index: 10;
+  background: rgba(0,0,0,0.8);
+}
+</style>
+</head>
+<body onload = "init()">
+<canvas id = "myCanvas"></canvas>
+<canvas id = "black"></canvas>
+<script>
+var canvas = document.getElementById("myCanvas"), ctx = canvas.getContext("2d");
+canvas.width = 600;
+canvas.height = 600;
+var perspective = 100;
+var balls = [], maxnum = 800;
+var maxz = 600, radius = 10;
+var key;
+var speed = 5;
+
+function init()
+{
+    for (let i = 0; i < maxnum; i++)
+    {
+        let b = new ball(canvas.width/2, 0, maxz/2, radius);
+        balls.push(b);
+    }
+    setInterval(updatearea, 20);
+    window.addEventListener('keydown', function (e) {
+            key = e.keyCode;
+        })
+        window.addEventListener('keyup', function (e) {
+            key = false;
+        })
+}
+
+function ball(x,y,z,radius)
+{
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.speedX = 2 * speed * Math.random() - speed;
+    this.speedY = 2 * speed * Math.random() - speed;
+    this.speedZ = 2 * speed * Math.random() - speed;
+    this.color = "rgba("+~~(Math.random() * 155)+100+","+~~(Math.random() * 255)+","+~~(Math.random() * 255)+",1)";
+    this.radius = radius;
+    this.gravity = 0.2;
+    this.bounce = Math.random();
+    this.update = function()
+    {
+        let scale = 1/(1 + this.z/perspective);
+        let drawx = canvas.width/2 + (this.x - canvas.width/2) * scale;
+        let drawy = canvas.height/3 + (this.y - canvas.height/3) * scale;
+        let drawradius = this.radius * scale;
+        ctx.beginPath();
+        ctx.arc(drawx, drawy, drawradius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+    this.getPos =function()
+    {
+        this.speedY += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.z += this.speedZ;
+        if (this.y >= canvas.height)
+        {
+            this.y = canvas.height;
+            this.speedY *= -this.bounce;
+        }
+        if (this.z <= -perspective)
+        {
+            this.z = -perspective + 1;
+            this.color = "rgba(0,0,0,0)";
+        }
+    }
+}
+
+function updatearea()
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (key && key == 38)
+    {
+        perspective --;
+    }
+    if (key && key == 40)
+    {
+        perspective ++;
+    }
+    balls = balls.sort(function(a,b) {
+        return a.z > b.z ? -1 : a.z < b.z ? 1 : 0;
+    });
+    for (let i = 0; i < maxnum; i++)
+    {
+        balls[i].getPos()
+        balls[i].update();
+    }
+}
+</script>
+</body>
+</html>
