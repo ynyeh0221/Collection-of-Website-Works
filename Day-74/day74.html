@@ -62,6 +62,7 @@ function ball(x,y,z,radius)
     this.speedY = 2 * speed * Math.random() - speed;
     this.speedZ = 2 * speed * Math.random() - speed;
     this.color = "rgba("+~~(Math.random() * 155)+100+","+~~(Math.random() * 255)+","+~~(Math.random() * 255)+",1)";
+    this.grd = null;
     this.radius = radius;
     this.gravity = 0.2;
     this.bounce = Math.random();
@@ -73,7 +74,10 @@ function ball(x,y,z,radius)
         let drawradius = this.radius * scale;
         ctx.beginPath();
         ctx.arc(drawx, drawy, drawradius, 0, 2 * Math.PI, false);
-        ctx.fillStyle = this.color;
+        this.grd = ctx.createRadialGradient(drawx, drawy, 0, drawx, drawy, drawradius);
+        this.grd.addColorStop(0, "rgba(255, 255, 255, 1)");
+        this.grd.addColorStop(1, this.color);
+        ctx.fillStyle = this.grd;
         ctx.fill();
     }
     this.getPos =function()
@@ -90,7 +94,7 @@ function ball(x,y,z,radius)
         if (this.z <= -perspective)
         {
             this.z = -perspective + 1;
-            this.color = "rgba(0,0,0,0)";
+            this.grd = "rgba(0,0,0,0)";
         }
     }
 }
