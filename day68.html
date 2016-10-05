@@ -88,10 +88,10 @@ function ball(x,y,z,color,radius)
             this.speedX *= -1;
         if (this.y <= 0 || this.y >= canvas.height)
             this.speedY *= -1;
-        if (this.z <= 0 || this.z >= maxz)
+        if (this.z <= -perspective || this.z >= maxz)
             this.speedZ *= -1;
-        if (this.z < 0)
-            this.z = 0;
+        if (this.z < -perspective)
+            this.z = -perspective+1;
     }
 }
 
