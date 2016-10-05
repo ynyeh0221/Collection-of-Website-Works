@@ -90,9 +90,9 @@ function ball(x, y, z, radius)
             this.speedY = 0;
             this.speedZ = -2 * Math.random()-1;
         }
-        if (this.z <= 0)
+        if (this.z <= -perspective)
         {
-            this.z = 0;
+            this.z = -perspective+1;
         }
     }
 }
