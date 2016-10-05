@@ -173,7 +173,7 @@ function component(width, height, color, x, z, type) {
             this.mass = 0.001;
             ctx.beginPath();
             ctx.arc(drawx, drawy, drawradius, 0, 2 * Math.PI, false);
-            let grd = ctx.createRadialGradient(drawx-5, drawy-5, 0, drawx, drawy, this.radius);
+            let grd = ctx.createRadialGradient(drawx-5, drawy-5, 0, drawx, drawy, drawradius);
             grd.addColorStop(0, "rgba(255, 255, 255, 1)");
             grd.addColorStop(0.6, this.color);
             ctx.fillStyle = grd;
