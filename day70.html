@@ -82,7 +82,7 @@ function ball(x,y,z,color,radius)
         let drawradius = this.radius * scale;
         ctx.beginPath();
         ctx.arc(drawx, drawy, drawradius, 0, 2 * Math.PI, false);
-        let grd = ctx.createRadialGradient(drawx, drawy, 0, drawx, drawy, this.radius);
+        let grd = ctx.createRadialGradient(drawx, drawy, 0, drawx, drawy, drawradius);
         grd.addColorStop(0, "rgba(255, 255, 255, 1)");
         grd.addColorStop(0.8, this.color);
         ctx.fillStyle = grd;
