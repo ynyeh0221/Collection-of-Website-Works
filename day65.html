@@ -67,7 +67,7 @@ function ball(x, y, z, radius)
         let drawx = this.x * scale;
         let drawy = this.y * scale;
         let drawradius = this.radius * scale;
-        let grd = ctx.createRadialGradient(drawx, drawy, 0, drawx, drawy, this.radius);
+        let grd = ctx.createRadialGradient(drawx, drawy, 0, drawx, drawy, drawradius);
         grd.addColorStop(0, "rgba(255, 255, 255, 1)");
         grd.addColorStop(0.6, this.color);
         ctx.fillStyle = grd;
