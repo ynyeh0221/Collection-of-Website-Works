@@ -85,7 +85,7 @@ function ball(x, y, z, radius)
         this.x += this.speedX;
         this.y += this.speedY;
         this.z += this.speedZ;
-        if (this.x <= 0 || this.y <= 0 || this.z <= 0)
+        if (this.x <= 0 || this.y <= 0 || this.z <= -perspective)
         {
             this.x = ~~(canvas.width * Math.random());
             this.y = ~~(canvas.height * Math.random());
